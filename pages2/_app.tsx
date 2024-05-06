@@ -1,23 +1,28 @@
+import { LinkAction } from '../components/link'
+import { Tokens } from '../components/tokens'
 import logo from '../public/vercel.svg'
 import '../styles/global.css'
-import { Footer, Navbar } from 'git-started-components'
+import { Footer } from '@/components/footer'
+import { Navbar } from '@/components/navbar'
+import { ProfileButton } from '@/components/profile-button'
 import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
+import { useRouter } from 'next/router'
 
 const title = 'git-started'
 
-const links = [
+const links: LinkAction[] = [
   {
-    label: 'Pricing',
-    href: '#',
+    href: '/prixing',
+    children: 'Pricing',
   },
   {
-    label: 'FAQ',
-    href: '#',
+    href: '/faw',
+    children: 'FAQ',
   },
   {
-    label: 'Login',
-    href: '#',
+    href: '/login',
+    children: 'Login',
   },
 ]
 
@@ -25,14 +30,21 @@ export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
+  const router = useRouter()
+
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-base-100">
       <SessionProvider session={session}>
         <Navbar
           title={title}
           logoUrl={logo.src}
           links={links}
-          cta={<div className="btn-xl btn-rounded btn">Get started!</div>}
+          end={
+            <ProfileButton
+              linkUrl={() => router.push('/profile')}
+              extraLabel="10 tokens"
+            />
+          }
         />
 
         <Component {...pageProps} />

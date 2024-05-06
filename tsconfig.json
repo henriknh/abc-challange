@@ -6,6 +6,7 @@
     "strict": false,
     "noEmit": true,
     "incremental": true,
+    "target": "esnext",
     "module": "esnext",
     "esModuleInterop": true,
     "moduleResolution": "node",
@@ -15,10 +16,14 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": ["components/*"],
-      "react": ["node_modules/react"],
-      "react-dom": ["node_modules/react-dom"]
-    }
+      "@/utils/*": ["utils/*"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

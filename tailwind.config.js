@@ -13,7 +13,11 @@ module.exports = {
       center: true,
       padding: '2rem',
     },
-    extend: {},
+    extend: {
+      opacity: {
+        disabled: 0.38,
+      },
+    },
   },
-  plugins: [require('daisyui')],
+  plugins: [require('@tailwindcss/typography'), require('daisyui')],
 }
