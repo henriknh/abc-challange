@@ -1,4 +1,4 @@
-import { LinkAction } from './link'
+import { LinkType } from './link'
 import { LogoutButton } from './logout-button'
 import { ProfileButton, ProfileButtonProps } from './profile-button'
 import { signIn, useSession } from 'next-auth/react'
@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export interface ProfileButtonWithMenuProps extends ProfileButtonProps {
   linkUrl?: string
-  links: LinkAction[]
+  links: LinkType[]
 }
 
 export function ProfileButtonWithMenu({

@@ -1,6 +1,7 @@
 'use client'
 
-import { LinkAction } from './link'
+import { config } from '../app.config'
+import { LinkType } from './link'
 import { mdiClose } from '@mdi/js'
 import Icon from '@mdi/react'
 import Link from 'next/link'
@@ -8,29 +9,20 @@ import { ReactElement, useMemo, useState } from 'react'
 
 export interface NavbarProps {
   sticky?: boolean
-  title: string
-  logoUrl: string
-  links: LinkAction[]
+  links: LinkType[]
   end?: ReactElement
   cta?: ReactElement
 }
-export function Navbar({
-  sticky,
-  title,
-  logoUrl,
-  links,
-  end,
-  cta,
-}: NavbarProps) {
+export function Navbar({ sticky, links, end, cta }: NavbarProps) {
   const [showMenu, setShowMenu] = useState(false)
 
   const logo = useMemo(() => {
     return (
       <Link href="/">
-        <img src={logoUrl} className="h-10" alt="Logo" />
+        <img src={config.logoUrl} className="h-10" alt="Logo" />
       </Link>
     )
-  }, [logoUrl])
+  }, [])
 
   return (
     <>

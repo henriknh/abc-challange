@@ -1,10 +1,17 @@
+'use client'
+
 import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 
-export function LogoutButton() {
+export function LogoutButton({ ...props }) {
   return (
-    <Link className="btn btn-ghost" href="/api/auth/logout">
+    <button
+      className="btn btn-ghost"
+      onClick={() => signOut()}
+      // href="/api/auth/signout"
+      {...props}
+    >
       Sign out
-    </Link>
+    </button>
   )
 }

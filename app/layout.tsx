@@ -1,24 +1,41 @@
 import { Footer } from '../components/footer'
-import { LinkAction } from '../components/link'
+import { Introduction } from '../components/introduction'
+import { LinkType } from '../components/link'
 import { Navbar } from '../components/navbar'
 import { ProfileButton } from '../components/profile-button'
-import logo from '../public/vercel.svg'
 import '../styles/global.css'
 
-const title = 'git-started'
-
-const links: LinkAction[] = [
+const links: LinkType[] = [
   {
     href: '/recipes',
     children: 'Recipes',
   },
   {
     href: '/create-recipe',
-    children: 'Create recepie',
+    children: 'Create recipe',
+  },
+]
+
+const moreLinks: LinkType[] = [
+  {
+    href: 'https://tasteoftrail.com',
+    children: 'Taste of Trail',
+    _target: '_blank',
   },
   {
-    href: '/login',
-    children: 'Login',
+    href: 'https://marketplace.visualstudio.com/items?itemName=henriknh.lfw-codes-for-bananas',
+    children: 'LFW: Codes for bananas',
+    _target: '_blank',
+  },
+  {
+    href: 'https://play.google.com/store/apps/details?id=com.henriknh.addzelines',
+    children: 'add ze lines (google play)',
+    _target: '_blank',
+  },
+  {
+    href: 'https://henriknh.itch.io/add-ze-lines',
+    children: 'add ze lines (itch)',
+    _target: '_blank',
   },
 ]
 
@@ -35,8 +52,6 @@ export default function RootLayout({
     <html lang="en">
       <body className="flex min-h-screen flex-col bg-base-100">
         <Navbar
-          title={title}
-          logoUrl={logo.src}
           links={links}
           cta={<ProfileButton linkUrl="/profile" extraLabel="10 tokens" />}
         ></Navbar>
@@ -44,10 +59,9 @@ export default function RootLayout({
         {children}
 
         <Footer
-          title={title}
-          description="Your cookbook made simple"
-          logoUrl={logo.src}
           links={links}
+          moreLinks={moreLinks}
+          bottomSlot={<Introduction />}
         />
       </body>
     </html>

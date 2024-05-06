@@ -29,7 +29,7 @@ export async function ProfileButton({
       </div>
     </Link>
   ) : (
-    <Link href="/api/auth/login" className="btn btn-primary">
+    <Link href="/api/auth/signin" className="btn btn-primary">
       Sign in
     </Link>
   )

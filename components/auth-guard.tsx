@@ -16,7 +16,7 @@ export default async function AuthGuard({
   const session = await getServerSession(authOptions)
 
   if (!session) {
-    redirect(redirectUrl || '/')
+    redirect(redirectUrl || '/api/auth/signin')
   }
 
   return <>{children}</>

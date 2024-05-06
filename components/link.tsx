@@ -1,8 +1,7 @@
 import { HTMLAttributeAnchorTarget, ReactNode } from 'react'
 
-export type LinkAction = {
-  action?: () => void
-  href?: string
+export type LinkType = {
+  href: string
   _target?: HTMLAttributeAnchorTarget
   children: ReactNode
 }
