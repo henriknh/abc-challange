@@ -1,3 +1,5 @@
+'use client'
+
 import { Recipe as RecipeType } from '../../app/api/cook'
 import Ingredient from './ingredient'
 import Step from './step'
@@ -22,7 +24,7 @@ export default function Recipe({ recipe }: RecipeProps) {
       </div>
 
       <div>{recipe.description}</div>
-      <div className="realtive flex gap-10">
+      <div className="flex gap-10">
         <div className="max-w-96">
           <div className="sticky top-0 w-full">
             <div className="flex items-end justify-between">
@@ -46,13 +48,13 @@ export default function Recipe({ recipe }: RecipeProps) {
                 />
               ))}
 
-              <button className="btn btn-ghost w-full" onClick={() => null}>
+              {/* <button className="btn btn-ghost w-full" onClick={() => null}>
                 Clear completed ingredients
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
-        <div>
+        <div className="flex-1">
           <div className="sticky top-0 flex-col">
             <div className="flex items-end justify-between">
               <h4>Steps</h4>

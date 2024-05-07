@@ -20,7 +20,16 @@ export default function LetsCook({ onAction }: LetsCookProps) {
     setIsIngredients(!isValidHttpUrl(context))
 
     if (context && browserStorage.getItem('triggerSearch')) {
+      console.log(form.current.elements['context'])
+
+      form.current.elements['context'].value =
+        browserStorage.getItem('letsCookInput')
+      // form.current.elements['type'].value =
+      //   browserStorage.getItem('letsCookType')
+      // form.current.elements['portions'].value =
+      //   browserStorage.getItem('letsCookPortions')
       form.current.requestSubmit()
+
       browserStorage.removeItem('triggerSearch')
     }
   }, [])
@@ -36,13 +45,12 @@ export default function LetsCook({ onAction }: LetsCookProps) {
           name="context"
           type="text"
           className="min-w-0 grow"
-          placeholder="Insert URL or ingredients..."
+          placeholder="Feed me an URL of a tasty recipe..."
           onChange={(change) => {
             const value = change.target.value
             browserStorage.setItem('letsCookInput', value)
             setIsIngredients(!isValidHttpUrl(value))
           }}
-          defaultValue={browserStorage.getItem('letsCookInput')}
         />
 
         <SubmitButton>
@@ -51,7 +59,7 @@ export default function LetsCook({ onAction }: LetsCookProps) {
         </SubmitButton>
       </label>
 
-      <div className="flex justify-end gap-2">
+      {/* <div className="flex justify-end gap-2">
         <select
           name="type"
           title="Available only when cooking by ingredients"
@@ -60,7 +68,6 @@ export default function LetsCook({ onAction }: LetsCookProps) {
           onChange={(change) => {
             browserStorage.setItem('letsCookType', change.target.value)
           }}
-          defaultValue={browserStorage.getItem('letsCookType')}
         >
           <option>Tiny Apple</option>
           <option>Tiny Orange</option>
@@ -80,7 +87,6 @@ export default function LetsCook({ onAction }: LetsCookProps) {
             onChange={(change) => {
               browserStorage.setItem('letsCookPortions', change.target.value)
             }}
-            defaultValue={browserStorage.getItem('letsCookPortions') || '4'}
           >
             <option>1</option>
             <option>2</option>
@@ -103,7 +109,7 @@ export default function LetsCook({ onAction }: LetsCookProps) {
         >
           <Icon path={mdiClose} size={0.8} />
         </button>
-      </div>
+      </div> */}
     </form>
   )
 }

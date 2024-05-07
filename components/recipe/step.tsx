@@ -1,3 +1,5 @@
+'use client'
+
 import { Step as StepType } from '../../app/api/cook'
 import { useState } from 'react'
 
@@ -10,7 +12,7 @@ export default function Step({ step }: StepProps) {
 
   return (
     <div
-      className="card card-compact cursor-pointer bg-base-200 shadow transition"
+      className="card card-compact w-full cursor-pointer bg-base-200 shadow transition"
       onClick={() => setStepCompleted(!stepCompleted)}
     >
       <div className="card-body">

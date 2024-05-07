@@ -1,3 +1,5 @@
+'use client'
+
 import { Ingredient as IngredientType } from '../../app/api/cook'
 import { useMemo, useState } from 'react'
 
@@ -21,16 +23,17 @@ export default function Ingredient({ ingredient, isMetric }: IngredientProps) {
       onClick={() => setIngredientCompleted(!ingredientCompleted)}
     >
       <div className="flex gap-2">
-        <input
+        {/* <input
           type="checkbox"
           checked={ingredientCompleted}
           defaultChecked={ingredientCompleted}
           className="checkbox-primary checkbox"
-        />
+        /> */}
 
         <div
           className={
-            'transition-opacity' + (ingredientCompleted ? ' opacity-40' : '')
+            'capitalize transition-opacity' +
+            (ingredientCompleted ? ' opacity-40' : '')
           }
         >
           {ingredient.name}
