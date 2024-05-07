@@ -1,13 +1,14 @@
 'use client'
 
 import LetsCook from '../../components/lets-cook'
+import { AddToMyCookbook } from '../../components/recipe/add-to-my-cookbook'
 import Recipe from '../../components/recipe/recipe'
 import Section from '../../components/section'
-import { onCook } from '../api/cook'
-import { useFormState } from 'react-dom'
+import { Recipe as RecipeType } from '../api/cook'
+import { useState } from 'react'
 
 export default function CreateRecipe() {
-  const [recipe, formAction] = useFormState(onCook)
+  const [recipe, setRecipe] = useState<RecipeType>()
 
   return (
     <div className="prose max-w-none pb-10">
@@ -15,7 +16,7 @@ export default function CreateRecipe() {
         <h1>Create new recipe</h1>
 
         <div className="flex flex-col gap-10">
-          <LetsCook onAction={formAction} />
+          <LetsCook onRecipeGeneration={setRecipe} />
 
           {recipe ? (
             <div className="flex flex-col gap-10">
@@ -24,9 +25,7 @@ export default function CreateRecipe() {
               </div>
 
               <div className="flex justify-end">
-                <button className="btn btn-primary" disabled={!recipe}>
-                  Add to my collection
-                </button>
+                <AddToMyCookbook recipe={recipe} />
               </div>
             </div>
           ) : (

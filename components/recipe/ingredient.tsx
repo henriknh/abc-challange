@@ -45,8 +45,7 @@ export default function Ingredient({ ingredient, isMetric }: IngredientProps) {
             'transition-opacity' + (ingredientCompleted ? ' opacity-40' : '')
           }
         >
-          {unit.value}
-          {unit.unit}
+          {unit.value} {unit.unit}
         </div>
       )}
     </div>

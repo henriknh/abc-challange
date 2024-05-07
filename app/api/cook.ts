@@ -38,14 +38,14 @@ const extractContentByRL = async (url: string) => {
   const regexHTMLComments = /<!--(.*?)-->/gims
   const noHTMLComments = cleanDivTags.replace(regexHTMLComments, '')
 
-  // const regexOpeningTag = /<.*?>/gims
-  // const noOpeningTags = noHTMLComments.replace(regexOpeningTag, '')
+  const regexOpeningTag = /<.*?>/gims
+  const noOpeningTags = noHTMLComments.replace(regexOpeningTag, '')
 
-  // const regexClosingTags = /<\/.*?>/gims
-  // const noClosingTags = noOpeningTags.replace(regexClosingTags, '')
+  const regexClosingTags = /<\/.*?>/gims
+  const noClosingTags = noOpeningTags.replace(regexClosingTags, '')
 
   const regexNewLines = /(\r\n|\n|\r)/gims
-  const noNewLines = noHTMLComments.replace(regexNewLines, '')
+  const noNewLines = noClosingTags.replace(regexNewLines, '')
 
   const regexWhiteSpace = /\s\s+/gims
   const noWhiteSpace = noNewLines.replace(regexWhiteSpace, ' ')
@@ -55,8 +55,8 @@ const extractContentByRL = async (url: string) => {
   console.log('noStyleTags', noStyleTags.length)
   console.log('cleanDivTags', cleanDivTags.length)
   console.log('noHTMLComments', noHTMLComments.length)
-  // console.log('noOpeningTags', noOpeningTags.length)
-  // console.log('noClosingTags', noClosingTags.length)
+  console.log('noOpeningTags', noOpeningTags.length)
+  console.log('noClosingTags', noClosingTags.length)
   console.log('noNewLines', noNewLines.length)
   console.log('noWhiteSpace', noWhiteSpace.length)
   console.log(
@@ -167,7 +167,6 @@ const generateRecipeByContent = async (content): Promise<object> => {
   return recipe
 }
 
-// formData: FormData
 export async function onCook(req, formData: FormData) {
   const context = formData.get('context') as string | null
   const type = formData.get('type') as string | null

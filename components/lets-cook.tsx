@@ -1,18 +1,25 @@
 'use client'
 
+import { onCook, Recipe } from '../app/api/cook'
 import browserStorage from '../utils/browser-storage'
 import isValidHttpUrl from '../utils/is-valid-http-url'
-import { SubmitButton } from './submit-button'
-import { mdiChefHat, mdiClose } from '@mdi/js'
-import Icon from '@mdi/react'
+import LetsCookInput from './lets-cook-input'
 import { useEffect, useRef, useState } from 'react'
+import { useFormState, useFormStatus } from 'react-dom'
 
 export interface LetsCookProps {
-  onAction: any
+  onRecipeGeneration?: (recipe: Recipe) => void
 }
 
-export default function LetsCook({ onAction }: LetsCookProps) {
+export default function LetsCook({ onRecipeGeneration }: LetsCookProps) {
   const [isIngredients, setIsIngredients] = useState(false)
+  const [state, formAction] = useFormState(onCook)
+  const { pending } = useFormStatus()
+  console.log('pending', pending)
+
+  useEffect(() => {
+    onRecipeGeneration(state)
+  }, [state, onRecipeGeneration])
 
   const form = useRef<HTMLFormElement>()
   useEffect(() => {
@@ -36,28 +43,11 @@ export default function LetsCook({ onAction }: LetsCookProps) {
 
   return (
     <form
-      action={onAction}
+      action={formAction}
       ref={form}
       className="flex flex-col items-end gap-2"
     >
-      <label className="input input-bordered flex w-full items-center gap-2">
-        <input
-          name="context"
-          type="text"
-          className="min-w-0 grow"
-          placeholder="Feed me an URL of a tasty recipe..."
-          onChange={(change) => {
-            const value = change.target.value
-            browserStorage.setItem('letsCookInput', value)
-            setIsIngredients(!isValidHttpUrl(value))
-          }}
-        />
-
-        <SubmitButton>
-          <Icon path={mdiChefHat} size={0.8} />
-          Let&apos;s cook
-        </SubmitButton>
-      </label>
+      <LetsCookInput />
 
       {/* <div className="flex justify-end gap-2">
         <select

@@ -15,7 +15,7 @@ export default function Recipes() {
         </div>
 
         <div>
-          {recipes.length ? (
+          {recipes?.length ? (
             recipes.map((recipe) => <div key={0}>{recipe}</div>)
           ) : (
             <div className="flex flex-col items-center gap-4">

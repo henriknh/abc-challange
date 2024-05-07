@@ -20,7 +20,7 @@ export default function Step({ step }: StepProps) {
           <input
             type="checkbox"
             checked={stepCompleted}
-            defaultChecked={stepCompleted}
+            readOnly
             className="checkbox-primary checkbox"
           />
           <div

@@ -2,6 +2,7 @@
 
 import { Recipe as RecipeType } from '../../app/api/cook'
 import Ingredient from './ingredient'
+import { RecipeInfo } from './recipe-info'
 import Step from './step'
 import { useState } from 'react'
 
@@ -13,19 +14,12 @@ export default function Recipe({ recipe }: RecipeProps) {
 
   return (
     <div className="prose flex max-w-none flex-col">
-      <h1>{recipe?.title || <div className="skeleton h-12 w-96"></div>}</h1>
+      <h1>{recipe.title}</h1>
 
-      <div className="flex">
-        <div>{recipe.portions} portions</div>
-        <div className="divider divider-horizontal" />
-        <div>{recipe.ingredients.length} ingredints</div>
-        <div className="divider divider-horizontal" />
-        <div>{recipe.steps.length} steps</div>
-      </div>
+      <RecipeInfo recipe={recipe} />
 
-      <div>{recipe.description}</div>
       <div className="flex gap-10">
-        <div className="max-w-96">
+        <div className="basis-1/3">
           <div className="sticky top-0 w-full">
             <div className="flex items-end justify-between">
               <h4>Ingredients</h4>
@@ -40,7 +34,7 @@ export default function Recipe({ recipe }: RecipeProps) {
             </div>
 
             <div className="flex flex-col gap-2">
-              {recipe.ingredients.map((ingredient, index) => (
+              {recipe.ingredients?.map((ingredient, index) => (
                 <Ingredient
                   key={ingredient.name + index}
                   ingredient={ingredient}
@@ -54,15 +48,17 @@ export default function Recipe({ recipe }: RecipeProps) {
             </div>
           </div>
         </div>
-        <div className="flex-1">
+        <div className="basis-2/3">
           <div className="sticky top-0 flex-col">
             <div className="flex items-end justify-between">
               <h4>Steps</h4>
-              <div className="pb-2">{recipe.total_cooking_time} minutes</div>
+              <div className="pb-2">
+                {recipe.total_cooking_time || 0} minutes
+              </div>
             </div>
 
             <div className="flex flex-col gap-4">
-              {recipe.steps.map((step, index) => (
+              {recipe.steps?.map((step, index) => (
                 <Step key={step.description + step.time + index} step={step} />
               ))}
             </div>

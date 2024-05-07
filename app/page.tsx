@@ -1,7 +1,7 @@
 'use client'
 
 import Hero from '../components/hero'
-import LetsCook from '../components/lets-cook'
+import LetsCookInput from '../components/lets-cook-input'
 import Section from '../components/section'
 import browserStorage from '../utils/browser-storage'
 import { useRouter } from 'next/navigation'
@@ -27,12 +27,14 @@ export default function Home() {
           </div>
 
           <div className="w-full max-w-[600px]">
-            <LetsCook
-              onAction={() => {
+            <form
+              action={() => {
                 browserStorage.setItem('triggerSearch', 'true')
                 router.push('/create-recipe')
               }}
-            />
+            >
+              <LetsCookInput />
+            </form>
           </div>
         </div>
       </Hero>
