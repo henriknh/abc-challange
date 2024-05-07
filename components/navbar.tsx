@@ -1,113 +1,110 @@
-'use client'
-
 import { config } from '../app.config'
 import { LinkType } from './link'
-import { mdiClose } from '@mdi/js'
-import Icon from '@mdi/react'
+import { LogoutButton } from './logout-button'
+import { ProfileButtonWithMenu } from './profile-button-with-menu'
+import { UserCard } from './user-card'
 import Link from 'next/link'
-import { ReactElement, useMemo, useState } from 'react'
+import { ReactNode } from 'react'
 
 export interface NavbarProps {
-  sticky?: boolean
+  children: ReactNode
   links: LinkType[]
-  end?: ReactElement
-  cta?: ReactElement
+  profileDropdownLinks: LinkType[]
 }
-export function Navbar({ sticky, links, end, cta }: NavbarProps) {
-  const [showMenu, setShowMenu] = useState(false)
-
-  const logo = useMemo(() => {
-    return (
-      <Link href="/">
-        <img src={config.logoUrl} className="h-10" alt="Logo" />
-      </Link>
-    )
-  }, [])
-
+export function Navbar({ children, links, profileDropdownLinks }: NavbarProps) {
   return (
-    <>
+    <div className="drawer drawer-end min-h-screen">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 
-      <div
-        className={
-          (sticky ? 'sticky' : '') + ' flex h-24 w-full items-center px-10 py-4'
-        }
-      >
-        <div className="flex-1">{logo}</div>
-
-        <div className="hidden flex-none place-self-center self-center justify-self-center lg:block">
-          <ul className="menu menu-horizontal">
-            {links.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href}>{link.children}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="flex flex-1 justify-end gap-4">
-          <div className="flex flex-none">
-            <div className="hidden flex-none lg:block">{end}</div>
-            {cta}
+      <div className="drawer-content flex flex-col">
+        {/* Navbar */}
+        <div className="navbar min-h-20 w-full">
+          <div className="flex-1">
+            <Link href="/">
+              <img src={config.logoUrl} className="h-10" alt="Logo" />
+            </Link>
+          </div>
+          <div className="hidden flex-none lg:block">
+            <ul className="menu menu-horizontal flex gap-4">
+              {/* Navbar menu content here */}
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.children}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="block lg:hidden">
-            <button
-              className="btn btn-square"
-              onClick={() => setShowMenu(!showMenu)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="inline-block h-6 w-6 stroke-current"
+          <div className="flex-1 justify-end">
+            <div className="hidden flex-none lg:flex">
+              <ProfileButtonWithMenu links={profileDropdownLinks} />
+            </div>
+            <div className="flex-none lg:hidden">
+              <label
+                htmlFor="my-drawer-3"
+                aria-label="open sidebar"
+                className="btn btn-square btn-ghost"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="inline-block h-6 w-6 stroke-current"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  ></path>
+                </svg>
+              </label>
+            </div>
           </div>
         </div>
+
+        {children}
       </div>
+      <div className="drawer-side">
+        <label
+          htmlFor="my-drawer-3"
+          aria-label="close sidebar"
+          className="drawer-overlay"
+        ></label>
+        <div className="menu flex min-h-full w-80 flex-col bg-base-200 p-4">
+          {/* Sidebar content here */}
 
-      {showMenu && (
-        <div className="fixed inset-0 z-10 flex bg-black/50">
-          <div className="flex-1" onClick={() => setShowMenu(false)}></div>
-          <div className="min-h-full w-full max-w-96 bg-base-200 px-10 py-10">
-            <div className="flex flex-col gap-8">
-              <div className="flex items-center justify-between">
-                {logo}
-                <button
-                  className="btn btn-square btn-ghost"
-                  onClick={() => setShowMenu(false)}
-                >
-                  <Icon path={mdiClose} size={1} />
-                </button>
-              </div>
-
-              <ul className="menu">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href}>{link.children}</Link>
-                  </li>
-                ))}
-              </ul>
+          <div className="flex-1">
+            <div className="px-4 pb-4 pt-2">
+              <UserCard />
             </div>
 
-            {end && (
+            {profileDropdownLinks?.length && (
               <>
-                <div className="divider"></div>
+                <ul>
+                  {profileDropdownLinks.map((link) => (
+                    <li key={link.href}>
+                      <Link href={link.href}>{link.children}</Link>
+                    </li>
+                  ))}
+                </ul>
 
-                <div className="flex flex-col">{end}</div>
+                <div className="divider" />
               </>
             )}
+
+            <ul className="w-full">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.children}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
+
+          <LogoutButton />
         </div>
-      )}
-    </>
+      </div>
+    </div>
   )
 }

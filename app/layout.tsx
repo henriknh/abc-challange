@@ -2,7 +2,6 @@ import { Footer } from '../components/footer'
 import { Introduction } from '../components/introduction'
 import { LinkType } from '../components/link'
 import { Navbar } from '../components/navbar'
-import { ProfileButton } from '../components/profile-button'
 import '../styles/global.css'
 
 const links: LinkType[] = [
@@ -13,6 +12,13 @@ const links: LinkType[] = [
   {
     href: '/create-recipe',
     children: 'Create recipe',
+  },
+]
+
+const userLinks: LinkType[] = [
+  {
+    href: '/tokens',
+    children: 'Buy tokens',
   },
 ]
 
@@ -51,18 +57,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex min-h-screen flex-col bg-base-100">
-        <Navbar
-          links={links}
-          cta={<ProfileButton linkUrl="/profile" extraLabel="10 tokens" />}
-        ></Navbar>
+        <Navbar links={links} profileDropdownLinks={userLinks}>
+          {children}
 
-        {children}
-
-        <Footer
-          links={links}
-          moreLinks={moreLinks}
-          bottomSlot={<Introduction />}
-        />
+          <Footer
+            links={links}
+            moreLinks={moreLinks}
+            bottomSlot={<Introduction />}
+          />
+        </Navbar>
       </body>
     </html>
   )

@@ -1,25 +1,38 @@
 import { LinkType } from './link'
 import { LogoutButton } from './logout-button'
-import { ProfileButton, ProfileButtonProps } from './profile-button'
-import { signIn, useSession } from 'next-auth/react'
+import { UserCard, UserCardProps } from './user-card'
 import Link from 'next/link'
 
-export interface ProfileButtonWithMenuProps extends ProfileButtonProps {
-  linkUrl?: string
+export interface ProfileButtonWithMenuProps extends UserCardProps {
   links: LinkType[]
 }
 
-export function ProfileButtonWithMenu({
-  linkUrl,
+export async function ProfileButtonWithMenu({
   links = [],
 }: ProfileButtonWithMenuProps) {
-  const { data: session } = useSession()
-
   return (
     <div className="dropdown dropdown-end">
-      <ProfileButton />
+      <div role="button" tabIndex={0} className="btn btn-ghost">
+        <UserCard />
+      </div>
 
-      {session?.user && (
+      <ul
+        tabIndex={0}
+        className="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow"
+      >
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link href={link.href}>{link.children}</Link>
+          </li>
+        ))}
+
+        <div className="divider" />
+
+        <li>
+          <LogoutButton />
+        </li>
+      </ul>
+      {/* {session?.user && (
         <ul
           tabIndex={0}
           className="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow"
@@ -34,7 +47,7 @@ export function ProfileButtonWithMenu({
             <LogoutButton />
           </li>
         </ul>
-      )}
+      )} */}
     </div>
   )
 }
