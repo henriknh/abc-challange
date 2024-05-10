@@ -11,14 +11,18 @@ export interface NavbarProps {
   links: LinkType[]
   profileDropdownLinks: LinkType[]
 }
-export function Navbar({ children, links, profileDropdownLinks }: NavbarProps) {
+export async function Navbar({
+  children,
+  links,
+  profileDropdownLinks,
+}: NavbarProps) {
   return (
     <div className="drawer drawer-end min-h-screen">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="navbar min-h-20 w-full">
+        <div className="navbar min-h-20 w-full px-8">
           <div className="flex-1">
             <Link href="/">
               <img src={config.logoUrl} className="h-10" alt="Logo" />
@@ -39,6 +43,7 @@ export function Navbar({ children, links, profileDropdownLinks }: NavbarProps) {
             <div className="hidden flex-none lg:flex">
               <ProfileButtonWithMenu links={profileDropdownLinks} />
             </div>
+
             <div className="flex-none lg:hidden">
               <label
                 htmlFor="my-drawer-3"

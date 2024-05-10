@@ -13,10 +13,12 @@ export default function Recipe({ recipe }: RecipeProps) {
   const [isMetric, setIsMetric] = useState(true)
 
   return (
-    <div className="prose flex max-w-none flex-col">
-      <h1>{recipe.title}</h1>
+    <div className="prose flex max-w-none flex-col gap-4">
+      <div>
+        <h1>{recipe.title}</h1>
 
-      <RecipeInfo recipe={recipe} />
+        <RecipeInfo recipe={recipe} />
+      </div>
 
       <div className="flex gap-10">
         <div className="basis-1/3">

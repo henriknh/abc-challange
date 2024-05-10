@@ -1,4 +1,4 @@
-import { authOptions } from '../utils/auth'
+import { authOptions } from '@/utils/auth-options'
 import { getServerSession } from 'next-auth'
 
 export async function UserPortait() {

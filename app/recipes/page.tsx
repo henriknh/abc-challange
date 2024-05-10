@@ -1,8 +1,21 @@
-import AuthGuard from '../../components/auth-guard'
+import { authOptions } from '@/utils/auth-options'
+import clientPromise from 'lib/mongodb'
+import { getServerSession } from 'next-auth'
 import Link from 'next/link'
+import AuthGuard from '../../components/auth-guard'
 
-export default function Recipes() {
-  const recipes = []
+export default async function Recipes() {
+  const session = await getServerSession(authOptions)
+
+  const client = await clientPromise
+  const collection = client.db().collection('recipes')
+
+  const recipes = await collection
+    .find({
+      userId: session.user.id,
+    })
+    .toArray()
+
   return (
     <AuthGuard>
       <div className="container prose flex max-w-none flex-col gap-10 py-10">
@@ -14,20 +27,48 @@ export default function Recipes() {
           </Link>
         </div>
 
-        <div>
-          {recipes?.length ? (
-            recipes.map((recipe) => <div key={0}>{recipe}</div>)
-          ) : (
-            <div className="flex flex-col items-center gap-4">
-              <div>Oh no.. You don&apos;t have any recipes yet</div>
-              <div>Why don&apos;t you create your first now?</div>
+        {recipes.length ? (
+          <div className="overflow-x-auto">
+            <table className="table table-zebra">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Portions</th>
+                  <th>Ingredients</th>
+                  <th>Steps</th>
+                  <th>Cooking time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recipes.map((recipe) => (
+                  <tr key={recipe._id.toString()} className="cursor-pointer">
+                    <td>
+                      <Link
+                        href={`recipe/${recipe._id}`}
+                        className="no-underline"
+                      >
+                        {recipe.recipe.title}
+                      </Link>
+                    </td>
+                    <td> {recipe.recipe.portions} portions</td>
+                    <td> {recipe.recipe.ingredients.length} ingredients</td>
+                    <td> {recipe.recipe.steps.length} steps</td>
+                    <td> {recipe.recipe.total_cooking_time} minutes</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center gap-4">
+            <div>Oh no.. You don&apos;t have any recipes yet</div>
+            <div>Why don&apos;t you create your first now?</div>
 
-              <Link href="/create-recipe" className="btn btn-primary">
-                Let&apos;s get cooking
-              </Link>
-            </div>
-          )}
-        </div>
+            <Link href="/create-recipe" className="btn btn-primary">
+              Let&apos;s get cooking
+            </Link>
+          </div>
+        )}
       </div>
     </AuthGuard>
   )

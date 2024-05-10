@@ -23,13 +23,15 @@ export default function Step({ step }: StepProps) {
             readOnly
             className="checkbox-primary checkbox"
           />
-          <div
-            className={
-              'transition-opacity' + (stepCompleted ? ' opacity-40' : '')
-            }
-          >
-            {step.time} minutes
-          </div>
+          {step.time && (
+            <div
+              className={
+                'transition-opacity' + (stepCompleted ? ' opacity-40' : '')
+              }
+            >
+              {step.time} minutes
+            </div>
+          )}
         </div>
         <div
           className={

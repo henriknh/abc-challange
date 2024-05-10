@@ -15,10 +15,11 @@ export default function LetsCook({ onRecipeGeneration }: LetsCookProps) {
   const [isIngredients, setIsIngredients] = useState(false)
   const [state, formAction] = useFormState(onCook)
   const { pending } = useFormStatus()
-  console.log('pending', pending)
 
   useEffect(() => {
-    onRecipeGeneration(state)
+    if (state){
+      onRecipeGeneration(state)
+    }
   }, [state, onRecipeGeneration])
 
   const form = useRef<HTMLFormElement>()

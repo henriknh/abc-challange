@@ -7,7 +7,6 @@ export interface SubmitButtonProps {
 
 export function SubmitButton({ children }: SubmitButtonProps) {
   const { pending, data, method, action } = useFormStatus()
-  console.log('pending', pending)
 
   return (
     <button

@@ -1,9 +1,10 @@
+import { authOptions } from '@/utils/auth-options'
 import { mdiCrownCircleOutline } from '@mdi/js'
 import Icon from '@mdi/react'
 import { getServerSession } from 'next-auth'
 
 export async function Tokens() {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   return session?.user ? (
     <button className="btn btn-ghost">
       <Icon path={mdiCrownCircleOutline} size={1} />

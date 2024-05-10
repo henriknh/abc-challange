@@ -1,5 +1,6 @@
 'use client'
 
+import { RECIPE_EXAMPLE_CHIMICHURRI } from '@/utils/example-recipes'
 import LetsCook from '../../components/lets-cook'
 import { AddToMyCookbook } from '../../components/recipe/add-to-my-cookbook'
 import Recipe from '../../components/recipe/recipe'
@@ -7,9 +8,12 @@ import Section from '../../components/section'
 import { Recipe as RecipeType } from '../api/cook'
 import { useState } from 'react'
 
-export default function CreateRecipe() {
-  const [recipe, setRecipe] = useState<RecipeType>()
 
+export default function CreateRecipe() {
+  const [recipe, setRecipe] = useState<RecipeType>(RECIPE_EXAMPLE_CHIMICHURRI)
+
+  console.log(recipe);
+  
   return (
     <div className="prose max-w-none pb-10">
       <Section>

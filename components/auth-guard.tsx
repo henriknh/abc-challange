@@ -1,6 +1,6 @@
 'use server'
 
-import { authOptions } from '../utils/auth'
+import { authOptions } from '@/utils/auth-options'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'

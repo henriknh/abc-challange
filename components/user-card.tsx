@@ -1,6 +1,6 @@
 'use server'
 
-import { authOptions } from '../utils/auth'
+import { authOptions } from '@/utils/auth-options'
 import { UserPortait } from './user-portrait'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'

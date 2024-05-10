@@ -1,6 +1,8 @@
+import { authOptions } from '@/utils/auth-options'
 import { LinkType } from './link'
 import { LogoutButton } from './logout-button'
 import { UserCard, UserCardProps } from './user-card'
+import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 
 export interface ProfileButtonWithMenuProps extends UserCardProps {
@@ -10,6 +12,16 @@ export interface ProfileButtonWithMenuProps extends UserCardProps {
 export async function ProfileButtonWithMenu({
   links = [],
 }: ProfileButtonWithMenuProps) {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user) {
+    return (
+      <Link href="/api/auth/signin" className="btn btn-primary">
+        Sign in
+      </Link>
+    )
+  }
+
   return (
     <div className="dropdown dropdown-end">
       <div role="button" tabIndex={0} className="btn btn-ghost">

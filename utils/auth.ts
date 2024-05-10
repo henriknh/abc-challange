@@ -1,27 +1,17 @@
-import clientPromise from '../lib/mongodb'
-import { MongoDBAdapter } from '@auth/mongodb-adapter'
-import type { NextAuthOptions } from 'next-auth'
-import { Adapter } from 'next-auth/adapters'
-import NextAuth from 'next-auth/next'
-import Google from 'next-auth/providers/google'
+import type {
+  GetServerSidePropsContext,
+  NextApiRequest,
+  NextApiResponse,
+} from "next"
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from "./auth-options"
 
-export const authOptions: NextAuthOptions = {
-  secret: process.env.NEXTAUTH_SECRET,
-  providers: [
-    Google({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
-      authorization: {
-        params: {
-          prompt: 'consent',
-          access_type: 'offline',
-          response_type: 'code',
-        },
-      },
-    }),
-  ], // rest of your config
 
-  adapter: MongoDBAdapter(clientPromise) as Adapter,
+export function auth(
+  ...args:
+    | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
+    | [NextApiRequest, NextApiResponse]
+    | []
+) {
+  return getServerSession(...args, authOptions)
 }
-
-export const { handlers, signIn, signOut, auth } = NextAuth(authOptions)

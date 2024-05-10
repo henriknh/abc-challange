@@ -39,10 +39,10 @@ export default function Ingredient({ ingredient, isMetric }: IngredientProps) {
           {ingredient.name}
         </div>
       </div>
-      {unit && (
+      {unit?.value && (
         <div
           className={
-            'transition-opacity' + (ingredientCompleted ? ' opacity-40' : '')
+            'transition-opacity text-nowrap' + (ingredientCompleted ? ' opacity-40' : '')
           }
         >
           {unit.value} {unit.unit}

@@ -88,6 +88,7 @@ export interface Step {
 }
 
 export interface Recipe {
+  context: string
   title: string
   description: string
   total_cooking_time: number
@@ -104,15 +105,15 @@ const recipeFormat = {
   description: 'A short text describing the recipe, max 200 characters',
   ingredients: [
     {
-      name: 'Name of the ingredient',
+      name: 'Name of the ingredient. Remove any units from this text',
       unit: {
         metric_unit: {
           value: 'The amount needed of this ingredient, type=number',
-          unit: 'The unit in metric system. Can also be "pieces" if mote suitable',
+          unit: 'The unit in metric system. Choose volume or weight depending on what is most common. Can also be "pieces" if mote suitable',
         },
         imperial_unit: {
           value: 'The amount needed of this ingredient, type=number',
-          unit: 'The unit in imperial system. Can also be "pieces" if mote suitable',
+          unit: 'The unit in imperial system. Choose volume or weight depending on what is most common. Can also be "pieces" if mote suitable',
         },
       },
     },
@@ -128,8 +129,6 @@ const recipeFormat = {
 
 const generateRecipeByContent = async (content): Promise<object> => {
   const assistant = await getAssistantGenerateRecipeByContent()
-
-  console.log(assistant)
 
   let run = await openai.beta.threads.createAndRun({
     assistant_id: assistant.id,
@@ -160,7 +159,7 @@ const generateRecipeByContent = async (content): Promise<object> => {
     (threadMessages.data[0].content[0] as TextContentBlock).text.value
   )
 
-  console.log('Prompt tokens:', run.usage.prompt_tokens)
+  recipe.context = console.log('Prompt tokens:', run.usage.prompt_tokens)
   console.log('Completion tokens:', run.usage.completion_tokens)
   console.log('Total tokens:', run.usage.total_tokens)
 
@@ -178,12 +177,18 @@ export async function onCook(req, formData: FormData) {
   try {
     if (isUrl) {
       const content = await extractContentByRL(context)
-      const recipe = await generateRecipeByContent(content)
+      const recipe = {
+        ...(await generateRecipeByContent(content)),
+        context,
+      }
 
       console.log('recipe', recipe)
       return recipe
     } else {
-      const recipe = await generateRecipeByIngredients(context, type, portions)
+      const recipe = {
+        ...(await generateRecipeByIngredients(context, type, portions)),
+        context: new Date().getTime().toString(), // TODO propper ID
+      }
 
       console.log('recipe', recipe)
       return recipe
