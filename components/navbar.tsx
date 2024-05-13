@@ -87,26 +87,27 @@ export async function Navbar({
           {/* Sidebar content here */}
 
           <div className="flex-1">
-            {session && <>
-            <div className="px-4 pb-4 pt-2">
-              <UserCard />
-            </div>
-
-            {profileDropdownLinks?.length && (
+            {session && (
               <>
-                <ul>
-                  {profileDropdownLinks.map((link) => (
-                    <li key={link.href}>
-                      <Link href={link.href}>{link.children}</Link>
-                    </li>
-                  ))}
-                </ul>
+                <div className="px-4 pb-4 pt-2">
+                  <UserCard />
+                </div>
 
-                <div className="divider" />
+                {profileDropdownLinks?.length && (
+                  <>
+                    <ul>
+                      {profileDropdownLinks.map((link) => (
+                        <li key={link.href}>
+                          <Link href={link.href}>{link.children}</Link>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="divider" />
+                  </>
+                )}
               </>
             )}
-            </>
-            }
 
             <ul className="w-full">
               {links.map((link) => (
