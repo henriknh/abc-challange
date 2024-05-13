@@ -1,8 +1,11 @@
 import { config } from '../app.config'
 import { LinkType } from './link'
+import { LoginButton } from './login-button'
 import { LogoutButton } from './logout-button'
 import { ProfileButtonWithMenu } from './profile-button-with-menu'
 import { UserCard } from './user-card'
+import { authOptions } from '@/utils/auth-options'
+import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 
@@ -16,6 +19,10 @@ export async function Navbar({
   links,
   profileDropdownLinks,
 }: NavbarProps) {
+  const session = await getServerSession(authOptions)
+
+  console.log('session', session)
+
   return (
     <div className="drawer drawer-end min-h-screen">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
@@ -80,6 +87,7 @@ export async function Navbar({
           {/* Sidebar content here */}
 
           <div className="flex-1">
+            {session && <>
             <div className="px-4 pb-4 pt-2">
               <UserCard />
             </div>
@@ -97,6 +105,8 @@ export async function Navbar({
                 <div className="divider" />
               </>
             )}
+            </>
+            }
 
             <ul className="w-full">
               {links.map((link) => (
@@ -107,7 +117,7 @@ export async function Navbar({
             </ul>
           </div>
 
-          <LogoutButton />
+          {session ? <LogoutButton /> : <LoginButton />}
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { LogoutButton } from './logout-button'
 import { UserCard, UserCardProps } from './user-card'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
+import { LoginButton } from './login-button'
 
 export interface ProfileButtonWithMenuProps extends UserCardProps {
   links: LinkType[]
@@ -16,9 +17,7 @@ export async function ProfileButtonWithMenu({
 
   if (!session?.user) {
     return (
-      <Link href="/api/auth/signin" className="btn btn-primary">
-        Sign in
-      </Link>
+      <LoginButton />
     )
   }
 
