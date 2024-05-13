@@ -6,9 +6,14 @@ import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import Icon from '@mdi/react'
 import { mdiPlus } from '@mdi/js'
+import { redirect } from 'next/navigation'
 
 export default async function Recipes() {
   const session = await getServerSession(authOptions)
+
+  if (!session) {
+    redirect('/api/auth/signin')
+  }
 
   const client = await clientPromise
   const collection = client.db().collection('recipes')
