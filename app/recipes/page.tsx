@@ -1,8 +1,9 @@
+import { TableRow } from '@/components/table-row'
+import AuthGuard from '../../components/auth-guard'
 import { authOptions } from '@/utils/auth-options'
 import clientPromise from 'lib/mongodb'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
-import AuthGuard from '../../components/auth-guard'
 
 export default async function Recipes() {
   const session = await getServerSession(authOptions)
@@ -41,7 +42,7 @@ export default async function Recipes() {
               </thead>
               <tbody>
                 {recipes.map((recipe) => (
-                  <tr key={recipe._id.toString()} className="cursor-pointer">
+                  <TableRow key={recipe._id.toString()} className="cursor-pointer hover:!bg-base-300" href={`recipe/${recipe._id}`}>
                     <td>
                       <Link
                         href={`recipe/${recipe._id}`}
@@ -54,7 +55,7 @@ export default async function Recipes() {
                     <td> {recipe.recipe.ingredients.length} ingredients</td>
                     <td> {recipe.recipe.steps.length} steps</td>
                     <td> {recipe.recipe.total_cooking_time} minutes</td>
-                  </tr>
+                  </TableRow>
                 ))}
               </tbody>
             </table>
