@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { Footer } from '../components/footer'
 import { Introduction } from '../components/introduction'
 import { LinkType } from '../components/link'
@@ -45,6 +46,9 @@ const moreLinks: LinkType[] = [
   },
 ]
 
+export const metadata: Metadata = {
+  title: 'as easy as pie',
+}
 interface RootProps {
   children: React.ReactNode
 }
