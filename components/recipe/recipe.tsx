@@ -10,8 +10,7 @@ import { useState } from 'react'
 export interface RecipeProps {
   recipe: RecipeType
 }
-export default function Recipe({ recipe }: RecipeProps, test) {
-  console.log(123, test)
+export default function Recipe({ recipe }: RecipeProps) {
 
   const currentTab = useSearchParams().get('tab')
 
@@ -77,7 +76,6 @@ export default function Recipe({ recipe }: RecipeProps, test) {
   return (
     <>
       <div className="flex flex-col gap-4 md:hidden">
-
         {info}
 
         <div role="tablist" className="tabs-boxed tabs">
