@@ -4,6 +4,8 @@ import { authOptions } from '@/utils/auth-options'
 import clientPromise from 'lib/mongodb'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
+import Icon from '@mdi/react'
+import { mdiPlus } from '@mdi/js'
 
 export default async function Recipes() {
   const session = await getServerSession(authOptions)
@@ -20,11 +22,15 @@ export default async function Recipes() {
   return (
     <AuthGuard>
       <div className="container prose flex max-w-none flex-col gap-10 py-10">
-        <div className="flex justify-between">
-          <h1>Welcome chef!</h1>
+        <div className="flex justify-between items-center">
+          <h1 className='mb-0'>Welcome chef!</h1>
 
-          <Link href="/create-recipe" className="btn">
-            Create recipe
+          <Link href="/create-recipe" className="btn max-sm:btn-square">
+            <span className='hidden md:block'>
+              Create recipe
+              </span>
+
+            <Icon path={mdiPlus} size={1} className='block md:hidden' />
           </Link>
         </div>
 
@@ -43,7 +49,7 @@ export default async function Recipes() {
               <tbody>
                 {recipes.map((recipe) => (
                   <TableRow key={recipe._id.toString()} className="cursor-pointer hover:!bg-base-300" href={`recipe/${recipe._id}`}>
-                    <td>
+                    <td className='text-nowrap'>
                       <Link
                         href={`recipe/${recipe._id}`}
                         className="no-underline"
@@ -51,10 +57,10 @@ export default async function Recipes() {
                         {recipe.recipe.title}
                       </Link>
                     </td>
-                    <td> {recipe.recipe.portions} portions</td>
-                    <td> {recipe.recipe.ingredients.length} ingredients</td>
-                    <td> {recipe.recipe.steps.length} steps</td>
-                    <td> {recipe.recipe.total_cooking_time} minutes</td>
+                    <td className='text-nowrap'>{recipe.recipe.portions} portions</td>
+                    <td className='text-nowrap'>{recipe.recipe.ingredients.length} ingredients</td>
+                    <td className='text-nowrap'>{recipe.recipe.steps.length} steps</td>
+                    <td className='text-nowrap'>{recipe.recipe.total_cooking_time} minutes</td>
                   </TableRow>
                 ))}
               </tbody>
