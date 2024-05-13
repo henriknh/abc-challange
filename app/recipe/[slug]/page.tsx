@@ -1,29 +1,23 @@
 import Recipe from '@/components/recipe/recipe'
-import { authOptions } from '@/utils/auth-options'
-import clientPromise from 'lib/mongodb'
-import { ObjectId } from 'mongodb'
-import { getServerSession } from 'next-auth'
+import { findOneRecipe } from 'app/api/find-one-recipe'
 import AuthGuard from '../../../components/auth-guard'
+
+export async function generateMetadata({ params }) {
+  const recipe = await findOneRecipe(params.slug)
+  return {
+    title: `${recipe.recipe.title} - as easy as pie`
+  }
+}
 
 export default async function RecipePage({
   params,
 }: {
   params: { slug: string }
 }) {
-  console.log('params', params)
+  // const session = await getServerSession(authOptions)
 
-  const session = await getServerSession(authOptions)
+  const recipe = await findOneRecipe(params.slug)
 
-  const client = await clientPromise
-  const collection = client.db().collection('recipes')
-
-  const _id = new ObjectId(params.slug)
-
-  const recipe = await collection.findOne({
-    _id,
-  })
-
-  console.log(recipe)
 
   return (
     <AuthGuard>
