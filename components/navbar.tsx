@@ -21,8 +21,6 @@ export async function Navbar({
 }: NavbarProps) {
   const session = await getServerSession(authOptions)
 
-  console.log('session', session)
-
   return (
     <div className="drawer drawer-end min-h-screen">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />

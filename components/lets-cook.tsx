@@ -17,7 +17,7 @@ export default function LetsCook({ onRecipeGeneration }: LetsCookProps) {
   const { pending } = useFormStatus()
 
   useEffect(() => {
-    if (state){
+    if (state) {
       onRecipeGeneration(state)
     }
   }, [state, onRecipeGeneration])
@@ -28,8 +28,6 @@ export default function LetsCook({ onRecipeGeneration }: LetsCookProps) {
     setIsIngredients(!isValidHttpUrl(context))
 
     if (context && browserStorage.getItem('triggerSearch')) {
-      console.log(form.current.elements['context'])
-
       form.current.elements['context'].value =
         browserStorage.getItem('letsCookInput')
       // form.current.elements['type'].value =
