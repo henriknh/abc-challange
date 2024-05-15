@@ -11,7 +11,6 @@ export interface RecipeProps {
   recipe: RecipeType
 }
 export default function Recipe({ recipe }: RecipeProps) {
-
   const currentTab = useSearchParams().get('tab')
 
   const [isMetric, setIsMetric] = useState(true)

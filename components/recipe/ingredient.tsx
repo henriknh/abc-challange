@@ -42,7 +42,8 @@ export default function Ingredient({ ingredient, isMetric }: IngredientProps) {
       {unit?.value && (
         <div
           className={
-            'transition-opacity text-nowrap' + (ingredientCompleted ? ' opacity-40' : '')
+            'text-nowrap transition-opacity' +
+            (ingredientCompleted ? ' opacity-40' : '')
           }
         >
           {unit.value} {unit.unit}
