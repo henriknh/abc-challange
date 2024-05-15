@@ -3,6 +3,8 @@
 import isValidHttpUrl from '../../utils/is-valid-http-url'
 import { openai } from '../../utils/openai'
 
+export const maxDuration = 60 // This function can run for a maximum of 5 seconds
+
 export interface Unit {
   value: number
   unit: string
