@@ -4,6 +4,7 @@ import { MRecipe } from '@/models/recipe'
 import { authOptions } from '@/utils/auth-options'
 import { mdiPlus } from '@mdi/js'
 import Icon from '@mdi/react'
+import dbConnect from 'lib/db-connect'
 import mongoose from 'mongoose'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
@@ -15,6 +16,8 @@ export default async function Recipes() {
   if (!session) {
     redirect('/api/auth/signin')
   }
+
+  await dbConnect()
 
   const recipes = await MRecipe.find({
     user: new mongoose.Types.ObjectId(session.user.id),
