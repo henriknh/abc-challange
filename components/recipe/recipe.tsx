@@ -1,18 +1,16 @@
 'use client'
 
-import { Recipe as RecipeType } from '../../app/api/cook'
+import { IRecipe } from '@/models/recipe'
+import { useState } from 'react'
 import Ingredient from './ingredient'
 import { RecipeInfo } from './recipe-info'
 import Step from './step'
-import { useSearchParams } from 'next/navigation'
-import { useState } from 'react'
 
 export interface RecipeProps {
-  recipe: RecipeType
+  recipe: IRecipe
 }
 export default function Recipe({ recipe }: RecipeProps) {
-  const currentTab = useSearchParams().get('tab')
-
+  const [isIngredients, setIsIngredients] = useState(true)
   const [isMetric, setIsMetric] = useState(true)
 
   const info = (
@@ -22,7 +20,6 @@ export default function Recipe({ recipe }: RecipeProps) {
       <RecipeInfo recipe={recipe} />
     </div>
   )
-
   const ingredients = (
     <div className="basis-1/3">
       <div className="sticky top-0 w-full">
@@ -74,29 +71,31 @@ export default function Recipe({ recipe }: RecipeProps) {
 
   return (
     <>
-      <div className="flex flex-col gap-4 md:hidden">
+      <div className="flex flex-col gap-10 md:hidden">
         {info}
 
-        <div role="tablist" className="tabs-boxed tabs">
-          <a
-            role="tab"
-            href="?tab=ingredients"
-            className={'tab' + (currentTab !== 'steps' ? ' tab-active' : '')}
-          >
-            Ingredients
-          </a>
-          <a
-            role="tab"
-            href="?tab=steps"
-            className={'tab' + (currentTab === 'steps' ? ' tab-active' : '')}
-          >
-            Steps
-          </a>
-        </div>
+        <div className="max-h- flex flex-col">
+          <div role="tablist" className="tabs-boxed tabs">
+            <button
+              role="tab"
+              onClick={() => setIsIngredients(true)}
+              className={'tab' + (isIngredients ? ' tab-active' : '')}
+            >
+              Ingredients
+            </button>
+            <button
+              role="tab"
+              onClick={() => setIsIngredients(false)}
+              className={'tab' + (!isIngredients ? ' tab-active' : '')}
+            >
+              Steps
+            </button>
+          </div>
 
-        <div>{currentTab !== 'steps' ? ingredients : steps}</div>
+          <div>{isIngredients ? ingredients : steps}</div>
+        </div>
       </div>
-      <div className="prose hidden max-w-none flex-col gap-4 md:flex">
+      <div className="prose hidden max-w-none flex-col gap-10 md:flex">
         {info}
 
         <div className="flex gap-10">

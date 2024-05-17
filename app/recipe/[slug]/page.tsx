@@ -1,11 +1,15 @@
 import Recipe from '@/components/recipe/recipe'
-import { findOneRecipe } from 'app/api/find-one-recipe'
-import AuthGuard from '../../../components/auth-guard'
+import { MRecipe } from '@/models/recipe'
+import dbConnect from 'lib/db-connect'
 
 export async function generateMetadata({ params }) {
-  const recipe = await findOneRecipe(params.slug)
+  console.log('params', params)
+
+  await dbConnect()
+  const recipe = await MRecipe.findById(params.slug)
+
   return {
-    title: `${recipe.recipe.title} - as easy as pie`
+    title: `${recipe.title} - as easy as pie`,
   }
 }
 
@@ -14,16 +18,14 @@ export default async function RecipePage({
 }: {
   params: { slug: string }
 }) {
-  // const session = await getServerSession(authOptions)
+  await dbConnect()
+  const recipe = (await MRecipe.findById(params.slug)).toJSON()
 
-  const recipe = await findOneRecipe(params.slug)
-
+  console.log(recipe)
 
   return (
-    <AuthGuard>
-      <div className="container prose flex max-w-none flex-col gap-10 py-10">
-        <Recipe recipe={recipe.recipe} />
-      </div>
-    </AuthGuard>
+    <div className="container prose flex max-w-none flex-col gap-10 py-10">
+      <Recipe recipe={recipe} />
+    </div>
   )
 }

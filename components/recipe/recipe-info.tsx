@@ -1,8 +1,8 @@
-import { Recipe } from '../../app/api/cook'
+import { IRecipe } from '@/models/recipe'
 import { RecipeStats } from './recipe-stats'
 
 export interface RecipeInfoProps {
-  recipe: Recipe
+  recipe: IRecipe
 }
 
 export function RecipeInfo({ recipe }: RecipeInfoProps) {

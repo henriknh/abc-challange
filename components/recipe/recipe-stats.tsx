@@ -1,7 +1,7 @@
-import { Recipe } from '../../app/api/cook'
+import { IRecipe } from '@/models/recipe'
 
 export interface RecipeInfoProps {
-  recipe: Recipe
+  recipe: IRecipe
 }
 
 export function RecipeStats({ recipe }: RecipeInfoProps) {
@@ -13,37 +13,28 @@ export function RecipeStats({ recipe }: RecipeInfoProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 md:flex">
-      {recipe.portions && <div>{recipe.portions} portions</div>}
-      {recipe.ingredients?.length && (
-        <>
-          {recipe.portions && (
-            <div className="divider divider-horizontal hidden md:block" />
-          )}
-          <div>{recipe.ingredients?.length} ingredints</div>
-        </>
-      )}
-      {recipe.steps?.length && (
-        <>
-          {(recipe.portions || recipe.ingredients?.length) && (
-            <div className="divider divider-horizontal hidden md:block" />
-          )}
-          <div>{recipe.steps?.length} steps</div>
-        </>
-      )}
+    <div className="grid grid-cols-2 sm:flex">
+      <div className="text-nowrap py-2 max-sm:text-center">
+        {recipe.portions} portions
+      </div>
 
-      {recipe.total_cooking_time && (
-        <>
-          <>
-            {(recipe.portions ||
-              recipe.ingredients?.length ||
-              recipe.steps?.length) && (
-              <div className="divider divider-horizontal hidden md:block" />
-            )}
-            <div>{recipe.total_cooking_time} minutes</div>
-          </>
-        </>
-      )}
+      <div className="divider divider-horizontal max-sm:hidden" />
+
+      <div className="text-nowrap py-2 max-sm:text-center">
+        {recipe.total_cooking_time} minutes
+      </div>
+
+      <div className="divider divider-horizontal max-sm:hidden" />
+
+      <div className="text-nowrap py-2 max-sm:text-center">
+        {recipe.ingredients?.length} ingredints
+      </div>
+
+      <div className="divider divider-horizontal max-sm:hidden" />
+
+      <div className="text-nowrap py-2 max-sm:text-center">
+        {recipe.steps?.length} steps
+      </div>
     </div>
   )
 }

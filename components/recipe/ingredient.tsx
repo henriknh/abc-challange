@@ -19,33 +19,14 @@ export default function Ingredient({ ingredient, isMetric }: IngredientProps) {
 
   return (
     <div
-      className="flex cursor-pointer justify-between gap-4 rounded-md bg-base-200 px-3 py-2 shadow"
+      className="flex justify-between gap-4 rounded-md bg-base-200 px-3 py-2 shadow"
       onClick={() => setIngredientCompleted(!ingredientCompleted)}
     >
       <div className="flex gap-2">
-        {/* <input
-          type="checkbox"
-          checked={ingredientCompleted}
-          defaultChecked={ingredientCompleted}
-          className="checkbox-primary checkbox"
-        /> */}
-
-        <div
-          className={
-            'capitalize transition-opacity' +
-            (ingredientCompleted ? ' opacity-40' : '')
-          }
-        >
-          {ingredient.name}
-        </div>
+        <div className="capitalize">{ingredient.name}</div>
       </div>
       {unit?.value && (
-        <div
-          className={
-            'text-nowrap transition-opacity' +
-            (ingredientCompleted ? ' opacity-40' : '')
-          }
-        >
+        <div className="text-nowrap">
           {unit.value} {unit.unit}
         </div>
       )}

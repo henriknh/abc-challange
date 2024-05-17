@@ -1,18 +1,18 @@
-import { Recipe } from '../../app/api/cook'
+import { IRecipe } from '@/models/recipe'
 import { createRecipe } from 'app/api/create-recipe'
 
 export interface AddToMyCookbookProps {
-  recipe: Recipe
+  recipe: IRecipe
 }
 
 export function AddToMyCookbook({ recipe }: AddToMyCookbookProps) {
+  const createRecipeWithRecipe = createRecipe.bind(null, recipe)
+
   return (
-    <button
-      className="btn btn-primary"
-      disabled={!recipe}
-      onClick={async () => await createRecipe(recipe)}
-    >
-      Add to my cookbook
-    </button>
+    <form action={createRecipeWithRecipe}>
+      <button className="btn btn-primary" disabled={!recipe} type="submit">
+        Add to my cookbook
+      </button>
+    </form>
   )
 }

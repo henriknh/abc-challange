@@ -1,16 +1,16 @@
 'use client'
 
+import { IRecipe } from '@/models/recipe'
+import { useState } from 'react'
 import LetsCook from '../../components/lets-cook'
 import { AddToMyCookbook } from '../../components/recipe/add-to-my-cookbook'
 import Recipe from '../../components/recipe/recipe'
 import Section from '../../components/section'
-import { Recipe as RecipeType } from '../api/cook'
-import { useState } from 'react'
 
-export const maxDuration = 60;
+export const maxDuration = 60
 
 export default function CreateRecipe() {
-  const [recipe, setRecipe] = useState<RecipeType>() // RECIPE_EXAMPLE_CHIMICHURRI
+  const [recipe, setRecipe] = useState<IRecipe>() // RECIPE_EXAMPLE_CHIMICHURRI
 
   return (
     <div className="prose max-w-none pb-10">

@@ -1,14 +1,15 @@
 'use client'
 
-import { onCook, Recipe } from '../app/api/cook'
+import { IRecipe } from '@/models/recipe'
+import { useEffect, useRef, useState } from 'react'
+import { useFormState, useFormStatus } from 'react-dom'
+import { onCook } from '../app/api/cook'
 import browserStorage from '../utils/browser-storage'
 import isValidHttpUrl from '../utils/is-valid-http-url'
 import LetsCookInput from './lets-cook-input'
-import { useEffect, useRef, useState } from 'react'
-import { useFormState, useFormStatus } from 'react-dom'
 
 export interface LetsCookProps {
-  onRecipeGeneration?: (recipe: Recipe) => void
+  onRecipeGeneration?: (recipe: IRecipe) => void
 }
 
 export default function LetsCook({ onRecipeGeneration }: LetsCookProps) {

@@ -1,37 +1,10 @@
 'use server'
 
+import { getServerSession } from 'next-auth'
 import isValidHttpUrl from '../../utils/is-valid-http-url'
 import { openai } from '../../utils/openai'
-
-export interface Unit {
-  value: number
-  unit: string
-}
-
-export interface UnitSystems {
-  metric_unit: Unit
-  imperial_unit: Unit
-}
-
-export interface Ingredient {
-  name: string
-  unit: UnitSystems
-}
-
-export interface Step {
-  description: string
-  time: number
-}
-
-export interface Recipe {
-  context: string
-  title: string
-  description: string
-  total_cooking_time: number
-  portions: number
-  ingredients: Ingredient[]
-  steps: Step[]
-}
+import { IRecipe, MRecipe } from '@/models/recipe'
+import { authOptions } from '@/utils/auth-options'
 
 const recipeFormat = {
   title: 'Title of the recipe',
@@ -63,12 +36,40 @@ const recipeFormat = {
   ],
 }
 
+const generateImageByRecipe = async (recipe: IRecipe) => {
+  const prompt = `
+  The style must be minimalistic, white and black, outlined and top-down.
+    Generate a cover image for a recipe.
+    The content of the image is a white background.
+    On top of the white(#fff) background is a plate.
+    On the plate is the dish from a recipe that I will supply you with now.
+    The title of the dish is ${recipe.title}.
+    This is a brief description of the recipe ${recipe.description}.
+    These are the igredients of the recipe: ${recipe.ingredients.map((ingredient) => ingredient.name).join(', ')}.
+    These are the steps to cook the recipe: 
+    ${recipe.steps.map((step, index) => `${index + 1}. ${step.description}`).join('\n')}.
+    There is nothing around the plate, just white(#fff) background.
+    Remove anything that is not on the plate.
+    And the background should be completely white(#fff).
+  `
+
+  console.log(prompt)
+
+  const response = await openai.images.generate({
+    model: 'dall-e-3',
+    prompt,
+    n: 1,
+    size: '1024x1024',
+  })
+  return response.data[0].url
+}
+
 const generateRecipeByUrl = async (url) => {
   const content =
     `Summarize this recipe, ${url}, in exact this JSON format: ` +
     JSON.stringify(recipeFormat)
 
-  console.log(JSON.stringify(content))
+  console.log(content)
 
   const completion = await openai.chat.completions.create({
     messages: [
@@ -94,34 +95,33 @@ const generateRecipeByIngredients = async (
   return {}
 }
 
-export async function onCook(req, formData: FormData) {
+export async function onCook(req, formData: FormData): Promise<IRecipe> {
+  
   const context = formData.get('context') as string | null
   const type = formData.get('type') as string | null
   const portions = formData.get('portions')
     ? parseInt(formData.get('portions') as string)
     : null
 
-  const isUrl = isValidHttpUrl(context)
   try {
+    const isUrl = isValidHttpUrl(context)
     if (isUrl) {
-      const recipe = {
+      return {
         ...(await generateRecipeByUrl(context)),
         context,
       }
+    // } else {
+    //   const recipe = {
+    //     ...(await generateRecipeByIngredients(context, type, portions)),
+    //     context: new Date().getTime().toString(), // TODO propper ID
+    //   }
 
-      console.log('recipe', recipe)
-      return recipe
-    } else {
-      const recipe = {
-        ...(await generateRecipeByIngredients(context, type, portions)),
-        context: new Date().getTime().toString(), // TODO propper ID
-      }
-
-      console.log('recipe', recipe)
-      return recipe
+    //   console.log('recipe', recipe)
+    //   return recipe
     }
   } catch (error) {
     console.error(error)
-    return { error }
   }
+
+  return null
 }

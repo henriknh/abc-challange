@@ -1,11 +1,12 @@
-import { TableRow } from '@/components/table-row'
 import AuthGuard from '../../components/auth-guard'
+import { TableRow } from '@/components/table-row'
+import { MRecipe } from '@/models/recipe'
 import { authOptions } from '@/utils/auth-options'
-import clientPromise from 'lib/mongodb'
+import { mdiPlus } from '@mdi/js'
+import Icon from '@mdi/react'
+import mongoose from 'mongoose'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
-import Icon from '@mdi/react'
-import { mdiPlus } from '@mdi/js'
 import { redirect } from 'next/navigation'
 
 export default async function Recipes() {
@@ -15,27 +16,20 @@ export default async function Recipes() {
     redirect('/api/auth/signin')
   }
 
-  const client = await clientPromise
-  const collection = client.db().collection('recipes')
-
-  const recipes = await collection
-    .find({
-      userId: session.user.id,
-    })
-    .toArray()
+  const recipes = await MRecipe.find({
+    user: new mongoose.Types.ObjectId(session.user.id),
+  }).exec()
 
   return (
     <AuthGuard>
       <div className="container prose flex max-w-none flex-col gap-10 py-10">
-        <div className="flex justify-between items-center">
-          <h1 className='mb-0'>Welcome chef!</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="mb-0">Welcome chef!</h1>
 
           <Link href="/create-recipe" className="btn max-sm:btn-square">
-            <span className='hidden md:block'>
-              Create recipe
-              </span>
+            <span className="hidden md:block">Create recipe</span>
 
-            <Icon path={mdiPlus} size={1} className='block md:hidden' />
+            <Icon path={mdiPlus} size={1} className="block md:hidden" />
           </Link>
         </div>
 
@@ -53,19 +47,27 @@ export default async function Recipes() {
               </thead>
               <tbody>
                 {recipes.map((recipe) => (
-                  <TableRow key={recipe._id.toString()} className="cursor-pointer hover:!bg-base-300" href={`recipe/${recipe._id}`}>
-                    <td className='text-nowrap'>
+                  <TableRow
+                    key={recipe._id.toString()}
+                    className="cursor-pointer hover:!bg-base-300"
+                    href={`recipe/${recipe._id}`}
+                  >
+                    <td className="text-nowrap">
                       <Link
                         href={`recipe/${recipe._id}`}
                         className="no-underline"
                       >
-                        {recipe.recipe.title}
+                        {recipe.title}
                       </Link>
                     </td>
-                    <td className='text-nowrap'>{recipe.recipe.portions} portions</td>
-                    <td className='text-nowrap'>{recipe.recipe.ingredients.length} ingredients</td>
-                    <td className='text-nowrap'>{recipe.recipe.steps.length} steps</td>
-                    <td className='text-nowrap'>{recipe.recipe.total_cooking_time} minutes</td>
+                    <td className="text-nowrap">{recipe.portions} portions</td>
+                    <td className="text-nowrap">
+                      {recipe.ingredients.length} ingredients
+                    </td>
+                    <td className="text-nowrap">{recipe.steps.length} steps</td>
+                    <td className="text-nowrap">
+                      {recipe.total_cooking_time} minutes
+                    </td>
                   </TableRow>
                 ))}
               </tbody>

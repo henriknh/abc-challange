@@ -1,33 +1,23 @@
 'use server'
 
-import { Recipe } from './cook'
+import { IRecipe, MRecipe } from '@/models/recipe'
 import { authOptions } from '@/utils/auth-options'
-import clientPromise from 'lib/mongodb'
+import dbConnect from 'lib/db-connect'
 import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import { getCurrentUser } from './current-user'
 
-export async function createRecipe(recipe: Recipe) {
+export async function createRecipe(recipe: IRecipe) {
   const session = await getServerSession(authOptions)
 
-  if (!session.user.id) {
-    throw 'Session missing?'
+  if (!session) {
+    redirect('/api/auth/signin')
   }
 
-  if (!recipe.context) {
-    throw 'Context missing'
-  }
+  await dbConnect()
 
-  const client = await clientPromise
-  const collection = client.db().collection('recipes')
+  const mrecipe = new MRecipe({ ...recipe, user: await getCurrentUser() })
+  await mrecipe.save()
 
-  await collection.updateOne(
-    { context: recipe.context, userId: session.user.id },
-    {
-      $set: {
-        context: recipe.context,
-        userId: session.user.id,
-        recipe,
-      },
-    },
-    { upsert: true }
-  )
+  redirect(`/recipe/${mrecipe.id}`)
 }
