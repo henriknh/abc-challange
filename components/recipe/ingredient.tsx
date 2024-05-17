@@ -1,10 +1,10 @@
 'use client'
 
-import { Ingredient as IngredientType } from '../../app/api/cook'
+import { IIngredient } from '@/models/recipe'
 import { useMemo, useState } from 'react'
 
 export interface IngredientProps {
-  ingredient: IngredientType
+  ingredient: IIngredient
   isMetric: boolean
 }
 

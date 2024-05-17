@@ -1,10 +1,10 @@
 'use client'
 
-import { Step as StepType } from '../../app/api/cook'
+import { IStep } from '@/models/recipe'
 import { useState } from 'react'
 
 export interface StepProps {
-  step: StepType
+  step: IStep
 }
 
 export default function Step({ step }: StepProps) {
