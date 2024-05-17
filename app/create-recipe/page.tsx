@@ -7,6 +7,8 @@ import Section from '../../components/section'
 import { Recipe as RecipeType } from '../api/cook'
 import { useState } from 'react'
 
+export const maxDuration = 60;
+
 export default function CreateRecipe() {
   const [recipe, setRecipe] = useState<RecipeType>() // RECIPE_EXAMPLE_CHIMICHURRI
 

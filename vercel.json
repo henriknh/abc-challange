@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "api/cook.ts": {
-      "maxDuration": 60
-    }
-  }
-}
