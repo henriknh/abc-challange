@@ -1,10 +1,10 @@
 'use client'
 
+import { IRecipe } from '@/models/recipe'
 import { RecipeStats } from './recipe/recipe-stats'
-import { Recipe } from 'app/api/cook'
 
 export interface RecipeProps {
-  recipe: Recipe
+  recipe: IRecipe
 }
 export default function RecipeCard({ recipe }: RecipeProps) {
   return (
