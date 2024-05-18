@@ -14,6 +14,10 @@ module.exports = {
       padding: '2rem',
     },
     extend: {
+      fontFamily: {
+        sans: ['var(--font-trip-sans)'],
+        mono: ['var(--font-trip-sans-mono)'],
+      },
       opacity: {
         disabled: 0.38,
       },

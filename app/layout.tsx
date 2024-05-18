@@ -1,9 +1,20 @@
-import { Metadata } from 'next'
 import { Footer } from '../components/footer'
 import { Introduction } from '../components/introduction'
 import { LinkType } from '../components/link'
 import { Navbar } from '../components/navbar'
 import '../styles/global.css'
+import { Metadata } from 'next'
+import localFont from 'next/font/local'
+
+const tripSansFont = localFont({
+  src: '../public/Trip-Sans-Font/trip-sans-variable.ttf',
+  variable: '--font-trip-sans',
+})
+
+const tripSansMonoFont = localFont({
+  src: '../public/Trip-Sans-Font/trip-sans-mono-regular.otf',
+  variable: '--font-trip-sans-mono',
+})
 
 const links: LinkType[] = [
   {
@@ -59,7 +70,7 @@ export default function RootLayout({
   children,
 }: RootProps) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${tripSansFont.variable} ${tripSansMonoFont}`}>
       <body className="flex min-h-screen flex-col bg-base-100">
         <Navbar links={links} profileDropdownLinks={userLinks}>
           {children}
