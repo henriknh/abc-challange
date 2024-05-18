@@ -78,7 +78,7 @@ const generateRecipeByUrl = async (url) => {
         content,
       },
     ],
-    model: 'gpt-4o',
+    model: 'gpt-3.5-turbo-0125',
     response_format: { type: 'json_object' },
   })
 
