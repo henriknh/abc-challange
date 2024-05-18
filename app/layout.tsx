@@ -72,7 +72,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${tripSansFont.variable} ${tripSansMonoFont}`}>
       <body className="flex min-h-screen flex-col bg-base-100">
-        <Navbar links={links} profileDropdownLinks={userLinks}>
+        <Navbar
+          navLinks={links}
+          userInlineLinks={userLinks}
+          userProfileLink="/profile"
+        >
           {children}
 
           <Footer

@@ -11,13 +11,18 @@ import { ReactNode } from 'react'
 
 export interface NavbarProps {
   children: ReactNode
-  links: LinkType[]
-  profileDropdownLinks: LinkType[]
+  navLinks?: LinkType[]
+  userInlineLinks?: LinkType[]
+  userDropdownLinks?: LinkType[]
+  userProfileLink?: string
 }
+
 export async function Navbar({
   children,
-  links,
-  profileDropdownLinks,
+  navLinks = [],
+  userInlineLinks = [],
+  userDropdownLinks = [],
+  userProfileLink,
 }: NavbarProps) {
   const session = await getServerSession(authOptions)
 
@@ -36,7 +41,7 @@ export async function Navbar({
           <div className="hidden flex-none lg:block">
             <ul className="menu menu-horizontal flex gap-4">
               {/* Navbar menu content here */}
-              {links.map((link) => (
+              {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href}>{link.children}</Link>
                 </li>
@@ -44,9 +49,27 @@ export async function Navbar({
             </ul>
           </div>
 
-          <div className="flex-1 justify-end">
+          <div className="flex-1 justify-end gap-2">
+            {userInlineLinks?.length > 0 && (
+              <ul className="menu menu-horizontal hidden flex-none gap-4 lg:flex">
+                {userInlineLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href}>{link.children}</Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+
             <div className="hidden flex-none lg:flex">
-              <ProfileButtonWithMenu links={profileDropdownLinks} />
+              {userDropdownLinks.length ? (
+                <ProfileButtonWithMenu links={userDropdownLinks} />
+              ) : userProfileLink ? (
+                <Link href={userProfileLink} className="btn btn-ghost">
+                  <UserCard />
+                </Link>
+              ) : (
+                <UserCard />
+              )}
             </div>
 
             <div className="flex-none lg:hidden">
@@ -87,14 +110,39 @@ export async function Navbar({
           <div className="flex-1">
             {session && (
               <>
-                <div className="px-4 pb-4 pt-2">
-                  <UserCard />
+                <div className="pb-4">
+                  {userProfileLink ? (
+                    <Link
+                      href={userProfileLink}
+                      className="btn btn-ghost"
+                    >
+                      <UserCard />
+                    </Link>
+                  ) : (
+                    <div className="flex h-12 items-center px-4">
+                      <UserCard />
+                    </div>
+                  )}
                 </div>
 
-                {profileDropdownLinks?.length && (
+                {userInlineLinks?.length > 0 && (
                   <>
                     <ul>
-                      {profileDropdownLinks.map((link) => (
+                      {userInlineLinks.map((link) => (
+                        <li key={link.href}>
+                          <Link href={link.href}>{link.children}</Link>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="divider" />
+                  </>
+                )}
+
+                {userDropdownLinks?.length > 0 && (
+                  <>
+                    <ul>
+                      {userDropdownLinks.map((link) => (
                         <li key={link.href}>
                           <Link href={link.href}>{link.children}</Link>
                         </li>
@@ -108,7 +156,7 @@ export async function Navbar({
             )}
 
             <ul className="w-full">
-              {links.map((link) => (
+              {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href}>{link.children}</Link>
                 </li>
