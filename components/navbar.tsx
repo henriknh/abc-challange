@@ -50,25 +50,31 @@ export async function Navbar({
           </div>
 
           <div className="flex-1 justify-end gap-2">
-            {userInlineLinks?.length > 0 && (
-              <ul className="menu menu-horizontal hidden flex-none gap-4 lg:flex">
-                {userInlineLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href}>{link.children}</Link>
-                  </li>
-                ))}
-              </ul>
-            )}
+            <div className="hidden flex-none justify-end gap-2 lg:flex">
+              {session ? (
+                <>
+                  {userInlineLinks?.length > 0 && (
+                    <ul className="menu menu-horizontal flex gap-4">
+                      {userInlineLinks.map((link) => (
+                        <li key={link.href}>
+                          <Link href={link.href}>{link.children}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
 
-            <div className="hidden flex-none lg:flex">
-              {userDropdownLinks.length ? (
-                <ProfileButtonWithMenu links={userDropdownLinks} />
-              ) : userProfileLink ? (
-                <Link href={userProfileLink} className="btn btn-ghost">
-                  <UserCard />
-                </Link>
+                  {userDropdownLinks.length ? (
+                    <ProfileButtonWithMenu links={userDropdownLinks} />
+                  ) : userProfileLink ? (
+                    <Link href={userProfileLink} className="btn btn-ghost">
+                      <UserCard />
+                    </Link>
+                  ) : (
+                    <UserCard />
+                  )}
+                </>
               ) : (
-                <UserCard />
+                <LoginButton />
               )}
             </div>
 
@@ -112,10 +118,7 @@ export async function Navbar({
               <>
                 <div className="pb-4">
                   {userProfileLink ? (
-                    <Link
-                      href={userProfileLink}
-                      className="btn btn-ghost"
-                    >
+                    <Link href={userProfileLink} className="btn btn-ghost">
                       <UserCard />
                     </Link>
                   ) : (
