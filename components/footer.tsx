@@ -59,7 +59,7 @@ export function Footer({ links, moreLinks, bottomSlot }: FooterProps) {
               </Link>
             </nav>
 
-            {moreLinks?.length && (
+            {moreLinks?.length > 0 && (
               <nav>
                 <h6 className="footer-title">More</h6>
 
