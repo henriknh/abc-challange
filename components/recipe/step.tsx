@@ -12,10 +12,10 @@ export default function Step({ step }: StepProps) {
 
   return (
     <div
-      className="card card-compact w-full cursor-pointer bg-base-200 shadow transition"
+      className="card w-full cursor-pointer bg-base-200 shadow transition"
       onClick={() => setStepCompleted(!stepCompleted)}
     >
-      <div className="card-body">
+      <div className="card-body p-4">
         <div className="flex items-center gap-4">
           <input
             type="checkbox"
