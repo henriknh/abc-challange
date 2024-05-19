@@ -12,11 +12,11 @@ export default function Hero({
   excludeNavbarHeight,
 }: HeroProps) {
   return (
-    <Section isAlternative={isAlternative}>
+    <Section isAlternative={isAlternative} noPadding>
       <div
         className={
           (excludeNavbarHeight
-            ? 'min-h-[calc(100vh_-_96px)]'
+            ? 'min-h-[calc(100vh_-_80px)]'
             : 'min-h-screen') + ' flex flex-col justify-center'
         }
       >

@@ -2,7 +2,7 @@
 
 import { IRecipe } from '@/models/recipe'
 import { useEffect, useRef, useState } from 'react'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useFormState } from 'react-dom'
 import { onCook } from '../app/api/cook'
 import browserStorage from '../utils/browser-storage'
 import isValidHttpUrl from '../utils/is-valid-http-url'
@@ -15,7 +15,6 @@ export interface LetsCookProps {
 export default function LetsCook({ onRecipeGeneration }: LetsCookProps) {
   const [isIngredients, setIsIngredients] = useState(false)
   const [state, formAction] = useFormState(onCook)
-  const { pending } = useFormStatus()
 
   useEffect(() => {
     if (state) {
@@ -27,18 +26,6 @@ export default function LetsCook({ onRecipeGeneration }: LetsCookProps) {
   useEffect(() => {
     const context = browserStorage.getItem('letsCookInput')
     setIsIngredients(!isValidHttpUrl(context))
-
-    if (context && browserStorage.getItem('triggerSearch')) {
-      form.current.elements['context'].value =
-        browserStorage.getItem('letsCookInput')
-      // form.current.elements['type'].value =
-      //   browserStorage.getItem('letsCookType')
-      // form.current.elements['portions'].value =
-      //   browserStorage.getItem('letsCookPortions')
-      form.current.requestSubmit()
-
-      browserStorage.removeItem('triggerSearch')
-    }
   }, [])
 
   return (

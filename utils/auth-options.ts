@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
     async createUser({ user }) {
       await dbConnect()
       const _user = await MUser.findById(user.id)
-      _user.tokens = 10
+      _user.tokens = 5
       await _user.save()
     },
   },

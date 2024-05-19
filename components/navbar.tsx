@@ -118,7 +118,10 @@ export async function Navbar({
               <>
                 <div className="pb-4">
                   {userProfileLink ? (
-                    <Link href={userProfileLink} className="btn btn-ghost">
+                    <Link
+                      href={userProfileLink}
+                      className="btn btn-ghost w-full justify-start"
+                    >
                       <UserCard />
                     </Link>
                   ) : (

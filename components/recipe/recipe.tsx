@@ -1,10 +1,14 @@
 'use client'
 
-import { IRecipe } from '@/models/recipe'
-import { useState } from 'react'
 import Ingredient from './ingredient'
 import { RecipeInfo } from './recipe-info'
 import Step from './step'
+import { IRecipe } from '@/models/recipe'
+import isValidHttpUrl from '@/utils/is-valid-http-url'
+import { mdiOpenInNew, mdiTrashCanOutline } from '@mdi/js'
+import Icon from '@mdi/react'
+import Link from 'next/link'
+import { useState } from 'react'
 
 export interface RecipeProps {
   recipe: IRecipe
@@ -14,8 +18,29 @@ export default function Recipe({ recipe }: RecipeProps) {
   const [isMetric, setIsMetric] = useState(true)
 
   const info = (
-    <div>
-      <h1>{recipe.title}</h1>
+    <div className="flex flex-col gap-10">
+      <div className="flex items-center justify-between">
+        <h1 className="m-0">{recipe.title}</h1>
+
+        <div className="flex gap-2">
+          {/* <form>
+            <button className="btn btn-square btn-ghost">
+              <Icon path={mdiTrashCanOutline} size={1} />
+            </button>
+          </form> */}
+          {/* TODO2 */}
+
+          {isValidHttpUrl(recipe.context) && (
+            <Link
+              href={recipe.context}
+              target="_blank"
+              className="btn btn-square btn-ghost"
+            >
+              <Icon path={mdiOpenInNew} size={1} />
+            </Link>
+          )}
+        </div>
+      </div>
 
       <RecipeInfo recipe={recipe} />
     </div>

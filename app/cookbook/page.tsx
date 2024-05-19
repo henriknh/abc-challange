@@ -86,7 +86,7 @@ export default async function Recipes() {
             ) : (
               <div className="flex flex-col items-center gap-4">
                 <div className="flex flex-col gap-2">
-                  <div>Oh no.. You don&apos;t have any recipes yet</div>
+                  <div>Oh no.. You don&apos;t have any recipes yet.</div>
                   <div>Why don&apos;t you create your first now?</div>
                 </div>
                 <Link href="/create-recipe" className="btn btn-primary">

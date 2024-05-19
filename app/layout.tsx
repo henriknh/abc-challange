@@ -26,7 +26,7 @@ const userLinks: LinkType[] = [
     children: 'Create recipe',
   },
   {
-    href: '/recipes',
+    href: '/cookbook',
     children: 'My cookbook',
   },
   {

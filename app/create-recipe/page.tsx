@@ -1,11 +1,11 @@
 'use client'
 
-import { IRecipe } from '@/models/recipe'
-import { useState } from 'react'
 import LetsCook from '../../components/lets-cook'
 import { AddToMyCookbook } from '../../components/recipe/add-to-my-cookbook'
 import Recipe from '../../components/recipe/recipe'
 import Section from '../../components/section'
+import { IRecipe } from '@/models/recipe'
+import { useState } from 'react'
 
 export const maxDuration = 60
 
@@ -15,7 +15,7 @@ export default function CreateRecipe() {
   return (
     <div className="prose max-w-none">
       <Section>
-        <h1>Create new recipe</h1>
+        <h1>Create recipe</h1>
 
         <div className="flex flex-col gap-10">
           <LetsCook onRecipeGeneration={setRecipe} />
@@ -32,8 +32,10 @@ export default function CreateRecipe() {
             </div>
           ) : (
             <div className="flex flex-col gap-10">
-              <h2>Welcome to the recipe generator!</h2>
-              <p>To get started simply do it! TODO :)</p>
+              <div className="flex flex-col items-center">
+                  Provide a recipe URL, to create easy-to-follow cooking
+                  instructions that simplify the original recipe.
+              </div>
             </div>
           )}
         </div>

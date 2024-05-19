@@ -13,16 +13,18 @@ export default async function Profile() {
     <AuthGuard>
       <div className="prose max-w-none">
         <Section>
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col">
             <div className="flex justify-between">
-              <h1 className="m-0">{session?.user?.name}</h1>
+              <h1 className="m-0">Welcome {session?.user?.name}</h1>
             </div>
 
+            <h2>Overview</h2>
             <ProfileStats />
 
+            <h2>Settings</h2>
             <ProfileSettings />
 
-            <div className="flex justify-end">
+            <div className="flex justify-end pt-10">
               <LogoutButton />
             </div>
           </div>
