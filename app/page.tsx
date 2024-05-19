@@ -36,54 +36,66 @@ export default function Home() {
         <div className="prose max-w-none">
           {/* <h2>Example recipe</h2> */}
           {/* <h3>Simple yet elegant with easy overview and feaures to make your life easier</h3> */}
-          <h3>Features that let you focus on the cooking</h3>
-          <ul>
-            <li>
-              Switch measurement system and persist setting on your profile.
-            </li>
-            <li>Ingredients and steps are always in view side-by-side.</li>
-            <li>Mark steps as completed as you go.</li>
-            <li>Clean minimalistic design.</li>
-          </ul>
 
-          <div className="rounded-xl border bg-base-100 p-10">
-            <Recipe recipe={RECIPE_EXAMPLE_CHIMICHURRI as any} />
+          <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-4">
+              <h3 className="m-0">
+                Features that let you focus on the cooking
+              </h3>
+              <ul className="mb-0">
+                <li>
+                  Switch measurement system and persist setting on your profile.
+                </li>
+                <li>Ingredients and steps are always in view side-by-side.</li>
+                <li>Mark steps as completed as you go.</li>
+                <li>Clean minimalistic design.</li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl border bg-base-100 p-10">
+              <Recipe recipe={RECIPE_EXAMPLE_CHIMICHURRI as any} />
+            </div>
           </div>
         </div>
       </Section>
       <Section>
         <div className="prose max-w-none">
-          <h3>Creating recipes is as easy as 1-2-3</h3>
-
           <div className="flex flex-col gap-10">
-            <div className="flex flex-col gap-4 md:flex-row">
-              <div className="card card-bordered card-compact flex-1">
-                <div className="card-body">
-                  <div className="text-xl">1.</div>
-                  <div>Copy URL of a recipe</div>
-                </div>
-              </div>
-              <div className="card card-bordered card-compact flex-1">
-                <div className="card-body">
-                  <div className="text-xl">2.</div>
-                  <div>
-                    <div className="inline-flex flex-wrap items-center gap-2">
-                      <div className="text-nowrap">Paste URL and press</div>
-                      <button className="btn btn-outline btn-sm relative">
-                        <Icon path={mdiChefHat} size={0.8} /> Let&apos;s cook
-                      </button>
+            <div className="flex flex-col gap-4">
+              <h3 className="m-0">Creating recipes is as easy as 1-2-3</h3>
+
+              <div className="flex flex-col gap-10">
+                <div className="flex flex-col gap-4 md:flex-row">
+                  <div className="card card-bordered card-compact flex-1">
+                    <div className="card-body">
+                      <div className="text-xl">1.</div>
+                      <div>Copy URL of a recipe</div>
+                    </div>
+                  </div>
+                  <div className="card card-bordered card-compact flex-1">
+                    <div className="card-body">
+                      <div className="text-xl">2.</div>
+                      <div>
+                        <div className="inline-flex flex-wrap items-center gap-2">
+                          <div className="text-nowrap">Paste URL and press</div>
+                          <button className="btn btn-outline btn-sm relative">
+                            <Icon path={mdiChefHat} size={0.8} /> Let&apos;s
+                            cook
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card card-bordered card-compact flex-1">
+                    <div className="card-body">
+                      <div className="text-xl">3.</div>
+                      <div>Actually let&apos;s get cooking!</div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="card card-bordered card-compact flex-1">
-                <div className="card-body">
-                  <div className="text-xl">3.</div>
-                  <div>Actually let&apos;s get cooking!</div>
-                </div>
-              </div>
             </div>
-
+            
             <div className="flex aspect-video items-center justify-center bg-base-200">
               VIDEO
             </div>
