@@ -1,4 +1,5 @@
 import Recipe from '@/components/recipe/recipe'
+import Section from '@/components/section'
 import { MRecipe } from '@/models/recipe'
 import dbConnect from 'lib/db-connect'
 
@@ -24,8 +25,10 @@ export default async function RecipePage({
   console.log(recipe)
 
   return (
-    <div className="container prose flex max-w-none flex-col gap-10 py-10">
-      <Recipe recipe={recipe} />
+    <div className="prose max-w-none">
+      <Section>
+        <Recipe recipe={recipe} />
+      </Section>
     </div>
   )
 }

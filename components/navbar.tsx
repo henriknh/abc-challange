@@ -39,7 +39,7 @@ export async function Navbar({
             </Link>
           </div>
           <div className="hidden flex-none lg:block">
-            <ul className="menu menu-horizontal flex gap-4">
+            <ul className="menu menu-horizontal flex gap-2">
               {/* Navbar menu content here */}
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -54,7 +54,7 @@ export async function Navbar({
               {session ? (
                 <>
                   {userInlineLinks?.length > 0 && (
-                    <ul className="menu menu-horizontal flex gap-4">
+                    <ul className="menu menu-horizontal flex gap-2">
                       {userInlineLinks.map((link) => (
                         <li key={link.href}>
                           <Link href={link.href}>{link.children}</Link>

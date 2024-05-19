@@ -13,7 +13,7 @@ export default function CreateRecipe() {
   const [recipe, setRecipe] = useState<IRecipe>() // RECIPE_EXAMPLE_CHIMICHURRI
 
   return (
-    <div className="prose max-w-none pb-10">
+    <div className="prose max-w-none">
       <Section>
         <h1>Create new recipe</h1>
 

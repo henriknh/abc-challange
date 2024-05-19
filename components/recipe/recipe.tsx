@@ -43,10 +43,6 @@ export default function Recipe({ recipe }: RecipeProps) {
               isMetric={isMetric}
             />
           ))}
-
-          {/* <button className="btn btn-ghost w-full" onClick={() => null}>
-      Clear completed ingredients
-    </button> */}
         </div>
       </div>
     </div>

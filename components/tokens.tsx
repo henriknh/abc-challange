@@ -1,16 +1,13 @@
-import { authOptions } from '@/utils/auth-options'
 import { mdiCrownCircleOutline } from '@mdi/js'
 import Icon from '@mdi/react'
-import { getServerSession } from 'next-auth'
+import { getCurrentUser } from 'app/api/current-user'
+import Link from 'next/link'
 
-export async function Tokens() {
-  const session = await getServerSession(authOptions)
-  return session?.user ? (
-    <button className="btn btn-ghost">
-      <Icon path={mdiCrownCircleOutline} size={1} />
-      <div>10</div>
-    </button>
-  ) : (
-    <></>
-  )
+export interface TokensProps {
+  href: string
+}
+
+export async function Tokens({ href }: TokensProps) {
+  const currentUser = await getCurrentUser()
+  return currentUser ? <span>{currentUser.tokens} tokens</span> : <></>
 }
