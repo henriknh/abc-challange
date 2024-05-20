@@ -14,7 +14,7 @@ export default async function Ingredients({ recipe }: IngredientsProps) {
       <div className="flex items-end justify-between">
         <h4>Ingredients</h4>
 
-        <SystemOfUnitsDropdown isMetric={currentUser.isMetric} />
+        <SystemOfUnitsDropdown isMetric={!!currentUser?.isMetric} />
       </div>
 
       <div className="flex flex-col gap-2">

@@ -15,7 +15,7 @@ export async function ProfileSettings() {
             <button
               className={
                 'btn join-item btn-sm' +
-                (currentUser.isMetric ? ' btn-primary' : '')
+                (currentUser?.isMetric ? ' btn-primary' : '')
               }
               type="submit"
             >
@@ -26,7 +26,7 @@ export async function ProfileSettings() {
             <button
               className={
                 'btn join-item btn-sm' +
-                (!currentUser.isMetric ? ' btn-primary' : '')
+                (!currentUser?.isMetric ? ' btn-primary' : '')
               }
               type="submit"
             >
