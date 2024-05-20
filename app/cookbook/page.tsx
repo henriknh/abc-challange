@@ -1,4 +1,3 @@
-import AuthGuard from '../../components/auth-guard'
 import Section from '@/components/section'
 import { TableRow } from '@/components/table-row'
 import { MRecipe } from '@/models/recipe'
@@ -10,6 +9,7 @@ import mongoose from 'mongoose'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import AuthGuard from '../../components/auth-guard'
 
 export default async function Recipes() {
   const session = await getServerSession(authOptions)
@@ -45,10 +45,10 @@ export default async function Recipes() {
                   <thead>
                     <tr>
                       <th>Name</th>
-                      <th>Portions</th>
-                      <th>Ingredients</th>
-                      <th>Steps</th>
-                      <th>Cooking time</th>
+                      <th className="text-right">Portions</th>
+                      <th className="text-right">Ingredients</th>
+                      <th className="text-right">Steps</th>
+                      <th className="text-right">Cooking time</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -66,16 +66,16 @@ export default async function Recipes() {
                             {recipe.title}
                           </Link>
                         </td>
-                        <td className="text-nowrap">
+                        <td className="text-nowrap text-right">
                           {recipe.portions} portions
                         </td>
-                        <td className="text-nowrap">
+                        <td className="text-nowrap text-right">
                           {recipe.ingredients.length} ingredients
                         </td>
-                        <td className="text-nowrap">
+                        <td className="text-nowrap text-right">
                           {recipe.steps.length} steps
                         </td>
-                        <td className="text-nowrap">
+                        <td className="text-nowrap text-right">
                           {recipe.total_cooking_time} minutes
                         </td>
                       </TableRow>
