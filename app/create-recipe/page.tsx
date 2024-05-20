@@ -33,7 +33,7 @@ export default function CreateRecipe() {
           ) : (
             <div className="flex flex-col gap-10">
               <div className="flex flex-col items-center">
-                  Provide a recipe URL, to create easy-to-follow cooking
+                  Provide a recipe web address, to create easy-to-follow cooking
                   instructions that simplify the original recipe.
               </div>
             </div>

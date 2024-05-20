@@ -12,7 +12,7 @@ export default function LetsCookInput() {
         name="context"
         type="text"
         className="min-w-0 grow"
-        placeholder="Feed me an URL of a tasty recipe..."
+        placeholder="https://www.some-tasty-recipe.com"
         onChange={(change) => {
           const value = change.target.value
           browserStorage.setItem('letsCookInput', value)
