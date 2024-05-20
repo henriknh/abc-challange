@@ -6,6 +6,10 @@ import dbConnect from 'lib/db-connect'
 import { redirect } from 'next/navigation'
 
 export async function deleteRecipe(recipe: IRecipe) {
+  if (!recipe) {
+    throw 'Recipe missing'
+  }
+
   const currentUser = await getCurrentUser()
 
   if (!currentUser) {
@@ -13,8 +17,7 @@ export async function deleteRecipe(recipe: IRecipe) {
   }
 
   if (recipe.user !== currentUser.id) {
-    console.log('Not recipe creator')
-    return
+    throw 'Not recipe creator'
   }
   console.log('deleteRecipe', recipe)
 
@@ -25,9 +28,6 @@ export async function deleteRecipe(recipe: IRecipe) {
   await dbConnect()
 
   const mrecipe = await MRecipe.findById(recipe._id)
-
-  console.log('mrecipe', mrecipe)
-
   await mrecipe.deleteOne()
 
   redirect(`/cookbook`)

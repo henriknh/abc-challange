@@ -1,10 +1,10 @@
 import { authOptions } from '@/utils/auth-options'
 import { LinkType } from './link'
-import { LogoutButton } from './logout-button'
+import { LogoutButton } from './session/logout-button'
 import { UserCard, UserCardProps } from './user-card'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
-import { LoginButton } from './login-button'
+import { LoginButton } from './session/login-button'
 
 export interface ProfileButtonWithMenuProps extends UserCardProps {
   links: LinkType[]

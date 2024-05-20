@@ -1,7 +1,7 @@
 'use client'
 
+import { SubmitButton } from '@/components/form/submit-button'
 import Section from '../../components/section'
-import { SubmitButton } from '@/components/submit-button'
 import { mdiChefHat } from '@mdi/js'
 import Icon from '@mdi/react'
 import { onCook } from 'app/api/cook'

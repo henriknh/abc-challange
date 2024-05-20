@@ -216,10 +216,14 @@ export async function onCook(formData: FormData): Promise<IRecipe> {
   await dbConnect()
 
   const context = formData.get('context') as string | null
-  const type = formData.get('type') as string | null
-  const portions = formData.get('portions')
-    ? parseInt(formData.get('portions') as string)
-    : null
+  // const type = formData.get('type') as string | null
+  // const portions = formData.get('portions')
+  //   ? parseInt(formData.get('portions') as string)
+  //   : null
+
+  if (!context) {
+    throw 'URL missing'
+  }
 
   if (!isValidHttpUrl(context)) {
     throw 'Not a valid URL'
@@ -231,9 +235,6 @@ export async function onCook(formData: FormData): Promise<IRecipe> {
     user: currentUser,
   }
 
-  console.log(recipeData);
-  
-
   const recipe = new MRecipe(recipeData)
   await recipe.save()
 
@@ -241,22 +242,4 @@ export async function onCook(formData: FormData): Promise<IRecipe> {
   await currentUser.save()
 
   redirect(`/recipe/${recipe.id}`)
-  try {
-    const isUrl = isValidHttpUrl(context)
-    if (isUrl) {
-      return
-      // } else {
-      //   const recipe = {
-      //     ...(await generateRecipeByIngredients(context, type, portions)),
-      //     context: new Date().getTime().toString(), // TODO propper ID
-      //   }
-
-      //   console.log('recipe', recipe)
-      //   return recipe
-    }
-  } catch (error) {
-    console.error(error)
-  }
-
-  return null
 }

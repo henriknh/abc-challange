@@ -15,9 +15,6 @@ export default async function AuthGuard({
 }: AuthGuardProps) {
   const session = await getServerSession(authOptions)
 
-  console.log('session', session);
-  
-
   if (!session) {
     redirect(redirectUrl || '/api/auth/signin')
   }

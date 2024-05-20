@@ -1,5 +1,5 @@
 import AuthGuard from '@/components/auth-guard'
-import { LogoutButton } from '@/components/logout-button'
+import { LogoutButton } from '@/components/session/logout-button'
 import { ProfileSettings } from '@/components/profile/settings'
 import { ProfileStats } from '@/components/profile/stats'
 import Section from '@/components/section'

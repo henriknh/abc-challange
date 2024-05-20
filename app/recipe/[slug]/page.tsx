@@ -4,8 +4,6 @@ import { MRecipe } from '@/models/recipe'
 import dbConnect from 'lib/db-connect'
 
 export async function generateMetadata({ params }) {
-  console.log('params', params)
-
   await dbConnect()
   const recipe = await MRecipe.findById(params.slug)
 
@@ -21,8 +19,6 @@ export default async function RecipePage({
 }) {
   await dbConnect()
   const recipe = (await MRecipe.findById(params.slug)).toJSON()
-
-  console.log(recipe)
 
   return (
     <div className="prose max-w-none">
