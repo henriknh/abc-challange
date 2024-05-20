@@ -1,3 +1,4 @@
+import AuthGuard from '@/components/auth-guard'
 import Recipe from '@/components/recipe/recipe'
 import Section from '@/components/section'
 import { MRecipe } from '@/models/recipe'
@@ -21,10 +22,12 @@ export default async function RecipePage({
   const recipe = (await MRecipe.findById(params.slug)).toJSON()
 
   return (
-    <div className="prose max-w-none">
-      <Section>
-        <Recipe recipe={recipe} />
-      </Section>
-    </div>
+    <AuthGuard>
+      <div className="prose max-w-none">
+        <Section>
+          <Recipe recipe={recipe} />
+        </Section>
+      </div>
+    </AuthGuard>
   )
 }
