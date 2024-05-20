@@ -1,5 +1,5 @@
-import { config } from '../app.config'
-import profilePic from '../public/henrik_nilsson_harnert.jpg'
+import { config } from '../../app.config'
+import profilePic from '../../public/henrik_nilsson_harnert.jpg'
 import Link from 'next/link'
 
 export function Introduction() {

@@ -1,11 +1,11 @@
+import '../styles/global.css'
+import { Footer } from '@/components/footer/footer'
+import { Introduction } from '@/components/footer/introduction'
+import { LinkType } from '@/components/link'
+import { Navbar } from '@/components/navbar'
 import { Tokens } from '@/components/tokens'
 import { Metadata } from 'next'
 import localFont from 'next/font/local'
-import { Footer } from '../components/footer'
-import { Introduction } from '../components/introduction'
-import { LinkType } from '../components/link'
-import { Navbar } from '../components/navbar'
-import '../styles/global.css'
 import Script from 'next/script'
 
 const tripSansFont = localFont({
@@ -70,7 +70,10 @@ export default function RootLayout({
 }: RootProps) {
   return (
     <html lang="en" className={`${tripSansFont.variable} ${tripSansMonoFont}`}>
-      <Script data-website-id="2be13eda-0dc7-4737-a95c-a09d9e17e35f" src="https://cloud.umami.is/script.js" />
+      <Script
+        data-website-id="2be13eda-0dc7-4737-a95c-a09d9e17e35f"
+        src="https://cloud.umami.is/script.js"
+      />
       <body className="flex min-h-screen flex-col bg-base-100">
         <Navbar userInlineLinks={userLinks} userProfileLink="/profile">
           {children}

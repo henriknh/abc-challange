@@ -1,3 +1,5 @@
+'use client'
+
 import { ReactNode } from 'react'
 import { useFormStatus } from 'react-dom'
 
@@ -6,16 +8,18 @@ export interface SubmitButtonProps {
 }
 
 export function SubmitButton({ children }: SubmitButtonProps) {
-  const { pending, data, method, action } = useFormStatus()
+  const { pending } = useFormStatus()
 
   return (
     <button
       type="submit"
       disabled={pending}
-      className="btn btn-ghost btn-sm relative"
+      className="btn btn-primary relative"
     >
       <div
-        className={'flex items-center gap-1' + (pending ? ' opacity-0' : '')}
+        className={
+          'flex items-center gap-1 text-nowrap' + (pending ? ' opacity-0' : '')
+        }
       >
         {children}
       </div>

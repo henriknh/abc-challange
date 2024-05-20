@@ -4,7 +4,7 @@ export interface RecipeInfoProps {
   recipe: IRecipe
 }
 
-export function RecipeStats({ recipe }: RecipeInfoProps) {
+export async function RecipeStats({ recipe }: RecipeInfoProps) {
   const hasMetadata =
     recipe.portions || recipe.portions || recipe.ingredients?.length
 

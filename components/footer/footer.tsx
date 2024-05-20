@@ -1,5 +1,5 @@
-import { config } from '../app.config'
-import { LinkType } from './link'
+import { config } from '../../app.config'
+import { LinkType } from '../link'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 

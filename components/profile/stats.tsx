@@ -1,6 +1,7 @@
 import { MRecipe } from '@/models/recipe'
 import { getCurrentUser } from 'app/api/current-user'
 import mongoose from 'mongoose'
+import Link from 'next/link'
 
 export async function ProfileStats() {
   const currentUser = await getCurrentUser()
@@ -19,7 +20,6 @@ export async function ProfileStats() {
       <div className="stat">
         <div className="stat-title">Tokens</div>
         <div className="stat-value">{currentUser.tokens}</div>
-        {/* TODO2 */}
       </div>
     </div>
   )

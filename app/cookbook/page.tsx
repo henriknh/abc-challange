@@ -32,7 +32,7 @@ export default async function Recipes() {
             <div className="flex items-center justify-between">
               <h1 className="mb-0">Welcome chef!</h1>
 
-              <Link href="/create-recipe" className="btn max-sm:btn-square">
+              <Link href="/create-recipe" className="btn max-sm:btn-square btn-ghost">
                 <span className="hidden md:block">Create recipe</span>
 
                 <Icon path={mdiPlus} size={1} className="block md:hidden" />

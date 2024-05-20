@@ -1,31 +1,25 @@
-'use client'
-
 import { IIngredient } from '@/models/recipe'
-import { useMemo, useState } from 'react'
+import { getCurrentUser } from 'app/api/current-user'
 
 export interface IngredientProps {
   ingredient: IIngredient
-  isMetric: boolean
 }
 
-export default function Ingredient({ ingredient, isMetric }: IngredientProps) {
-  const [ingredientCompleted, setIngredientCompleted] = useState(false)
+export default async function Ingredient({ ingredient }: IngredientProps) {
+  const currentUser = await getCurrentUser()
 
-  const unit = useMemo(
-    () =>
-      isMetric ? ingredient.unit?.metric_unit : ingredient.unit?.imperial_unit,
-    [ingredient, isMetric]
-  )
+  const isMetric = currentUser?.isMetric ?? true
+
+  const unit = isMetric
+    ? ingredient.unit?.metric_unit
+    : ingredient.unit?.imperial_unit
 
   const toFixedIfNecessary = (value: number, dp = 1) => {
-    return +value.toFixed(dp);
+    return +value.toFixed(dp)
   }
 
   return (
-    <div
-      className="flex justify-between gap-4 rounded-md bg-base-200 px-3 py-2 shadow"
-      onClick={() => setIngredientCompleted(!ingredientCompleted)}
-    >
+    <div className="flex justify-between gap-4 rounded-md bg-base-200 px-3 py-2 shadow">
       <div className="flex gap-2">
         <div className="capitalize">{ingredient.name}</div>
       </div>

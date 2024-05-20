@@ -1,5 +1,37 @@
 import mongoose, { Schema } from 'mongoose'
-import { IUser, userSchema } from './user'
+import { IUser } from './user'
+
+export interface IFoodAllergies extends mongoose.Document {
+  peanuts: boolean
+  tree_nuts: boolean
+  milk: boolean
+  eggs: boolean
+  wheat: boolean
+  shellfish: boolean
+}
+
+export const foodAllergiesSchema = new Schema<IFoodAllergies>({
+  peanuts: { type: Boolean, required: true },
+  tree_nuts: { type: Boolean, required: true },
+  milk: { type: Boolean, required: true },
+  eggs: { type: Boolean, required: true },
+  wheat: { type: Boolean, required: true },
+  shellfish: { type: Boolean, required: true },
+})
+
+export interface IFoodPreferences extends mongoose.Document {
+  vegetarian: boolean
+  vegan: boolean
+  gluten_free: boolean
+  pescatarian: boolean
+}
+
+export const foodPreferencesSchema = new Schema<IFoodPreferences>({
+  vegetarian: { type: Boolean, required: true },
+  vegan: { type: Boolean, required: true },
+  gluten_free: { type: Boolean, required: true },
+  pescatarian: { type: Boolean, required: true },
+})
 
 export interface IUnit extends mongoose.Document {
   value: number
@@ -45,22 +77,36 @@ export interface IRecipe extends mongoose.Document {
   context: string
   user: IUser
   title: string
-  description: string
   total_cooking_time: number
   portions: number
+  description: string
+  mealType:
+    | 'breakfast'
+    | 'lunch'
+    | 'starter'
+    | 'dinner'
+    | 'desert'
+    | 'snack'
+    | 'drink'
+  difficuly: 'easy' | 'medium' | 'hard'
+  food_allergies: IFoodAllergies
+  food_preferences: IFoodPreferences
   ingredients: IIngredient[]
   steps: IStep[]
 }
 
 const recipeSchema = new Schema<IRecipe>({
   context: { type: String, required: true },
-  user: {type: mongoose.Types.ObjectId, ref: "User"},
+  user: { type: mongoose.Types.ObjectId, ref: 'User' },
   title: { type: String, required: true },
   description: { type: String, required: true },
   total_cooking_time: { type: Number, required: true },
   portions: { type: Number, required: true },
+  food_allergies: foodAllergiesSchema,
+  food_preferences: foodPreferencesSchema,
   ingredients: [ingredientSchema],
   steps: [stepSchema],
 })
 
-export const MRecipe: mongoose.Model<IRecipe> = mongoose.models.Recipe || mongoose.model<IRecipe>('Recipe', recipeSchema);
+export const MRecipe: mongoose.Model<IRecipe> =
+  mongoose.models.Recipe || mongoose.model<IRecipe>('Recipe', recipeSchema)

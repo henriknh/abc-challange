@@ -1,18 +1,11 @@
-'use client'
-
 import Hero from '../components/hero'
-import LetsCookInput from '../components/lets-cook-input'
 import Section from '../components/section'
-import browserStorage from '../utils/browser-storage'
 import Recipe from '@/components/recipe/recipe'
 import { RECIPE_EXAMPLE_CHIMICHURRI } from '@/utils/example-recipes'
 import { mdiChefHat } from '@mdi/js'
 import Icon from '@mdi/react'
-import { useRouter } from 'next/navigation'
 
-export default function Home() {
-  const router = useRouter()
-
+export default async function Home() {
   return (
     <>
       <Hero excludeNavbarHeight>
@@ -20,14 +13,17 @@ export default function Home() {
           <div className="prose flex max-w-none flex-col items-center">
             <h1>Your cookbook simplified</h1>
             <p className="my-2">
-              Are you tiered of lengthy recipes and just want to get a list of
-              the ingredients and the steps to cook?
+              Tired of lengthy recipes and just want a simple list of
+              ingredients and steps to cook?
             </p>
             <p className="my-2">
-              Then <strong>as easy as pie</strong> is for you. Save all your
-              recipes in one place with one consistent look.
+              Then <span className="font-bold">as easy as pie</span> is for you.
+              Save all your recipes in one place with one consistent look.
             </p>
-            <h4>Easy to browse, easy to read, as easy as pie!</h4>
+            <p className="my-2">
+              Easy to browse, easy to read,{' '}
+              <span className="font-bold">as easy as pie!</span>
+            </p>
           </div>
         </div>
       </Hero>
@@ -95,7 +91,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            
+
             <div className="flex aspect-video items-center justify-center bg-base-200">
               VIDEO
             </div>
