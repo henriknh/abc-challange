@@ -1,13 +1,11 @@
+import { Tokens } from '@/components/tokens'
+import { Metadata } from 'next'
+import localFont from 'next/font/local'
 import { Footer } from '../components/footer'
 import { Introduction } from '../components/introduction'
 import { LinkType } from '../components/link'
 import { Navbar } from '../components/navbar'
 import '../styles/global.css'
-import { Tokens } from '@/components/tokens'
-import { mdiPlus } from '@mdi/js'
-import Icon from '@mdi/react'
-import { Metadata } from 'next'
-import localFont from 'next/font/local'
 
 const tripSansFont = localFont({
   src: '../public/Trip-Sans-Font/trip-sans-variable.ttf',
@@ -18,7 +16,6 @@ const tripSansMonoFont = localFont({
   src: '../public/Trip-Sans-Font/trip-sans-mono-regular.otf',
   variable: '--font-trip-sans-mono',
 })
-
 
 const userLinks: LinkType[] = [
   {
@@ -73,10 +70,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${tripSansFont.variable} ${tripSansMonoFont}`}>
       <body className="flex min-h-screen flex-col bg-base-100">
-        <Navbar
-          userInlineLinks={userLinks}
-          userProfileLink="/profile"
-        >
+        <Navbar userInlineLinks={userLinks} userProfileLink="/profile">
           {children}
 
           <Footer
