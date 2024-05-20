@@ -17,6 +17,10 @@ export default function Ingredient({ ingredient, isMetric }: IngredientProps) {
     [ingredient, isMetric]
   )
 
+  const toFixedIfNecessary = (value: number, dp = 1) => {
+    return +value.toFixed(dp);
+  }
+
   return (
     <div
       className="flex justify-between gap-4 rounded-md bg-base-200 px-3 py-2 shadow"
@@ -27,7 +31,7 @@ export default function Ingredient({ ingredient, isMetric }: IngredientProps) {
       </div>
       {unit?.value && (
         <div className="text-nowrap">
-          {unit.value} {unit.unit}
+          {toFixedIfNecessary(unit.value)} {unit.unit}
         </div>
       )}
     </div>
