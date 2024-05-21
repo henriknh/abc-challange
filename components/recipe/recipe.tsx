@@ -12,7 +12,7 @@ export default async function Recipe({ recipe }: RecipeProps) {
       <div className="flex flex-col gap-10 md:hidden">
         <RecipeInfo recipe={recipe} />
 
-        <div className="max-h- flex flex-col">
+        <div className="flex flex-col">
           <div role="tablist" className="tabs tabs-bordered grid-cols-2">
             <input
               type="radio"
@@ -21,7 +21,7 @@ export default async function Recipe({ recipe }: RecipeProps) {
               className="tab after:content-['Ingredients'] checked:border-primary"
               defaultChecked
             />
-            <div role="tabpanel" className="tab-content">
+            <div role="tabpanel" className="tab-content max-h-[80vh] overflow-y-auto">
               <Ingredients recipe={recipe} />
             </div>
 
@@ -31,7 +31,7 @@ export default async function Recipe({ recipe }: RecipeProps) {
               role="tab"
               className="tab after:content-['Steps'] checked:border-primary"
             />
-            <div role="tabpanel" className="tab-content">
+            <div role="tabpanel" className="tab-content max-h-[80vh] overflow-y-auto">
               <Steps recipe={recipe} />
             </div>
           </div>
