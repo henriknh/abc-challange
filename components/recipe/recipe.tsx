@@ -13,24 +13,28 @@ export default async function Recipe({ recipe }: RecipeProps) {
         <RecipeInfo recipe={recipe} />
 
         <div className="max-h- flex flex-col">
-          {/* <div role="tablist" className="tabs-boxed tabs">
-            <button
+          <div role="tablist" className="tabs tabs-bordered grid-cols-2">
+            <input
+              type="radio"
+              name="my_tabs_1"
               role="tab"
-              onClick={() => setIsIngredients(true)}
-              className={'tab' + (isIngredients ? ' tab-active' : '')}
-            >
-              Ingredients
-            </button>
-            <button
-              role="tab"
-              onClick={() => setIsIngredients(false)}
-              className={'tab' + (!isIngredients ? ' tab-active' : '')}
-            >
-              Steps
-            </button>
-          </div> */}
+              className="tab after:content-['Ingredients']"
+              defaultChecked
+            />
+            <div role="tabpanel" className="tab-content">
+              <Ingredients recipe={recipe} />
+            </div>
 
-          {/* <div>{isIngredients ? ingredients : steps}</div> */}
+            <input
+              type="radio"
+              name="my_tabs_1"
+              role="tab"
+              className="tab after:content-['Steps']"
+            />
+            <div role="tabpanel" className="tab-content">
+              <Steps recipe={recipe} />
+            </div>
+          </div>
         </div>
       </div>
       <div className="prose hidden max-w-none flex-col gap-10 md:flex">
