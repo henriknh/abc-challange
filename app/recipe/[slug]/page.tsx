@@ -19,7 +19,7 @@ export default async function RecipePage({
   params: { slug: string }
 }) {
   await dbConnect()
-  const recipe = (await MRecipe.findById(params.slug)).toJSON()
+  const recipe = JSON.parse(JSON.stringify(await MRecipe.findById(params.slug)))
 
   return (
     <AuthGuard>
