@@ -18,7 +18,7 @@ export default async function Recipe({ recipe }: RecipeProps) {
               type="radio"
               name="my_tabs_1"
               role="tab"
-              className="tab after:content-['Ingredients']"
+              className="tab after:content-['Ingredients'] checked:border-primary"
               defaultChecked
             />
             <div role="tabpanel" className="tab-content">
@@ -29,7 +29,7 @@ export default async function Recipe({ recipe }: RecipeProps) {
               type="radio"
               name="my_tabs_1"
               role="tab"
-              className="tab after:content-['Steps']"
+              className="tab after:content-['Steps'] checked:border-primary"
             />
             <div role="tabpanel" className="tab-content">
               <Steps recipe={recipe} />
