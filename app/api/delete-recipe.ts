@@ -6,6 +6,8 @@ import dbConnect from 'lib/db-connect'
 import { redirect } from 'next/navigation'
 
 export async function deleteRecipe(recipe: IRecipe) {
+  console.log('deleteRecipe', recipe);
+  
   if (!recipe) {
     throw 'Recipe missing'
   }

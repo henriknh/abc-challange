@@ -13,35 +13,47 @@ export interface RecipeDeleteButtonProps {
 export default function RecipeDeleteButton({
   recipe,
 }: RecipeDeleteButtonProps) {
-  const deleteRecipeWithRecipe = deleteRecipe.bind(null, recipe)
+  const [loading, setLoading] = useState(false)
 
   return (
     <div>
+      <button
+        type="button"
+        className="btn btn-square btn-ghost"
+        onClick={() =>
+          (document.getElementById('my_modal_1') as HTMLFormElement).showModal()
+        }
+      >
+        <Icon path={mdiTrashCanOutline} size={1} />
+      </button>
 
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
-          <h3 className="text-lg font-bold">Hello!</h3>
-          <p className="py-4">Press ESC key or click outside to close</p>
+          <h3 className="text-lg font-bold">Delete {recipe.title}</h3>
+          <p className="py-4">
+            Are you sure you want to permanently delete this recipe?
+          </p>
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn btn-ghost">Close</button>
+            </form>
+            <button
+              className="btn btn-error"
+              disabled={loading}
+              onClick={() => {
+                setLoading(true)
+                deleteRecipe(recipe).catch(() => setLoading(false))
+              }}
+            >
+              Delete
+            </button>
+          </div>
         </div>
         <form method="dialog" className="modal-backdrop">
           <button>close</button>
         </form>
       </dialog>
-      <button
-        type="button"
-        className="btn btn-square btn-ghost"
-        onClick={() => {
-          const element = document.getElementById('my_modal_1')
-          element.showModal()
-        //   console.log(element.getAttribute('open'));
-          
-        //   element.setAttribute('open', 'true')
-        //   console.log(element.getAttribute('open'));
-          //   setShowModal(!showModal)
-        }}
-      >
-        <Icon path={mdiTrashCanOutline} size={1} />
-      </button>
     </div>
   )
 }
