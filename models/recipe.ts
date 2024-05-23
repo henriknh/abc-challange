@@ -66,11 +66,13 @@ export const ingredientSchema = new Schema<IIngredient>({
 export interface IStep extends mongoose.Document {
   description: string
   time: number
+  isTimer: boolean
 }
 
 export const stepSchema = new Schema<IStep>({
   description: { type: String, required: true },
   time: { type: Number, required: true },
+  isTimer: { type: Boolean, required: true },
 })
 
 export interface IRecipe extends mongoose.Document {
