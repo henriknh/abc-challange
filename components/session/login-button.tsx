@@ -1,13 +1,14 @@
 import Link from 'next/link'
+import { ReactNode } from 'react'
 
-export function LoginButton({ ...props }) {
+export interface LoginButtonProps {
+  children?: ReactNode
+}
+
+export function LoginButton({ children, ...props }) {
   return (
-    <Link
-      className="btn btn-primary"
-      href="/api/auth/signin"
-      {...props}
-    >
-      Log in
+    <Link className="btn btn-primary" href="/api/auth/signin" {...props}>
+      {children ?? 'Log in'}
     </Link>
   )
 }
