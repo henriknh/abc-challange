@@ -112,6 +112,8 @@ const recipeFormat2 = `
       "description": string;
       // The time this part of the recipe take to comeplete
       "time": number;
+      // Does this step require timer? Such as letting a cooking on low heat for a longer time.
+      "isTimer": boolean;
     },
   ],
 }
