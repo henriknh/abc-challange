@@ -1,11 +1,9 @@
-'use client'
-
 import { SubmitButton } from './form/submit-button'
 import { mdiChefHat } from '@mdi/js'
 import Icon from '@mdi/react'
 import { onCook } from 'app/api/cook'
 
-export default function LetsCook() {
+export default async function LetsCook() {
   return (
     <form action={onCook} className="flex gap-4">
       <label className="input input-bordered flex w-full items-center gap-2">
