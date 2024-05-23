@@ -29,7 +29,7 @@ export default async function LandingPageProductExample() {
             </ul>
           </div>
 
-          <div className="rounded-xl border bg-base-100 p-10">
+          <div className="rounded-xl border bg-base-100 md:p-10 p-8 -mx-4 md:mx-0">
             <Recipe recipe={RECIPE_EXAMPLE_CHIMICHURRI as any} />
           </div>
         </div>
