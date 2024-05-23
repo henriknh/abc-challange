@@ -5,7 +5,7 @@ export interface LoginButtonProps {
   children?: ReactNode
 }
 
-export function LoginButton({ children, ...props }) {
+export function LoginButton({ children, ...props }: LoginButtonProps) {
   return (
     <Link className="btn btn-primary" href="/api/auth/signin" {...props}>
       {children ?? 'Log in'}
