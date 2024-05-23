@@ -203,8 +203,11 @@ const generateRecipeByIngredients = async (
 
   return {}
 }
+interface Error {
+  error: string
+}
 
-export async function onCook(formData: FormData): Promise<IRecipe> {
+export async function onCook(_: any, formData: FormData): Promise<IRecipe | Error> {
   const currentUser = await getCurrentUser()
 
   if (!currentUser) {
@@ -224,11 +227,11 @@ export async function onCook(formData: FormData): Promise<IRecipe> {
   //   : null
 
   if (!context) {
-    throw 'URL missing'
+    return { error: 'URL missing' }
   }
 
   if (!isValidHttpUrl(context)) {
-    throw 'Not a valid URL'
+    return { error: 'Not a valid URL' }
   }
 
   const recipeData = {

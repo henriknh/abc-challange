@@ -1,26 +1,50 @@
+'use client'
+
 import { SubmitButton } from './form/submit-button'
 import { mdiChefHat } from '@mdi/js'
 import Icon from '@mdi/react'
 import { onCook } from 'app/api/cook'
+import { useFormState, useActionState } from 'react-dom'
 
-export default async function LetsCook() {
+export default function LetsCook() {
+  // const [state, submitAction, isPending] = useActionState(onCook, {
+  //   message: null,
+  // })
+
+  const [state, formAction] = useFormState(onCook)
+
+  console.log(state)
+
   return (
-    <form action={onCook} className="flex gap-4">
-      <label className="input input-bordered flex w-full items-center gap-2">
-        <input
-          name="context"
-          type="text"
-          className="min-w-0 grow"
-          placeholder="https://www.some-tasty-recipe.com"
-        />
-      </label>
+    <>
+      <form action={formAction} className="flex flex-col gap-4">
+        <div className="flex gap-4">
+          <label className="form-control w-full">
+            <input
+              name="context"
+              type="text"
+              className={
+                'input input-bordered w-full' +
+                (state?.error ? ' input-error' : '')
+              }
+              placeholder="https://www.some-tasty-recipe.com"
+            />
 
-      <div className="flex flex-col items-center">
-        <SubmitButton>
-          <Icon path={mdiChefHat} size={0.8} />
-          Let&apos;s cook
-        </SubmitButton>
-      </div>
-    </form>
+            {state?.error && (
+              <div className="label">
+                <span className="label-text-alt text-error">{state.error}</span>
+              </div>
+            )}
+          </label>
+
+          <div className="flex flex-col items-center">
+            <SubmitButton>
+              <Icon path={mdiChefHat} size={0.8} />
+              Let&apos;s cook
+            </SubmitButton>
+          </div>
+        </div>
+      </form>
+    </>
   )
 }
