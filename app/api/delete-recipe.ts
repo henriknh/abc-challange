@@ -5,9 +5,9 @@ import { IRecipe, MRecipe } from '@/models/recipe'
 import dbConnect from 'lib/db-connect'
 import { redirect } from 'next/navigation'
 
-export async function deleteRecipe(recipe: IRecipe) {
+export async function deleteRecipe(recipe: IRecipe): Promise<void | ApiError> {
   if (!recipe) {
-    throw 'Recipe missing'
+    return { error: 'Recipe missing' }
   }
 
   const currentUser = await getCurrentUser()
@@ -17,7 +17,7 @@ export async function deleteRecipe(recipe: IRecipe) {
   }
 
   if (recipe.user !== currentUser.id) {
-    throw 'Not recipe creator'
+    return { error: 'Not recipe creator' }
   }
 
   if (currentUser.tokens === 0) {

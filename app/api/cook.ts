@@ -203,11 +203,8 @@ const generateRecipeByIngredients = async (
 
   return {}
 }
-interface Error {
-  error: string
-}
 
-export async function onCook(_: any, formData: FormData): Promise<IRecipe | Error> {
+export async function onCook(_: any, formData: FormData): Promise<IRecipe | ApiError> {
   const currentUser = await getCurrentUser()
 
   if (!currentUser) {
