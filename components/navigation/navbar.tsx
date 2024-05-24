@@ -53,7 +53,7 @@ export async function Navbar({
       userInlineLinks={userInlineLinks}
       userDropdownLinks={userDropdownLinks}
     >
-      children
+      {children}
     </InnerNavbar>
   )
 }

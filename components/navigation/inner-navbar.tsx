@@ -1,11 +1,11 @@
 'use client'
 
+import { config } from 'app.config'
+import Link from 'next/link'
+import { ReactNode } from 'react'
 import { LinkType } from '../link'
 import { LoginButton } from '../session/login-button'
 import { LogoutButton } from '../session/logout-button'
-import { config } from 'app.config'
-import Link from 'next/link'
-import { ReactNode, useState } from 'react'
 
 interface InnerNavbarProps {
   children: ReactNode
