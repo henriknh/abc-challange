@@ -1,11 +1,11 @@
-import { authOptions } from '@/utils/auth-options'
-import { getServerSession } from 'next-auth'
-import Link from 'next/link'
-import { ReactNode } from 'react'
 import { LinkType } from '../link'
 import { ProfileButtonWithMenu } from '../profile-button-with-menu'
 import { UserCard } from '../user-card'
 import InnerNavbar from './inner-navbar'
+import { authOptions } from '@/utils/auth-options'
+import { getServerSession } from 'next-auth'
+import Link from 'next/link'
+import { ReactNode } from 'react'
 
 export interface NavbarProps {
   children: ReactNode
@@ -44,15 +44,16 @@ export async function Navbar({
     </div>
   )
 
-  return <InnerNavbar 
-  children={children}
-  hasSession={!!session}
-  navbarProfileButton={navbarProfileButton}
-  navdrawerProfileButton={navdrawerProfileButton}
-  navLinks={navLinks}
-  userInlineLinks={userInlineLinks}
-  userDropdownLinks={userDropdownLinks}
-   />
-
-  
+  return (
+    <InnerNavbar
+      hasSession={!!session}
+      navbarProfileButton={navbarProfileButton}
+      navdrawerProfileButton={navdrawerProfileButton}
+      navLinks={navLinks}
+      userInlineLinks={userInlineLinks}
+      userDropdownLinks={userDropdownLinks}
+    >
+      children
+    </InnerNavbar>
+  )
 }
