@@ -18,7 +18,7 @@ export default async function RecipeInfo({ recipe }: RecipeInfoProps) {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex items-center justify-between">
-        <h1 className="m-0">{recipe.title}</h1>
+        <h1>{recipe.title}</h1>
 
         <div className="flex gap-2">
           {compareObjectIds(currentUser, recipe.user) && (

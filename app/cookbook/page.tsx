@@ -28,9 +28,9 @@ export default async function Recipes() {
     <AuthGuard>
       <div className="prose max-w-none ">
         <Section>
-          <div className="flex flex-col gap-10">
-            <div className="flex items-center justify-between">
-              <h1 className="mb-0">Welcome chef!</h1>
+          <div className="flex flex-col">
+            <div className="flex items-start justify-between">
+              <h1>Welcome chef!</h1>
 
               <Link href="/create-recipe" className="btn max-sm:btn-square btn-ghost">
                 <span className="hidden md:block">Create recipe</span>
@@ -41,7 +41,7 @@ export default async function Recipes() {
 
             {recipes.length ? (
               <div className="overflow-x-auto">
-                <table className="table table-zebra">
+                <table className="table table-zebra m-0">
                   <thead>
                     <tr>
                       <th>Name</th>
