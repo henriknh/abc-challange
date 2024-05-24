@@ -7,13 +7,7 @@ import { onCook } from 'app/api/cook'
 import { useFormState, useActionState } from 'react-dom'
 
 export default function LetsCook() {
-  // const [state, submitAction, isPending] = useActionState(onCook, {
-  //   message: null,
-  // })
-
   const [state, formAction] = useFormState(onCook)
-
-  console.log(state)
 
   return (
     <>
