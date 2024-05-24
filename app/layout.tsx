@@ -1,13 +1,14 @@
-import '../styles/global.css'
 import { Footer } from '@/components/footer/footer'
 import { Introduction } from '@/components/footer/introduction'
 import { LinkType } from '@/components/link'
 import { Navbar } from '@/components/navigation/navbar'
 import { Tokens } from '@/components/tokens'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Metadata } from 'next'
 import localFont from 'next/font/local'
 import Script from 'next/script'
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import '../styles/global.css'
+import { getCurrentUser } from './api/current-user'
 
 const tripSansFont = localFont({
   src: '../public/Trip-Sans-Font/trip-sans-variable.ttf',
@@ -64,13 +65,19 @@ interface RootProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   // Layouts must accept a children prop.
   // This will be populated with nested layouts or pages
   children,
 }: RootProps) {
+  const session = await getCurrentUser()
+  
   return (
-    <html lang="en" className={`${tripSansFont.variable} ${tripSansMonoFont}`}>
+    <html
+      lang="en"
+      className={`${tripSansFont.variable} ${tripSansMonoFont}`}
+      data-theme={session.isDarkMode ? "dark" : 'light'}
+    >
       <Script
         data-website-id="2be13eda-0dc7-4737-a95c-a09d9e17e35f"
         src="https://cloud.umami.is/script.js"

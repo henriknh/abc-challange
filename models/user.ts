@@ -5,6 +5,7 @@ export interface IUser extends mongoose.Document {
   email: string
   image: string
   emailVerified: boolean
+  isDarkMode: boolean
   isMetric: boolean
   tokens: number
 }
@@ -14,6 +15,7 @@ export const userSchema = new Schema<IUser>({
   email: { type: String, required: true },
   image: { type: String, required: true },
   emailVerified: { type: Boolean, default: false },
+  isDarkMode: { type: Boolean, default: false },
   isMetric: { type: Boolean, default: true },
   tokens: { type: Number, default: 0 },
 })
