@@ -5,3 +5,19 @@
 .container {
   max-width: 1024px;
 }
+
+/**
+ * Fix tab headers in development
+ */
+
+:is(.tab-active, [aria-selected='true']).tab:not(.tab-disabled):not([disabled]),
+:is(input:checked).tab {
+  border-color: var(--fallback-bc, oklch(var(--bc) / var(--tw-border-opacity)));
+  --tw-border-opacity: 1;
+  --tw-text-opacity: 1;
+}
+
+:is(input[type='radio']).tab:after {
+  --tw-content: attr(aria-label);
+  content: var(--tw-content);
+}

@@ -18,7 +18,8 @@ export default async function Recipe({ recipe }: RecipeProps) {
               type="radio"
               name="my_tabs_1"
               role="tab"
-              className="tab after:content-['Ingredients'] checked:border-primary"
+              className="tab"
+              aria-label='Ingredients'
               defaultChecked
             />
             <div role="tabpanel" className="tab-content max-h-[80vh] overflow-y-auto">
@@ -29,7 +30,8 @@ export default async function Recipe({ recipe }: RecipeProps) {
               type="radio"
               name="my_tabs_1"
               role="tab"
-              className="tab after:content-['Steps'] checked:border-primary"
+              className="tab"
+              aria-label='Steps'
             />
             <div role="tabpanel" className="tab-content max-h-[80vh] overflow-y-auto">
               <Steps recipe={recipe} />
