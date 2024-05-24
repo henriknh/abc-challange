@@ -1,14 +1,10 @@
-import { config } from '../../app.config'
-import { LinkType } from '../link'
-import { ProfileButtonWithMenu } from '../profile-button-with-menu'
-import { LoginButton } from '../session/login-button'
-import { LogoutButton } from '../session/logout-button'
-import { UserCard } from '../user-card'
-import NavSide from './nav-side'
 import { authOptions } from '@/utils/auth-options'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import { ReactNode } from 'react'
+import { LinkType } from '../link'
+import { ProfileButtonWithMenu } from '../profile-button-with-menu'
+import { UserCard } from '../user-card'
 import InnerNavbar from './inner-navbar'
 
 export interface NavbarProps {
