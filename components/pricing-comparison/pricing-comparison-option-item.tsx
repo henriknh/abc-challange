@@ -13,26 +13,23 @@ export default function PricingComparisonOptionItem({
   isIncluded,
   isExcluded,
 }: PricingComparisonOptionItemProps) {
+  const hasIcon = isIncluded || isExcluded
+
   return (
     <tr className={'not-prose' + (isExcluded ? ' opacity-40' : '')}>
-      <td>
-        {(isIncluded || isExcluded) && (
+      {hasIcon && (
+        <td>
           <span className="flex h-0 items-center pr-2">
             <Icon path={isIncluded ? mdiCheck : mdiClose} size={1} />
           </span>
-        )}
+        </td>
+      )}
+      <td
+        colSpan={hasIcon ? 1 : 2}
+        className={'py-1' + (!hasIcon ? ' text-center' : '')}
+      >
+        {children}
       </td>
-      <td className="py-1">{children}</td>
     </tr>
-  )
-  return (
-    <div
-      className={
-        'flex items-center justify-center gap-2' +
-        (isExcluded ? ' opacity-40' : '')
-      }
-    >
-      <span className="flex-1 text-center">{children}</span>
-    </div>
   )
 }
