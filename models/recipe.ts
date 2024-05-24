@@ -110,5 +110,7 @@ const recipeSchema = new Schema<IRecipe>({
   steps: [stepSchema],
 })
 
+recipeSchema.index({ title: 'text' })
+
 export const MRecipe: mongoose.Model<IRecipe> =
   mongoose.models.Recipe || mongoose.model<IRecipe>('Recipe', recipeSchema)
