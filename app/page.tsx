@@ -10,7 +10,7 @@ export default async function Home() {
       <LandingPageProblemAndSolution />
       <LandingPageProductExample />
       <LandingPageTextTutorialAndVideoDemo />
-      <LandingPageCustomerTestimonials />
+      {/* <LandingPageCustomerTestimonials /> */}
       <LandingPageBusinessModel />
     </>
   )
