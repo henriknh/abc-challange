@@ -7,6 +7,7 @@ import { Tokens } from '@/components/tokens'
 import { Metadata } from 'next'
 import localFont from 'next/font/local'
 import Script from 'next/script'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const tripSansFont = localFont({
   src: '../public/Trip-Sans-Font/trip-sans-variable.ttf',
@@ -84,6 +85,7 @@ export default function RootLayout({
             bottomSlot={<Introduction />}
           />
         </Navbar>
+        <SpeedInsights />
       </body>
     </html>
   )
