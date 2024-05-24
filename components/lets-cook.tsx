@@ -12,7 +12,7 @@ export default function LetsCook() {
   return (
     <>
       <form action={formAction} className="flex flex-col gap-4">
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <label className="form-control w-full">
             <input
               name="context"
@@ -31,12 +31,10 @@ export default function LetsCook() {
             )}
           </label>
 
-          <div className="flex flex-col items-center">
             <SubmitButton>
               <Icon path={mdiChefHat} size={0.8} />
               Let&apos;s cook
             </SubmitButton>
-          </div>
         </div>
       </form>
     </>
