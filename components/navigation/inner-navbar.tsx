@@ -1,30 +1,37 @@
-import { config } from '../app.config'
-import { LinkType } from './link'
-import { ProfileButtonWithMenu } from './profile-button-with-menu'
-import { LoginButton } from './session/login-button'
-import { LogoutButton } from './session/logout-button'
-import { UserCard } from './user-card'
-import { authOptions } from '@/utils/auth-options'
-import { getServerSession } from 'next-auth'
-import Link from 'next/link'
-import { ReactNode } from 'react'
+'use client'
 
-export interface NavbarProps {
+import { LinkType } from '../link'
+import { LoginButton } from '../session/login-button'
+import { LogoutButton } from '../session/logout-button'
+import { config } from 'app.config'
+import Link from 'next/link'
+import { ReactNode, useState } from 'react'
+
+interface InnerNavbarProps {
   children: ReactNode
-  navLinks?: LinkType[]
-  userInlineLinks?: LinkType[]
-  userDropdownLinks?: LinkType[]
-  userProfileLink?: string
+  hasSession: boolean
+  navbarProfileButton: ReactNode
+  navdrawerProfileButton: ReactNode
+  navLinks: LinkType[]
+  userInlineLinks: LinkType[]
+  userDropdownLinks: LinkType[]
 }
 
-export async function Navbar({
+export default function InnerNavbar({
   children,
-  navLinks = [],
-  userInlineLinks = [],
-  userDropdownLinks = [],
-  userProfileLink,
-}: NavbarProps) {
-  const session = await getServerSession(authOptions)
+  hasSession,
+  navbarProfileButton,
+  navdrawerProfileButton,
+  navLinks,
+  userInlineLinks,
+  userDropdownLinks,
+}: InnerNavbarProps) {
+  const open = () =>
+    ((document.getElementById('my-drawer-3') as HTMLInputElement).checked =
+      true)
+  const close = () =>
+    ((document.getElementById('my-drawer-3') as HTMLInputElement).checked =
+      false)
 
   return (
     <div className="drawer drawer-end min-h-screen">
@@ -51,7 +58,7 @@ export async function Navbar({
 
           <div className="flex-1 justify-end gap-2">
             <div className="hidden flex-none justify-end gap-2 lg:flex">
-              {session ? (
+              {hasSession ? (
                 <>
                   {userInlineLinks?.length > 0 && (
                     <ul className="menu menu-horizontal flex gap-2">
@@ -63,15 +70,7 @@ export async function Navbar({
                     </ul>
                   )}
 
-                  {userDropdownLinks.length ? (
-                    <ProfileButtonWithMenu links={userDropdownLinks} />
-                  ) : userProfileLink ? (
-                    <Link href={userProfileLink} className="btn btn-ghost">
-                      <UserCard />
-                    </Link>
-                  ) : (
-                    <UserCard />
-                  )}
+                  {navbarProfileButton}
                 </>
               ) : (
                 <LoginButton />
@@ -79,11 +78,11 @@ export async function Navbar({
             </div>
 
             <div className="flex-none lg:hidden">
-              {!session && navLinks.length === 0 ? (
+              {!hasSession && navLinks.length === 0 ? (
                 <LoginButton />
               ) : (
-                <label
-                  htmlFor="my-drawer-3"
+                <button
+                  onClick={open}
                   aria-label="open sidebar"
                   className="btn btn-square btn-ghost"
                 >
@@ -100,7 +99,7 @@ export async function Navbar({
                       d="M4 6h16M4 12h16M4 18h16"
                     ></path>
                   </svg>
-                </label>
+                </button>
               )}
             </div>
           </div>
@@ -108,6 +107,7 @@ export async function Navbar({
 
         {children}
       </div>
+
       <div className="drawer-side">
         <label
           htmlFor="my-drawer-3"
@@ -118,29 +118,18 @@ export async function Navbar({
           {/* Sidebar content here */}
 
           <div className="flex-1">
-            {session && (
+            {hasSession && (
               <>
-                <div className="pb-4">
-                  {userProfileLink ? (
-                    <Link
-                      href={userProfileLink}
-                      className="btn btn-ghost w-full justify-start"
-                    >
-                      <UserCard />
-                    </Link>
-                  ) : (
-                    <div className="flex h-12 items-center px-4">
-                      <UserCard />
-                    </div>
-                  )}
-                </div>
+                <div className="pb-4">{navdrawerProfileButton}</div>
 
                 {userInlineLinks?.length > 0 && (
                   <>
                     <ul>
                       {userInlineLinks.map((link) => (
                         <li key={link.href}>
-                          <Link href={link.href}>{link.children}</Link>
+                          <Link onClick={close} href={link.href}>
+                            {link.children}
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -154,7 +143,9 @@ export async function Navbar({
                     <ul>
                       {userDropdownLinks.map((link) => (
                         <li key={link.href}>
-                          <Link href={link.href}>{link.children}</Link>
+                          <Link onClick={close} href={link.href}>
+                            {link.children}
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -168,13 +159,15 @@ export async function Navbar({
             <ul className="w-full">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href}>{link.children}</Link>
+                  <Link onClick={close} href={link.href}>
+                    {link.children}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {session ? <LogoutButton /> : <LoginButton />}
+          <LogoutButton />
         </div>
       </div>
     </div>
