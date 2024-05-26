@@ -23,7 +23,7 @@ export default async function Ingredients({ recipe }: IngredientsProps) {
 
       <div className="flex flex-col">
         {recipe.ingredient_sections?.map((ingredient_section, index) => (
-          <div className="flex flex-col">
+          <div className="flex flex-col" key={ingredient_section.title+index}>
             {hasMultipleSections && <h4>{ingredient_section.title}</h4>}
 
             <div className="flex flex-col gap-2">
