@@ -76,7 +76,7 @@ export default async function RootLayout({
     <html
       lang="en"
       className={`${tripSansFont.variable} ${tripSansMonoFont}`}
-      data-theme={session.isDarkMode ? "dark" : 'light'}
+      data-theme={session?.isDarkMode ? "dark" : 'light'}
     >
       <Script
         data-website-id="2be13eda-0dc7-4737-a95c-a09d9e17e35f"
