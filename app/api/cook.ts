@@ -4,12 +4,27 @@ import isValidHttpUrl from '../../utils/is-valid-http-url'
 import { openai } from '../../utils/openai'
 import { getCurrentUser } from './current-user'
 import { IRecipe, MRecipe } from '@/models/recipe'
+import chromium from '@sparticuz/chromium'
 import dbConnect from 'lib/db-connect'
 import { redirect } from 'next/navigation'
 import puppeteer from 'puppeteer'
 
+async function getBrowser() {
+  if (process.env.NODE_ENV === 'development') {
+    return await puppeteer.launch()
+  }
+
+  // https://www.stefanjudis.com/blog/how-to-use-headless-chrome-in-serverless-functions/
+  return puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
+  })
+}
+
 const extractContentByRL = async (url: string) => {
-  const browser = await puppeteer.launch()
+  const browser = await getBrowser()
   const page = await browser.newPage()
 
   await page.goto(url)
@@ -289,9 +304,7 @@ export async function onCook(
     user: currentUser,
   }
 
-
-  console.log(JSON.stringify(recipeData));
-  
+  console.log(JSON.stringify(recipeData))
 
   const recipe = new MRecipe(recipeData)
   await recipe.save()
