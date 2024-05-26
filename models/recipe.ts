@@ -58,13 +58,13 @@ export const foodPreferencesSchema = new Schema<IFoodPreferences>({
 })
 
 export interface IUnit extends mongoose.Document {
-  value?: number
+  minValue?: number
   maxValue?: number
   unit?: string
 }
 
 export const unitSchema = new Schema<IUnit>({
-  value: { type: Number },
+  minValue: { type: Number },
   maxValue: { type: Number },
   unit: { type: String },
 })

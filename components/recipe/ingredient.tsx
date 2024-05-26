@@ -26,9 +26,9 @@ export default async function Ingredient({ ingredient }: IngredientProps) {
       <div className="flex gap-2">
         <div className="capitalize">{ingredient.name}</div>
       </div>
-      {unit?.value > 0 && (
+      {unit?.minValue > 0 && (
         <div className="text-nowrap">
-          {toFixedIfNecessary(unit.value)}{unit.value < unit.maxValue && `-${toFixedIfNecessary(unit.maxValue)}`} {unit.unit}
+          {toFixedIfNecessary(unit.minValue)}{unit.minValue < unit.maxValue && `-${toFixedIfNecessary(unit.maxValue)}`} {unit.unit}
         </div>
       )}
     </div>

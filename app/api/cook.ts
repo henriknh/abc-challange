@@ -139,8 +139,8 @@ const recipeFormat = `
         "unit": {
           // Metric unit for this ingredients decribing how much is needed for this recipe. This field has to be defined.
           "metric_unit": {
-            // The amount needed of this ingredient. If a range, define the bottom of the range here. For example if '1-2' this field should have the value '1'. If no applicable amount can be indentified, this value can be null.
-            "value"?: number;
+            // The amount needed of this ingredient. A range of values is not allowed. If it is a range, define the bottom of the range here. For example if '1-2' this field should have the value '1'. If no applicable amount can be indentified, this value can be null.
+            "minValue"?: number;
             // If a range, define the top of the range here. For example if '1-2' this field should have the value '2'. If no applicable amount can be indentified, this value can be null.
             "maxValue"?: number;
             // The unit in metric system. Choose volume or weight depending on what is most common. Can also be "pieces" if more suitable. Avoid cups as unit.
@@ -148,8 +148,8 @@ const recipeFormat = `
           },
           // Imperial unit for this ingredients decribing how much is needed for this recipe. This field has to be defined.
           "imperial_unit": {
-            // The amount needed of this ingredient. If a range, define the bottom of the range here. For example if '1-2' this field should have the value '1'. If no applicable amount can be indentified, this value can be null.
-            "value"?: number;
+            // The amount needed of this ingredient. A range of values is not allowed. If it is a range, define the bottom of the range here. For example if '1-2' this field should have the value '1'. If no applicable amount can be indentified, this value can be null.
+            "minValue"?: number;
             // If a range, define the top of the range here. For example if '1-2' this field should have the value '2'. If no applicable amount can be indentified, this value can be null.
             "maxValue"?: number;
             // The unit in imperial system. Choose volume or weight depending on what is most common. Can also be "pieces" if more suitable
@@ -164,7 +164,7 @@ const recipeFormat = `
     {
       // Describe the action of this particular step to cook the recipe. The step should not bee too lengthy neither in text nor in time but sometimes a step can take a long time if it requires little hands on for example baking in the oven
       "description": string;
-      // The time this part of the recipe take to comeplete. Should probably be larger than 0 in most cases.
+      // The time this step of the recipe take to complete.
       "time": number;
       // Does this step require timer? Such as letting a cooking on low heat for a longer time.
       "isTimer": boolean;
