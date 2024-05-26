@@ -57,36 +57,30 @@ export const foodPreferencesSchema = new Schema<IFoodPreferences>({
   pescatarian: { type: Boolean, required: true },
 })
 
-export interface IUnit extends mongoose.Document {
-  minValue?: number
-  maxValue?: number
-  unit?: string
-}
-
-export const unitSchema = new Schema<IUnit>({
-  minValue: { type: Number },
-  maxValue: { type: Number },
-  unit: { type: String },
-})
-
-export interface IUnitSystems extends mongoose.Document {
-  metric_unit: IUnit
-  imperial_unit: IUnit
-}
-
-export const unitSystemsSchema = new Schema<IUnitSystems>({
-  metric_unit: {type: unitSchema, required: true},
-  imperial_unit: {type: unitSchema, required: true},
-})
-
 export interface IIngredient extends mongoose.Document {
   name: string
-  unit: IUnitSystems
+  metric_unit?: string
+  metric_min_value?: number
+  metric_max_value?: number
+  imperial_unit: string
+  imperial_min_value?: number
+  imperial_max_value?: number
+  us_customary_unit: string
+  us_customary_min_value?: number
+  us_customary_max_value?: number
 }
 
 export const ingredientSchema = new Schema<IIngredient>({
   name: { type: String, required: true },
-  unit: {type: unitSystemsSchema, required: true},
+  metric_unit: { type: String },
+  metric_min_value: { type: Number },
+  metric_max_value: { type: Number },
+  imperial_unit: { type: String },
+  imperial_min_value: { type: Number },
+  imperial_max_value: { type: Number },
+  us_customary_unit: { type: String },
+  us_customary_min_value: { type: Number },
+  us_customary_max_value: { type: Number },
 })
 
 export interface IIngredientSection extends mongoose.Document {

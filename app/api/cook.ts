@@ -135,27 +135,24 @@ const recipeFormat = `
       "ingredients": [{
         // Name of the ingredient. Remove any units from this text.
         "name": string;
-        // Unit for this ingredients. This field has to be defined.
-        "unit": {
-          // Metric unit for this ingredients decribing how much is needed for this recipe. This field has to be defined.
-          "metric_unit": {
-            // The amount needed of this ingredient. A range of values is not allowed. If it is a range, define the bottom of the range here. For example if '1-2' this field should have the value '1'. If no applicable amount can be indentified, this value can be null.
-            "minValue"?: number;
-            // If a range, define the top of the range here. For example if '1-2' this field should have the value '2'. If no applicable amount can be indentified, this value can be null.
-            "maxValue"?: number;
-            // The unit in metric system. Choose volume or weight depending on what is most common. Can also be "pieces" if more suitable. Avoid cups as unit.
-            "unit"?: string;
-          },
-          // Imperial unit for this ingredients decribing how much is needed for this recipe. This field has to be defined.
-          "imperial_unit": {
-            // The amount needed of this ingredient. A range of values is not allowed. If it is a range, define the bottom of the range here. For example if '1-2' this field should have the value '1'. If no applicable amount can be indentified, this value can be null.
-            "minValue"?: number;
-            // If a range, define the top of the range here. For example if '1-2' this field should have the value '2'. If no applicable amount can be indentified, this value can be null.
-            "maxValue"?: number;
-            // The unit in imperial system. Choose volume or weight depending on what is most common. Can also be "pieces" if more suitable
-            "unit"?: string;
-          },
-        },
+        // Extract/translate the metric system unit needed for this recipe.
+        "metric_unit": string;
+        // Extract/convert the lower amount of metric system value needed for this recipe.
+        "metric_min_value": number;
+        // Extract/convert the upper amount metric system value needed for this recipe.
+        "metric_max_value": number;
+        // Extract/translate the imperial system unit needed for this recipe.
+        "imperial_unit": string;
+        // Extract/convert the lower amount of imperial system value needed for this recipe.
+        "imperial_min_value": number;
+        // Extract/convert the upper amount imperial system value needed for this recipe.
+        "imperial_max_value": number;
+        // Extract/translate the US customary system unit needed for this recipe.
+        "us_customary_unit": string;
+        // Extract/convert the lower amount of US customary system value needed for this recipe.
+        "us_customary_min_value": number;
+        // Extract/convert the upper amount US customary system value needed for this recipe.
+        "us_customary_max_value": number;
       }]
     }
   ],
