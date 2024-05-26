@@ -1,5 +1,5 @@
-import mongoose, { Schema } from 'mongoose'
 import { IUser } from './user'
+import mongoose, { Schema } from 'mongoose'
 
 export interface IFoodAllergies extends mongoose.Document {
   peanuts: boolean
@@ -19,6 +19,30 @@ export const foodAllergiesSchema = new Schema<IFoodAllergies>({
   shellfish: { type: Boolean, required: true },
 })
 
+export interface INutrientsTable extends mongoose.Document {
+  calories: number
+  total_fat: number
+  saturated_fat: number
+  cholesterol: number
+  sodium: number
+  total_carbohydrates: number
+  dietary_fiber: number
+  total_sugars: number
+  protein: number
+}
+
+export const nutrientsTableSchema = new Schema<INutrientsTable>({
+  calories: { type: Number, required: true },
+  total_fat: { type: Number, required: true },
+  saturated_fat: { type: Number, required: true },
+  cholesterol: { type: Number, required: true },
+  sodium: { type: Number, required: true },
+  total_carbohydrates: { type: Number, required: true },
+  dietary_fiber: { type: Number, required: true },
+  total_sugars: { type: Number, required: true },
+  protein: { type: Number, required: true },
+})
+
 export interface IFoodPreferences extends mongoose.Document {
   vegetarian: boolean
   vegan: boolean
@@ -34,13 +58,15 @@ export const foodPreferencesSchema = new Schema<IFoodPreferences>({
 })
 
 export interface IUnit extends mongoose.Document {
-  value: number
-  unit: string
+  value?: number
+  maxValue?: number
+  unit?: string
 }
 
 export const unitSchema = new Schema<IUnit>({
-  value: { type: Number, required: true },
-  unit: { type: String, required: true },
+  value: { type: Number },
+  maxValue: { type: Number },
+  unit: { type: String },
 })
 
 export interface IUnitSystems extends mongoose.Document {
@@ -49,8 +75,8 @@ export interface IUnitSystems extends mongoose.Document {
 }
 
 export const unitSystemsSchema = new Schema<IUnitSystems>({
-  metric_unit: unitSchema,
-  imperial_unit: unitSchema,
+  metric_unit: {type: unitSchema, required: true},
+  imperial_unit: {type: unitSchema, required: true},
 })
 
 export interface IIngredient extends mongoose.Document {
@@ -60,7 +86,17 @@ export interface IIngredient extends mongoose.Document {
 
 export const ingredientSchema = new Schema<IIngredient>({
   name: { type: String, required: true },
-  unit: unitSystemsSchema,
+  unit: {type: unitSystemsSchema, required: true},
+})
+
+export interface IIngredientSection extends mongoose.Document {
+  title: string
+  ingredients: IIngredient[]
+}
+
+export const ingredientSectionSchema = new Schema<IIngredientSection>({
+  title: { type: String, required: true },
+  ingredients: { type: [ingredientSchema], required: true },
 })
 
 export interface IStep extends mongoose.Document {
@@ -93,7 +129,8 @@ export interface IRecipe extends mongoose.Document {
   difficuly: 'easy' | 'medium' | 'hard'
   food_allergies: IFoodAllergies
   food_preferences: IFoodPreferences
-  ingredients: IIngredient[]
+  nutrients_table: INutrientsTable
+  ingredient_sections: IIngredientSection[]
   steps: IStep[]
 }
 
@@ -104,10 +141,11 @@ const recipeSchema = new Schema<IRecipe>({
   description: { type: String, required: true },
   total_cooking_time: { type: Number, required: true },
   portions: { type: Number, required: true },
-  food_allergies: foodAllergiesSchema,
-  food_preferences: foodPreferencesSchema,
-  ingredients: [ingredientSchema],
-  steps: [stepSchema],
+  food_allergies: { type: foodAllergiesSchema, required: true },
+  food_preferences: { type: foodPreferencesSchema, required: true },
+  nutrients_table: { type: nutrientsTableSchema, required: true },
+  ingredient_sections: { type: [ingredientSectionSchema], required: true },
+  steps: { type: [stepSchema], required: true },
 })
 
 recipeSchema.index({ title: 'text' })

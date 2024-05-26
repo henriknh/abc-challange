@@ -6,6 +6,9 @@ export interface StepsProps {
   recipe: IRecipe
 }
 export default async function Steps({ recipe }: StepsProps) {
+
+  console.log(recipe.steps);
+  
   return (
     <div className="sticky top-0 flex-col">
       <div className="flex items-end justify-between">

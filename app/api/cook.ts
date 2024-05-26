@@ -4,44 +4,64 @@ import isValidHttpUrl from '../../utils/is-valid-http-url'
 import { openai } from '../../utils/openai'
 import { getCurrentUser } from './current-user'
 import { IRecipe, MRecipe } from '@/models/recipe'
-import { authOptions } from '@/utils/auth-options'
-import { RECIPE_EXAMPLE_CHIMICHURRI } from '@/utils/example-recipes'
 import dbConnect from 'lib/db-connect'
-import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
-import { NextResponse } from 'next/server'
+import puppeteer from 'puppeteer'
 
-const recipeFormat = {
-  title: 'Title of the recipe',
-  total_cooking_time:
-    'The total time in minutes this recipe take to cook, type=number',
-  portions: 'The total portions this recipe create, type=number',
-  description: 'A short text describing the recipe, max 200 characters',
-  ingredients: [
-    {
-      name: 'Name of the ingredient. Remove any units from this text',
-      unit: {
-        metric_unit: {
-          value: 'The amount needed of this ingredient, type=number',
-          unit: 'The unit in metric system. Choose volume or weight depending on what is most common. Can also be "pieces" if mote suitable',
-        },
-        imperial_unit: {
-          value: 'The amount needed of this ingredient, type=number',
-          unit: 'The unit in imperial system. Choose volume or weight depending on what is most common. Can also be "pieces" if mote suitable',
-        },
-      },
-    },
-  ],
-  steps: [
-    {
-      description:
-        'Describe the action of this particular step to cook the recipe. The step should not bee too lengthy neither in text nor in time but sometimes a step can take a long time if it requires little hands on for example baking in the oven',
-      time: 'The time this part of the recipe take to comeplete, type=number',
-    },
-  ],
+const extractContentByRL = async (url: string) => {
+  const browser = await puppeteer.launch()
+  const page = await browser.newPage()
+
+  await page.goto(url)
+  await page.emulateMediaType('screen')
+  const pageSourceHTML = await page.content()
+
+  await browser.close()
+
+  const regexScriptTags = /<script.*?>.*?<\/script>/gims
+  const noScriptTags = pageSourceHTML.replace(regexScriptTags, '')
+
+  const regexStyleTags = /<style.*?>.*?<\/style>/gims
+  const noStyleTags = noScriptTags.replace(regexStyleTags, '')
+
+  const regexHTMLTags =
+    /<(a|g|abbr|acronym|address|applet|area|article|aside|audio|b|base|basefont|bdi|bdo|big|blockquote|body|br|button|canvas|caption|center|cite|code|col|colgroup|data|datalist|dd|del|details|dfn|dialog|dir|div|dl|dt|em|embed|fieldset|figcaption|figure|font|footer|form|frame|frameset|h1|h2|h3|h4|h5|h6|head|header|hgroup|hr|html|i|iframe|img|input|ins|kbd|label|legend|li|link|main|map|mark|menu|meta|meter|nav|noframes|noscript|object|ol|optgroup|option|output|p|param|picture|pre|progress|q|rp|rt|ruby|s|samp|script|search|section|select|small|source|span|strike|strong|style|sub|summary|sup|svg|table|tbody|td|template|textarea|tfoot|th|thead|time|title|tr|track|tt|u|ul|var|video|wbr)[^>]+>/gims
+  const cleanDivTags = noStyleTags.replace(regexHTMLTags, '<$1>')
+
+  const regexHTMLComments = /<!--(.*?)-->/gims
+  const noHTMLComments = cleanDivTags.replace(regexHTMLComments, '')
+
+  const regexOpeningTag = /<.*?>/gims
+  const noOpeningTags = noHTMLComments.replace(regexOpeningTag, '')
+
+  const regexClosingTags = /<\/.*?>/gims
+  const noClosingTags = noOpeningTags.replace(regexClosingTags, '')
+
+  const regexNewLines = /(\r\n|\n|\r)/gims
+  const noNewLines = noClosingTags.replace(regexNewLines, '')
+
+  const regexWhiteSpace = /\s\s+/gims
+  const noWhiteSpace = noNewLines.replace(regexWhiteSpace, ' ')
+
+  console.log('pageSourceHTML', pageSourceHTML.length)
+  console.log('noScriptTags', noScriptTags.length)
+  console.log('noStyleTags', noStyleTags.length)
+  console.log('cleanDivTags', cleanDivTags.length)
+  console.log('noHTMLComments', noHTMLComments.length)
+  console.log('noOpeningTags', noOpeningTags.length)
+  console.log('noClosingTags', noClosingTags.length)
+  console.log('noNewLines', noNewLines.length)
+  console.log('noWhiteSpace', noWhiteSpace.length)
+  console.log(
+    'Reduction:',
+    ((noWhiteSpace.length / pageSourceHTML.length) * 100).toFixed(1) + '%'
+  )
+
+  return noWhiteSpace
 }
 
-const recipeFormat2 = `
+// Extract the ingredients from the recipe and categorize them into their respective sections. If the recipe includes sections like 'Main Ingredients,' 'Sauce,' 'Garnish,' etc., please list the ingredients under each respective section with appropriate headings. There has to be at least one section. Identify all ingredient sections and include them. Don't skip a single one.
+const recipeFormat = `
 {
   // Title of the recipe
   "title": string;
@@ -49,7 +69,7 @@ const recipeFormat2 = `
   "total_cooking_time": number;
   // The total portions this recipe create
   "portions": number;
-  // A short text describing the recipe, max 200 characters
+  // A short text describing the recipe. The length should be 200-250 characters
   "description": string;
   // Which meal type is this recipe
   "mealType": 'breakfast' | 'lunch' | 'starter' | 'dinner' | 'desert' | 'snack' | 'drink';
@@ -81,36 +101,70 @@ const recipeFormat2 = `
     // Is this recipe suitable for pescatarians
     "pescatarian": boolean;
   }
-  // An array of the ingredients needed to complete this recipe
-  "ingredients": [
+  // Nutrients table for a portion of this recipe
+  "nutrients_table": {
+    // kcal (kilocalories)
+    "calories": number
+    // g (grams)
+    "total_fat": number
+    // g (grams)
+    "saturated_fat": number
+    // mg (milligrams)
+    "cholesterol": number
+    // mg (milligrams)
+    "sodium": number
+    // g (grams)
+    "total_carbohydrates": number
+    // g (grams)
+    "dietary_fiber": number
+    // g (grams)
+    "total_sugars": number
+    // g (grams)
+    "protein": number
+  }
+  // An array of sections or chapters containing different ingredients needed to complete
+  // this different parts of this recipe. The recipe might have one or several of these
+  // sections/chapters. The recipe will always have a main ingredient section. Other
+  // section examples are addons when serving, sauce, rice or sallad. All sections must
+  // be included. And all ingredients in each ssections must also all be included.
+  "ingredient_sections": [
     {
-      // Name of the ingredient. Remove any units from this text.
-      "name": string;
-      // 
-      "unit": {
-        // Metric unit for this ingredients decribing how much is needed for this recipe. 
-        "metric_unit": {
-          // The amount needed of this ingredient
-          "value": number;
-          // The unit in metric system. Choose volume or weight depending on what is most common. Can also be "pieces" if mote suitable. Avoid cups as unit.
-          "unit": string;
+      // A title that describe the section.
+      "title": string;
+      // An array of the ingredients needed to complete this recipe. All ingredients in this section needs to be included. Dont skip a single one.
+      "ingredients": [{
+        // Name of the ingredient. Remove any units from this text.
+        "name": string;
+        // Unit for this ingredients. This field has to be defined.
+        "unit": {
+          // Metric unit for this ingredients decribing how much is needed for this recipe. This field has to be defined.
+          "metric_unit": {
+            // The amount needed of this ingredient. If a range, define the bottom of the range here. For example if '1-2' this field should have the value '1'. If no applicable amount can be indentified, this value can be null.
+            "value"?: number;
+            // If a range, define the top of the range here. For example if '1-2' this field should have the value '2'. If no applicable amount can be indentified, this value can be null.
+            "maxValue"?: number;
+            // The unit in metric system. Choose volume or weight depending on what is most common. Can also be "pieces" if more suitable. Avoid cups as unit.
+            "unit"?: string;
+          },
+          // Imperial unit for this ingredients decribing how much is needed for this recipe. This field has to be defined.
+          "imperial_unit": {
+            // The amount needed of this ingredient. If a range, define the bottom of the range here. For example if '1-2' this field should have the value '1'. If no applicable amount can be indentified, this value can be null.
+            "value"?: number;
+            // If a range, define the top of the range here. For example if '1-2' this field should have the value '2'. If no applicable amount can be indentified, this value can be null.
+            "maxValue"?: number;
+            // The unit in imperial system. Choose volume or weight depending on what is most common. Can also be "pieces" if more suitable
+            "unit"?: string;
+          },
         },
-        // Imperial unit for this ingredients decribing how much is needed for this recipe
-        "imperial_unit": {
-          // The amount needed of this ingredient
-          "value": number;
-          // The unit in imperial system. Choose volume or weight depending on what is most common. Can also be "pieces" if mote suitable
-          "unit": string;
-        },
-      },
-    },
+      }]
+    }
   ],
   // Cooking steps to complete the recipe
   "steps": [
     {
       // Describe the action of this particular step to cook the recipe. The step should not bee too lengthy neither in text nor in time but sometimes a step can take a long time if it requires little hands on for example baking in the oven
       "description": string;
-      // The time this part of the recipe take to comeplete
+      // The time this part of the recipe take to comeplete. Should probably be larger than 0 in most cases.
       "time": number;
       // Does this step require timer? Such as letting a cooking on low heat for a longer time.
       "isTimer": boolean;
@@ -151,7 +205,7 @@ const generateImageByRecipe = async (recipe: IRecipe) => {
     On the plate is the dish from a recipe that I will supply you with now.
     The title of the dish is ${recipe.title}.
     This is a brief description of the recipe ${recipe.description}.
-    These are the igredients of the recipe: ${recipe.ingredients.map((ingredient) => ingredient.name).join(', ')}.
+    These are the igredients of the recipe: ${recipe.ingredient_sections.reduce((accu, ingredient_section) => [...accu, ...ingredient_section.ingredients.map((ingredient) => ingredient.name)], []).join(', ')}.
     These are the steps to cook the recipe: 
     ${recipe.steps.map((step, index) => `${index + 1}. ${step.description}`).join('\n')}.
     There is nothing around the plate, just white(#fff) background.
@@ -170,15 +224,21 @@ const generateImageByRecipe = async (recipe: IRecipe) => {
   return response.data[0].url
 }
 
-const generateRecipeByUrl = async (url) => {
-  const content =
-    `
-    Summarize this recipe, ${url}.
-    Identify the langauge of the recipe and write the summary in the same language.
-    The output should follow this exact JSON format(Each field is described on a comment on the line above): 
-    ` + JSON.stringify(recipeFormat2)
+const generateRecipeByContent = async (htmlContent) => {
+  const currentUser = await getCurrentUser()
+  const content = `
+    You are a expect chef and I need you to summarize a recipe for me.
 
-  console.log(content)
+    Identify the langauge of the recipe and write the summary in the same language.
+
+    The steps of the recipe has to be followed exactly. The same number of steps in the original recipe content should be generated in the response as well.
+    
+    And also all the ingredients has to be identified and used in the steps. The ingredients should also be listed in the correct ingredient section. Make sure that the ingredient count of the original recipe content is the same as the count in the response. 
+
+    The output should follow this exact JSON format(Each field is described with a comment above the field): ${JSON.stringify(recipeFormat)}
+
+    This is the content of the recipe: ${htmlContent}
+  `
 
   const completion = await openai.chat.completions.create({
     messages: [
@@ -187,24 +247,17 @@ const generateRecipeByUrl = async (url) => {
         content,
       },
     ],
-    model: 'gpt-4o',
+    model: 'gpt-3.5-turbo',
     response_format: { type: 'json_object' },
   })
 
   return JSON.parse(completion.choices[0].message.content)
 }
 
-const generateRecipeByIngredients = async (
-  ingredients: string,
-  type?: string,
-  portions?: number
-): Promise<object> => {
-  console.log('handleIngredients', ingredients, type, portions)
-
-  return {}
-}
-
-export async function onCook(_: any, formData: FormData): Promise<IRecipe | ApiError> {
+export async function onCook(
+  _: any,
+  formData: FormData
+): Promise<IRecipe | ApiError> {
   const currentUser = await getCurrentUser()
 
   if (!currentUser) {
@@ -231,11 +284,17 @@ export async function onCook(_: any, formData: FormData): Promise<IRecipe | ApiE
     return { error: 'Not a valid URL' }
   }
 
+  const webContent = await extractContentByRL(context)
+
   const recipeData = {
-    ...(await generateRecipeByUrl(context)),
+    ...(await generateRecipeByContent(webContent)),
     context,
     user: currentUser,
   }
+
+
+  console.log(JSON.stringify(recipeData));
+  
 
   const recipe = new MRecipe(recipeData)
   await recipe.save()

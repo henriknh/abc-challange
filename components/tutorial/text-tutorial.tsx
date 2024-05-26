@@ -16,7 +16,7 @@ export default async function TextTutorial() {
           <div>
             <div className="inline-flex flex-wrap items-center gap-2">
               <div className="text-nowrap">Paste and press</div>
-              <button className="btn btn-outline btn-sm relative">
+              <button className="btn btn-outline btn-sm relative pointer-events-none">
                 <Icon path={mdiChefHat} size={0.8} /> Let&apos;s cook
               </button>
             </div>
