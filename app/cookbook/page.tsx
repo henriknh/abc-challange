@@ -106,16 +106,16 @@ export default async function Recipes({ searchParams }) {
                           {recipe.portions} portions
                         </td>
                         <td className="text-nowrap text-right">
-                          {recipe.ingredient_sections.reduce(
+                          {recipe.ingredient_sections?.reduce(
                             (accu, ingredient_section) =>
                               accu +
                               (ingredient_section.ingredients?.length || 0),
                             0
-                          )}{' '}
+                          ) || 0}{' '}
                           ingredients
                         </td>
                         <td className="text-nowrap text-right">
-                          {recipe.steps.length} steps
+                          {recipe.steps?.length || 0} steps
                         </td>
                         <td className="text-nowrap text-right">
                           {recipe.total_cooking_time} minutes

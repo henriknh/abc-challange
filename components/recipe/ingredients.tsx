@@ -11,7 +11,7 @@ export default async function Ingredients({ recipe }: IngredientsProps) {
 
   console.log(recipe)
 
-  const hasMultipleSections = recipe.ingredient_sections.length >= 2
+  const hasMultipleSections = recipe?.ingredient_sections?.length >= 2
 
   return (
     <div className="sticky top-0 w-full">

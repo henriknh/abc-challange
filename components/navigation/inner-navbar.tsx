@@ -78,7 +78,7 @@ export default function InnerNavbar({
             </div>
 
             <div className="flex-none lg:hidden">
-              {!hasSession && navLinks.length === 0 ? (
+              {!hasSession && navLinks?.length === 0 ? (
                 <LoginButton />
               ) : (
                 <button
