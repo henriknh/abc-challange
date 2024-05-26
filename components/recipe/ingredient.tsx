@@ -9,8 +9,6 @@ export default async function Ingredient({ ingredient }: IngredientProps) {
   const currentUser = await getCurrentUser()
 
   const getSystemOfUnit = () => {
-    console.log(currentUser?.systemOfUnits)
-
     switch (currentUser?.systemOfUnits) {
       case 'imperial_system':
         return {
@@ -37,8 +35,6 @@ export default async function Ingredient({ ingredient }: IngredientProps) {
   const toFixedIfNecessary = (value: number, dp = 1) => {
     return +value.toFixed(dp)
   }
-
-  console.log(unit)
 
   return (
     <div className="flex justify-between gap-4 rounded-md bg-base-200 px-3 py-2 shadow">

@@ -8,9 +8,6 @@ export interface IngredientsProps {
 }
 export default async function Ingredients({ recipe }: IngredientsProps) {
   const currentUser = await getCurrentUser()
-
-  console.log(recipe)
-
   const hasMultipleSections = recipe?.ingredient_sections?.length >= 2
 
   return (
