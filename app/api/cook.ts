@@ -7,19 +7,22 @@ import { IRecipe, MRecipe } from '@/models/recipe'
 import chromium from '@sparticuz/chromium'
 import dbConnect from 'lib/db-connect'
 import { redirect } from 'next/navigation'
-import puppeteer from 'puppeteer'
+import puppeteer from 'puppeteer-core'
+
+const LOCAL_CHROME_EXECUTABLE =
+  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
 async function getBrowser() {
-  if (process.env.NODE_ENV === 'development') {
-    return await puppeteer.launch()
-  }
+  const isLocal = process.env.NODE_ENV === 'development'
 
   // https://www.stefanjudis.com/blog/how-to-use-headless-chrome-in-serverless-functions/
   return puppeteer.launch({
-    args: chromium.args,
+    args: isLocal ? puppeteer.defaultArgs() : chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(),
-    headless: chromium.headless,
+    executablePath: isLocal
+      ? LOCAL_CHROME_EXECUTABLE
+      : await chromium.executablePath(),
+    headless: isLocal ? false : chromium.headless,
   })
 }
 
