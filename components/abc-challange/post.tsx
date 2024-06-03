@@ -147,44 +147,90 @@ export default async function PostThumbnail({ letter }: PostProps) {
               </div>
             </form>
           ) : (
-            <div className="flex flex-1 flex-col justify-center">
-              <div className="flex gap-2">
-                <h4>Claire</h4>
+            <>
+              <div className="flex flex-1 flex-col justify-center">
+                <div className="flex gap-2">
+                  <h4>Claire</h4>
 
-                {!isHenrik && (
-                  <div className="flex items-end pb-[10px]">
-                    <button className="btn btn-square btn-ghost btn-xs">
-                      <Icon path={mdiPencil} size={0.6} />
-                    </button>
-                  </div>
-                )}
-              </div>
-              <div
-                className={
-                  !post?.claire || !post?.henrik ? 'select-none blur-sm' : ''
-                }
-              >
-                {post?.claire || '.'}
-              </div>
-              <div className="flex gap-2">
-                <h4>Henrik</h4>
+                  {!isHenrik && (
+                    <div className="flex items-end pb-[10px]">
+                      <label
+                        htmlFor="my_modal_7"
+                        className="btn btn-square btn-ghost btn-xs"
+                      >
+                        <Icon path={mdiPencil} size={0.6} />
+                      </label>
+                    </div>
+                  )}
+                </div>
+                <div
+                  className={
+                    !post?.claire || !post?.henrik ? 'select-none blur-sm' : ''
+                  }
+                >
+                  {post?.claire || '.'}
+                </div>
+                <div className="flex gap-2">
+                  <h4>Henrik</h4>
 
-                {isHenrik && (
-                  <div className="flex items-end pb-[10px]">
-                    <button className="btn btn-square btn-ghost btn-xs">
-                      <Icon path={mdiPencil} size={0.6} />
-                    </button>
-                  </div>
-                )}
+                  {isHenrik && (
+                    <div className="flex items-end pb-[10px]">
+                      <label
+                        htmlFor="my_modal_7"
+                        className="btn btn-square btn-ghost btn-xs"
+                      >
+                        <Icon path={mdiPencil} size={0.6} />
+                      </label>
+                    </div>
+                  )}
+                </div>
+                <div
+                  className={
+                    !post?.claire || !post?.henrik ? 'select-none blur-sm' : ''
+                  }
+                >
+                  {post?.henrik || '.'}
+                </div>
               </div>
-              <div
-                className={
-                  !post?.claire || !post?.henrik ? 'select-none blur-sm' : ''
-                }
-              >
-                {post?.henrik || '.'}
+
+              <input type="checkbox" id="my_modal_7" className="modal-toggle" />
+              <div className="modal" role="dialog">
+                <div className="modal-box">
+                  <h3 className="text-lg font-bold">Sneaky change! :)</h3>
+
+                  <form
+                    action={upsertPort}
+                    className="flex flex-1 flex-col gap-4"
+                  >
+                    <input
+                      name="letter"
+                      type="text"
+                      hidden
+                      defaultValue={letter}
+                    />
+                    <textarea
+                      name="letterInfo"
+                      disabled={!currentUser}
+                      className="textarea textarea-bordered w-full"
+                      defaultValue={isHenrik ? post?.henrik : post?.claire}
+                      placeholder={`Write something about you on the letter ${letter.toUpperCase()} that ${isHenrik ? 'Claire' : 'Henrik'} doesn\'t know about`}
+                    ></textarea>
+                    <div className="flex justify-end gap-2">
+                      <label
+                        className="btn btn-ghost btn-sm"
+                        htmlFor="my_modal_7"
+                      >
+                        Close
+                      </label>
+                      <SubmitButton disabled={!currentUser}>Save</SubmitButton>
+                    </div>
+                  </form>
+                </div>
+                <label className="modal-backdrop" htmlFor="my_modal_7">
+                  Close
+                </label>
               </div>
-            </div>
+            </>
           )}
         </div>
       </div>
