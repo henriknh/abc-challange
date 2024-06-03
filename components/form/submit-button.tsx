@@ -5,15 +5,16 @@ import { useFormStatus } from 'react-dom'
 
 export interface SubmitButtonProps {
   children: ReactNode
+  disabled?: boolean
 }
 
-export function SubmitButton({ children }: SubmitButtonProps) {
+export function SubmitButton({ children, disabled }: SubmitButtonProps) {
   const { pending } = useFormStatus()
 
   return (
     <button
       type="submit"
-      disabled={pending}
+      disabled={pending || disabled}
       className="btn btn-sm relative"
     >
       <div

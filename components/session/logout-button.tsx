@@ -1,15 +1,20 @@
 'use client'
 
 import Link from 'next/link'
+import { ReactNode } from 'react'
 
-export function LogoutButton({ ...props }) {
+interface LogoutButtonProps {
+  children?: ReactNode
+}
+
+export function LogoutButton({children, ...props }) {
   return (
     <Link
       className="btn btn-ghost"
       href="/api/auth/signout"
       {...props}
     >
-      Log out
+      {children || 'Log out'}
     </Link>
   )
 }

@@ -1,6 +1,6 @@
 import { SubmitButton } from '../form/submit-button'
+import Hero from '../hero'
 import { MPost } from '@/models/post'
-import { MUser } from '@/models/user'
 import { config } from 'app.config'
 import { getCurrentUser } from 'app/api/current-user'
 import dbConnect from 'lib/db-connect'
@@ -65,6 +65,7 @@ const getLetterIndex = (letter: string) => {
       return 27
   }
 }
+
 interface PostProps {
   letter: string
 }
@@ -76,14 +77,19 @@ export default async function PostThumbnail({ letter }: PostProps) {
   })
   console.log(post)
 
+  const postDate = new Date(config.startDate)
+  const postTime = postDate.getTime()
+  const postDays = Math.floor(postTime / 8.64e7)
+
+  const nowTime = new Date().getTime()
+  var nowDays = Math.floor(nowTime / 8.64e7)
+
+  console.log(postDays, nowDays)
+
   const currentUser = await getCurrentUser()
 
   const letterIndex = getLetterIndex(letter)
-  const postDate = new Date(config.startDate)
   postDate.setDate(postDate.getDate() + letterIndex)
-  const postTime = postDate.getTime()
-  const nowDate = new Date()
-  const nowTime = nowDate.getTime()
 
   const isHenrik = currentUser?.email === 'henrik.nilsson.harnert@gmail.com'
 
@@ -105,17 +111,16 @@ export default async function PostThumbnail({ letter }: PostProps) {
   }
 
   return (
-    <div
-      className={
-        'prose card relative col-span-4 max-w-none bg-base-100 shadow-xl ' +
-        getBgColor()
-      }
-    >
-      <div className="card-body">
-        <div className="flex justify-between gap-2">
-          <h1>{letter}</h1>
-          <div className="py-1 opacity-50">
-            {postDate.toLocaleDateString('se')}
+    <Hero excludeNavbarHeight>
+      <div className={'flex h-full flex-1 flex-col gap-20 px-10 py-20 '}>
+        <div className="flex basis-1/3 justify-between gap-2">
+          <h1 className="text-9xl">{letter}</h1>
+          <div>
+            {postDate.toLocaleDateString('se', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            })}
           </div>
         </div>
 
@@ -123,22 +128,23 @@ export default async function PostThumbnail({ letter }: PostProps) {
           <form className="flex flex-col gap-4">
             <input type="text" hidden value={letter} />
             <textarea
+              disabled={!currentUser}
               className="textarea textarea-bordered w-full"
               placeholder={`Write something about you on the letter ${letter.toUpperCase()} that ${isHenrik ? 'Claire' : 'Henrik'} doesn\'t know about`}
             ></textarea>
             <div className="flex justify-end">
-              <SubmitButton>Save</SubmitButton>
+              <SubmitButton disabled={!currentUser}>Save</SubmitButton>
             </div>
           </form>
         ) : post?.claire && post?.henrik ? (
-          <div>
+          <div className="flex flex-1 flex-col justify-center">
             <h6>Claire</h6>
             <div>{post.claire}</div>
             <h6>Henrik</h6>
             <div>{post.henrik}</div>
           </div>
         ) : (
-          <div>
+          <div className="flex flex-1 flex-col justify-center">
             <h6>Claire</h6>
             <div className="blur-sm">{post?.claire || '.'}</div>
             <h6>Henrik</h6>
@@ -146,6 +152,6 @@ export default async function PostThumbnail({ letter }: PostProps) {
           </div>
         )}
       </div>
-    </div>
+    </Hero>
   )
 }
