@@ -1,7 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
 
-export type SystemOfUnits = 'metric_system' | 'imperial_system' | 'us_imperial_system'
-
 export interface IPost extends mongoose.Document {
   letter: string
   date: Date

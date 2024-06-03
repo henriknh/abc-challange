@@ -14,7 +14,7 @@ export function SubmitButton({ children }: SubmitButtonProps) {
     <button
       type="submit"
       disabled={pending}
-      className="btn btn-primary relative"
+      className="btn btn-sm relative"
     >
       <div
         className={
