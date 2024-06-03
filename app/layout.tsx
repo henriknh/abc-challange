@@ -52,7 +52,7 @@ export const letters = [
 ]
 
 export const metadata: Metadata = {
-  title: 'ABC challange',
+  title: 'ABC challenge',
 }
 interface RootProps {
   children: React.ReactNode
@@ -114,7 +114,7 @@ export default async function RootLayout({
                 <span className="flex aspect-square items-center justify-center rounded-full bg-black p-1 font-bold text-white">
                   abc
                 </span>
-                <span className="font-bold">challange</span>
+                <span className="font-bold">challenge</span>
               </div>
               <div className="flex-none">
                 {currentUser && (
