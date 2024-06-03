@@ -3,6 +3,8 @@
 import { SubmitButton } from '../form/submit-button'
 import Hero from '../hero'
 import { MPost } from '@/models/post'
+import { mdiPencil } from '@mdi/js'
+import Icon from '@mdi/react'
 import { config } from 'app.config'
 import { getCurrentUser } from 'app/api/current-user'
 import { upsertPort } from 'app/api/post'
@@ -115,9 +117,11 @@ export default async function PostThumbnail({ letter }: PostProps) {
 
   return (
     <Hero excludeNavbarHeight>
-      <div className={'flex h-full flex-1 flex-col gap-20 px-10 py-20 '}>
-        <div className="flex basis-1/3 justify-between gap-2">
-          <h1 className="text-9xl">{letter}</h1>
+      <div
+        className={'prose flex h-full max-w-none flex-1 flex-col px-10 py-20 '}
+      >
+        <div className="flex justify-between gap-2">
+          <h1 className="mb-20 text-9xl">{letter}</h1>
           <div>
             {postDate.toLocaleDateString('se', {
               year: 'numeric',
@@ -127,35 +131,62 @@ export default async function PostThumbnail({ letter }: PostProps) {
           </div>
         </div>
 
-        {!post?.claire || !post?.henrik || postTime > nowTime ? (
-          <form action={upsertPort} className="flex flex-col gap-4">
-            <input name="letter" type="text" hidden defaultValue={letter} />
-            <textarea
-              name="letterInfo"
-              disabled={!currentUser}
-              className="textarea textarea-bordered w-full"
-              defaultValue={isHenrik ? post?.henrik : post?.claire}
-              placeholder={`Write something about you on the letter ${letter.toUpperCase()} that ${isHenrik ? 'Claire' : 'Henrik'} doesn\'t know about`}
-            ></textarea>
-            <div className="flex justify-end">
-              <SubmitButton disabled={!currentUser}>Save</SubmitButton>
+        <div className="flex-1">
+          {postTime > nowTime ? (
+            <form action={upsertPort} className="flex flex-1 flex-col gap-4">
+              <input name="letter" type="text" hidden defaultValue={letter} />
+              <textarea
+                name="letterInfo"
+                disabled={!currentUser}
+                className="textarea textarea-bordered w-full"
+                defaultValue={isHenrik ? post?.henrik : post?.claire}
+                placeholder={`Write something about you on the letter ${letter.toUpperCase()} that ${isHenrik ? 'Claire' : 'Henrik'} doesn\'t know about`}
+              ></textarea>
+              <div className="flex justify-end">
+                <SubmitButton disabled={!currentUser}>Save</SubmitButton>
+              </div>
+            </form>
+          ) : (
+            <div className="flex flex-1 flex-col justify-center">
+              <div className="flex gap-2">
+                <h4>Claire</h4>
+
+                {!isHenrik && (
+                  <div className="flex items-end pb-2">
+                    <button className="btn btn-square btn-ghost btn-xs">
+                      <Icon path={mdiPencil} size={0.6} />
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div
+                className={
+                  !post?.claire || !post?.henrik ? 'select-none blur-sm' : ''
+                }
+              >
+                {post?.claire || '.'}
+              </div>
+              <div className="flex gap-2">
+                <h4>Henrik</h4>
+
+                {isHenrik && (
+                  <div className="flex items-end pb-2">
+                    <button className="btn btn-square btn-ghost btn-xs">
+                      <Icon path={mdiPencil} size={0.6} />
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div
+                className={
+                  !post?.claire || !post?.henrik ? 'select-none blur-sm' : ''
+                }
+              >
+                {post?.henrik || '.'}
+              </div>
             </div>
-          </form>
-        ) : post?.claire && post?.henrik ? (
-          <div className="flex flex-1 flex-col justify-center">
-            <h6>Claire</h6>
-            <div>{post.claire}</div>
-            <h6>Henrik</h6>
-            <div>{post.henrik}</div>
-          </div>
-        ) : (
-          <div className="flex flex-1 flex-col justify-center">
-            <h6>Claire</h6>
-            <div className="blur-sm">{post?.claire || '.'}</div>
-            <h6>Henrik</h6>
-            <div className="blur-sm">{post?.henrik || '.'}</div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </Hero>
   )
