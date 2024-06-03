@@ -22,9 +22,9 @@ export default async function Home({ searchParams }) {
             <h1 className="text-9xl">Heeeey :)))</h1>
             <h2>Welcome to the ABC challange!</h2>
             <p>Each day we reveal something new about ourself that either starts with the letter of the days or has to do with that letter in some way, shape or form.</p>
-            <p>Ready for the ABC challange?!</p>
-            <LoginButton>Gooood!</LoginButton>
-            <div className='pt-4 text-[6px]'>Entering the challange is a binding contact the the challange! Muhahaha!</div>
+            <p>Are you ready for the challange?!</p>
+            <LoginButton>Let&apos;s go! Vamos! 我們走吧! Nu kör vi!</LoginButton>
+            <div className='pt-4 text-[6px]'>Entering the challange is a binding contract to the challange! 😈</div>
           </div>
         </div>
       </Hero>
