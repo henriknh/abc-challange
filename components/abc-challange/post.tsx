@@ -110,7 +110,7 @@ export default async function PostThumbnail({ letter }: PostProps) {
         </div>
 
         <div className="flex-1 flex flex-col">
-          {0 > nowTime ? (
+          {postTime > nowTime ? (
             <form action={upsertPort} className="flex flex-1 flex-col gap-4">
               <input name="letter" type="text" hidden defaultValue={letter} />
               <textarea

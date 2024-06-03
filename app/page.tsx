@@ -17,26 +17,28 @@ export default async function Home({ searchParams }) {
   if (!currentUser) {
     return (
       <Hero excludeNavbarHeight>
-        <div className="prose max-w-none px-4 flex-1 flex flex-col items-center justify-around text-center">
-            <h1 className="m-0 text-7xl md:text-9xl">Heeey :)))</h1>
-            <div className="flex flex-col items-center gap-4">
-              <h2 className='m-0'>Welcome to the ABC challange!</h2>
-              <div>
-                Each day we reveal something new about ourself that either
-                starts with the letter of the days or has to do with that letter
-                in some way, shape or form.
+        <div className="prose flex max-w-none flex-1 flex-col items-center justify-around px-4 text-center">
+            <div className="flex-1" />
+          <h1 className="m-0 text-7xl md:text-9xl">Heeey :)))</h1>
+          <div className="flex flex-1 flex-col items-center justify-center gap-4">
+            <h2 className="m-0">Welcome to the ABC challange!</h2>
+            <div>
+              Each day we reveal something new about ourself that either starts
+              with the letter of the days or has to do with that letter in some
+              way, shape or form.
+            </div>
+            <div>Are you ready for the challange?!</div>
+            <div className="flex flex-col items-center">
+              <LoginButton>
+                Let&apos;s go! Vamos! 我們走吧! Nu kör vi!
+              </LoginButton>
+              <div className="pt-4 text-[6px]">
+                Entering the challange is a binding contract to the challange!
+                😈
               </div>
-              <div>Are you ready for the challange?!</div>
-              <div className="flex flex-col items-center">
-                <LoginButton>
-                  Let&apos;s go! Vamos! 我們走吧! Nu kör vi!
-                </LoginButton>
-                <div className="pt-4 text-[6px]">
-                  Entering the challange is a binding contract to the challange!
-                  😈
-                </div>
             </div>
           </div>
+          <div className="flex-1" />
         </div>
       </Hero>
     )
