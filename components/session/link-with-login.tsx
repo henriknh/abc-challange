@@ -17,8 +17,6 @@ export function LinkWithLogin({
   ...props
 }: LinkWithLoginProps) {
   const { data: session } = useSession()
-
-  console.log(session);
   
 
   if (!session) {

@@ -17,9 +17,6 @@ export async function upsertPort(formData: FormData) {
 
   const letter = formData.get('letter') as string | null
   const letterInfo = formData.get('letterInfo') as string | null
-
-  console.log(letter, letterInfo)
-
   const isHenrik = currentUser?.email === 'henrik.nilsson.harnert@gmail.com'
 
   const newData = isHenrik

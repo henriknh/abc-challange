@@ -80,7 +80,6 @@ export default async function PostThumbnail({ letter }: PostProps) {
   const post = await MPost.findOne({
     letter,
   })
-  console.log(post)
 
   const postDate = new Date(config.startDate)
   const postTime = postDate.getTime()
@@ -88,8 +87,6 @@ export default async function PostThumbnail({ letter }: PostProps) {
 
   const nowTime = new Date().getTime()
   var nowDays = Math.floor(nowTime / 8.64e7)
-
-  console.log(postDays, nowDays)
 
   const currentUser = await getCurrentUser()
 

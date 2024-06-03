@@ -68,13 +68,12 @@ export default async function RootLayout({
   const isHenrik = currentUser?.email === 'henrik.nilsson.harnert@gmail.com'
 
   const posts = await MPost.find({})
-  console.log(posts)
 
   return (
     <html
       lang="en"
       className={`${tripSansFont.variable} ${tripSansMonoFont}`}
-      data-theme="light"
+      data-theme="bumblebee"
     >
       <Script
         data-website-id="2be13eda-0dc7-4737-a95c-a09d9e17e35f"
@@ -87,36 +86,36 @@ export default async function RootLayout({
             {/* Navbar */}
             <div className="navbar w-full bg-base-100">
               <div className="flex flex-none gap-4">
-                <label
-                  htmlFor="my-drawer-3"
-                  aria-label="open sidebar"
-                  className="btn btn-square btn-ghost"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    className="inline-block h-6 w-6 stroke-current"
+                {currentUser && (
+                  <label
+                    htmlFor="my-drawer-3"
+                    aria-label="open sidebar"
+                    className="btn btn-square btn-ghost"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    ></path>
-                  </svg>
-                </label>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      className="inline-block h-6 w-6 stroke-current"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      ></path>
+                    </svg>
+                  </label>
+                )}
               </div>
               <div className="mx-2 flex-1 px-2">
                 <img src={config.logoUrl} className="h-10" alt="Logo" />
               </div>
               <div className="flex-none">
-                {currentUser ? (
+                {currentUser && (
                   <LogoutButton>
                     <UserCard />
                   </LogoutButton>
-                ) : (
-                  <LoginButton />
                 )}
               </div>
             </div>
