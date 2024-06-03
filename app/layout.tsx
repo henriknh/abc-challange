@@ -84,7 +84,7 @@ export default async function RootLayout({
           <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content flex flex-col">
             {/* Navbar */}
-            <div className="navbar w-full bg-base-100">
+            <div className="navbar w-full bg-base-100 sticky top-0">
               <div className="flex flex-none gap-4">
                 {currentUser && (
                   <label

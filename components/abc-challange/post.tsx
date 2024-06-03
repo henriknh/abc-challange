@@ -83,10 +83,8 @@ export default async function PostThumbnail({ letter }: PostProps) {
 
   const postDate = new Date(config.startDate)
   const postTime = postDate.getTime()
-  const postDays = Math.floor(postTime / 8.64e7)
 
   const nowTime = new Date().getTime()
-  var nowDays = Math.floor(nowTime / 8.64e7)
 
   const currentUser = await getCurrentUser()
 
@@ -95,30 +93,13 @@ export default async function PostThumbnail({ letter }: PostProps) {
 
   const isHenrik = currentUser?.email === 'henrik.nilsson.harnert@gmail.com'
 
-  const getBgColor = () => {
-    if (!currentUser) {
-      return ''
-    }
-
-    if (postTime <= nowTime) {
-      return !(isHenrik ? post?.henrik : post?.claire)
-        ? 'border border-error'
-        : 'border border-transparent'
-    } else if (postTime - 3 * 86400000 <= nowTime) {
-      return !(isHenrik ? post?.henrik : post?.claire)
-        ? 'border border-warning'
-        : 'border border-transparent'
-    }
-    return 'border border-transparent'
-  }
-
   return (
     <Hero excludeNavbarHeight>
       <div
-        className={'prose flex h-full max-w-none flex-1 flex-col px-10 py-20 '}
+        className={'prose flex h-full max-w-none flex-1 flex-col px-10 py-10 md:py-20 '}
       >
         <div className="flex justify-between gap-2">
-          <h1 className="mb-20 text-9xl">{letter}</h1>
+          <h1 className="m-0 text-9xl">{letter}</h1>
           <div>
             {postDate.toLocaleDateString('se', {
               year: 'numeric',
@@ -128,14 +109,14 @@ export default async function PostThumbnail({ letter }: PostProps) {
           </div>
         </div>
 
-        <div className="flex-1">
-          {postTime > nowTime ? (
+        <div className="flex-1 flex flex-col">
+          {0 > nowTime ? (
             <form action={upsertPort} className="flex flex-1 flex-col gap-4">
               <input name="letter" type="text" hidden defaultValue={letter} />
               <textarea
                 name="letterInfo"
                 disabled={!currentUser}
-                className="textarea textarea-bordered w-full"
+                className="flex-1 textarea textarea-bordered w-full" rows={4}
                 defaultValue={isHenrik ? post?.henrik : post?.claire}
                 placeholder={`Write something about you on the letter ${letter.toUpperCase()} that ${isHenrik ? 'Claire' : 'Henrik'} doesn\'t know about`}
               ></textarea>
@@ -209,6 +190,7 @@ export default async function PostThumbnail({ letter }: PostProps) {
                       name="letterInfo"
                       disabled={!currentUser}
                       className="textarea textarea-bordered w-full"
+                      rows={4}
                       defaultValue={isHenrik ? post?.henrik : post?.claire}
                       placeholder={`Write something about you on the letter ${letter.toUpperCase()} that ${isHenrik ? 'Claire' : 'Henrik'} doesn\'t know about`}
                     ></textarea>

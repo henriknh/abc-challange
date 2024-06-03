@@ -10,27 +10,37 @@ export default async function Home({ searchParams }) {
     (new Date().getTime() - new Date(config.startDate).getTime()) /
       (24 * 60 * 60 * 1000)
   )
-  
+
   const day = searchParams.day || letters[dayIndex] || 'A'
   const currentUser = await getCurrentUser()
 
   if (!currentUser) {
     return (
       <Hero excludeNavbarHeight>
-        <div className="flex justify-center">
-          <div className="prose text-center">
-            <h1 className="text-9xl">Heeeey :)))</h1>
-            <h2>Welcome to the ABC challange!</h2>
-            <p>Each day we reveal something new about ourself that either starts with the letter of the days or has to do with that letter in some way, shape or form.</p>
-            <p>Are you ready for the challange?!</p>
-            <LoginButton>Let&apos;s go! Vamos! 我們走吧! Nu kör vi!</LoginButton>
-            <div className='pt-4 text-[6px]'>Entering the challange is a binding contract to the challange! 😈</div>
+        <div className="prose max-w-none px-4 flex-1 flex flex-col items-center justify-around text-center">
+            <h1 className="m-0 text-7xl md:text-9xl">Heeey :)))</h1>
+            <div className="flex flex-col items-center gap-4">
+              <h2 className='m-0'>Welcome to the ABC challange!</h2>
+              <div>
+                Each day we reveal something new about ourself that either
+                starts with the letter of the days or has to do with that letter
+                in some way, shape or form.
+              </div>
+              <div>Are you ready for the challange?!</div>
+              <div className="flex flex-col items-center">
+                <LoginButton>
+                  Let&apos;s go! Vamos! 我們走吧! Nu kör vi!
+                </LoginButton>
+                <div className="pt-4 text-[6px]">
+                  Entering the challange is a binding contract to the challange!
+                  😈
+                </div>
+            </div>
           </div>
         </div>
       </Hero>
     )
   }
-  
 
   return <PostThumbnail letter={day} />
 }
