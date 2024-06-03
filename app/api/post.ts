@@ -1,10 +1,10 @@
 'use server'
 
-import { getCurrentUser } from './current-user'
-import { IPost, MPost } from '@/models/post'
+import { MPost } from '@/models/post'
 import dbConnect from 'lib/db-connect'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { getCurrentUser } from './current-user'
 
 export async function upsertPort(formData: FormData) {
   await dbConnect()
@@ -16,17 +16,20 @@ export async function upsertPort(formData: FormData) {
   }
 
   const letter = formData.get('letter') as string | null
-  const letterInfo = formData.get('letterInfo') as string | null
+  const postWord = formData.get('postWord') as string | null
+  const postText = formData.get('postText') as string | null
   const isHenrik = currentUser?.email === 'henrik.nilsson.harnert@gmail.com'
 
   const newData = isHenrik
     ? {
         letter,
-        henrik: letterInfo.length ? letterInfo : null,
+        henrikWord: postWord?.length ? postWord : null,
+        henrikText: postText?.length ? postText : null,
       }
     : {
         letter,
-        claire: letterInfo.length ? letterInfo : null,
+        claireWord: postWord?.length ? postWord : null,
+        claireText: postText?.length ? postText : null,
       }
 
   await MPost.findOneAndUpdate({ letter }, newData, { upsert: true })

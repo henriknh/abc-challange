@@ -84,7 +84,7 @@ export default async function RootLayout({
           <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content flex flex-col">
             {/* Navbar */}
-            <div className="navbar w-full bg-base-100 sticky top-0">
+            <div className="navbar sticky top-0 w-full bg-base-100">
               <div className="flex flex-none gap-4">
                 {currentUser && (
                   <label
@@ -108,11 +108,13 @@ export default async function RootLayout({
                   </label>
                 )}
               </div>
-              <div className="mx-2 flex-1 px-2 flex gap-1">
+              <div className="mx-2 flex flex-1 gap-1 px-2">
                 {/* <img src={config.logoUrl} className="h-10" alt="Logo" /> */}
 
-                <span className='font-bold text-white bg-black rounded-full aspect-square flex items-center justify-center p-1'>abc</span>
-                <span className='font-bold'>challange</span>
+                <span className="flex aspect-square items-center justify-center rounded-full bg-black p-1 font-bold text-white">
+                  abc
+                </span>
+                <span className="font-bold">challange</span>
               </div>
               <div className="flex-none">
                 {currentUser && (
@@ -140,7 +142,9 @@ export default async function RootLayout({
                   posts.some(
                     (post) =>
                       post.letter === letter &&
-                      (isHenrik ? post.henrik : post.claire)
+                      (isHenrik
+                        ? post.henrikWord && post.henrikText
+                        : post.claireWord && post.claireText)
                   )
                 const startDate = new Date(config.startDate)
                 startDate.setDate(startDate.getDate() + index)
