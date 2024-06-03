@@ -26,7 +26,7 @@ export default async function Home({ searchParams }) {
               Each day we reveal something new about ourself through a letter in the alphabet. 
             </div>
             <div>
-              By the end of the challenge we will have gotten to know each other through 28 words and stories. Will we complete the challenge? What word can we find on Z?
+              By the end of the challenge we will have gotten to know each other through 28 words and stories. Will we complete all letters? What word can we find on Z?
             </div>
             <div>Are you ready for the challenge?!</div>
             <div className="flex flex-col items-center">
