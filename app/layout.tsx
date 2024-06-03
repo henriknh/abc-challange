@@ -108,8 +108,11 @@ export default async function RootLayout({
                   </label>
                 )}
               </div>
-              <div className="mx-2 flex-1 px-2">
-                <img src={config.logoUrl} className="h-10" alt="Logo" />
+              <div className="mx-2 flex-1 px-2 flex gap-1">
+                {/* <img src={config.logoUrl} className="h-10" alt="Logo" /> */}
+
+                <span className='font-bold text-white bg-black rounded-full aspect-square flex items-center justify-center p-1'>abc</span>
+                <span className='font-bold'>challange</span>
               </div>
               <div className="flex-none">
                 {currentUser && (
