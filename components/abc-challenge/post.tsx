@@ -100,7 +100,7 @@ export default async function PostThumbnail({ letter }: PostProps) {
 
   const isCompleted =
     currentUser &&
-    post.letter === letter &&
+    post?.letter === letter &&
     (isHenrik
       ? post.henrikWord && post.henrikText
       : post.claireWord && post.claireText)
