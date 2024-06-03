@@ -1,11 +1,14 @@
+import Link from 'next/link'
 import PricingComparisonOptionItem from './pricing-comparison-option-item'
 import { ReactNode } from 'react'
+import { LinkWithLogin } from '../session/link-with-login'
 
 export interface PricingComparisonOptionProps {
   title: string
   subTitle?: ReactNode
   description?: ReactNode
   price: number
+  buyLink: string
   children: ReactNode | ReactNode[]
   isPopular?: boolean
 }
@@ -14,6 +17,7 @@ export default function PricingComparisonOption({
   subTitle,
   description,
   price,
+  buyLink,
   children,
   isPopular,
 }: PricingComparisonOptionProps) {
@@ -38,7 +42,7 @@ export default function PricingComparisonOption({
         </div>
 
         <div className="card-actions">
-          <button className="btn btn-primary">Buy {title}</button>
+          <LinkWithLogin href={buyLink} className="btn btn-primary">Buy {title}</LinkWithLogin>
         </div>
       </div>
     </div>

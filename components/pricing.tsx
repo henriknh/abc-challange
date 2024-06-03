@@ -7,7 +7,7 @@ export default async function Pricing() {
     <div className="flex flex-col gap-4">
       <PricingComparison>
         <PricingComparisonOption
-          title="Starter Pack"
+          title="Starter"
           subTitle={
             <div className="flex flex-col items-center gap-2">
               <div>5 tokens</div>
@@ -16,6 +16,7 @@ export default async function Pricing() {
           }
           description="Just a taste, perfect for quick bites!"
           price={1}
+          buyLink="https://buy.stripe.com/test_3cs2aBbkHejqat2000"
         >
           <PricingComparisonOptionItem isIncluded>
             Filter recipes
@@ -31,7 +32,7 @@ export default async function Pricing() {
           </PricingComparisonOptionItem>
         </PricingComparisonOption>
         <PricingComparisonOption
-          title="Plus Pack"
+          title="Plus"
           subTitle={
             <div className="flex flex-col items-center gap-2">
               <div>10 tokens</div>
@@ -41,6 +42,7 @@ export default async function Pricing() {
           description="More meals, fewer takeouts. Cook away!"
           price={2}
           isPopular
+          buyLink="https://buy.stripe.com/test_fZe3eF1K7fnuat2eUV"
         >
           <PricingComparisonOptionItem isIncluded>
             Filter recipes
@@ -56,7 +58,7 @@ export default async function Pricing() {
           </PricingComparisonOptionItem>
         </PricingComparisonOption>
         <PricingComparisonOption
-          title="Premium Pack"
+          title="Premium"
           subTitle={
             <div className="flex flex-col items-center gap-2">
               <div>25 tokens</div>
@@ -70,6 +72,7 @@ export default async function Pricing() {
             </>
           }
           price={5}
+          buyLink="https://buy.stripe.com/test_8wM5mNagD0sAgRqaEG"
         >
           <PricingComparisonOptionItem isIncluded>
             Filter recipes
@@ -85,7 +88,7 @@ export default async function Pricing() {
           </PricingComparisonOptionItem>
         </PricingComparisonOption>
         <PricingComparisonOption
-          title="Unlimited Pack"
+          title="Unlimited"
           subTitle={
             <div className="flex flex-col items-center gap-2">
               <div>Unlimited tokens</div>
@@ -105,6 +108,7 @@ export default async function Pricing() {
             </>
           }
           price={10}
+          buyLink="https://buy.stripe.com/test_6oE6qR9czdfm7gQ003"
         >
           <PricingComparisonOptionItem isIncluded>
             Filter recipes
@@ -121,8 +125,8 @@ export default async function Pricing() {
         </PricingComparisonOption>
       </PricingComparison>
 
-      <div className='text-sm'>
-        Daily limit applies to Unlimited pack of 15 recipes per day.
+      <div className='text-sm text-center'>
+        Daily limit applies to Unlimited package of 15 recipes per day.
       </div>
     </div>
   )
