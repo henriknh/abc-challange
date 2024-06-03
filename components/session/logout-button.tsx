@@ -7,13 +7,9 @@ interface LogoutButtonProps {
   children?: ReactNode
 }
 
-export function LogoutButton({children, ...props }) {
+export function LogoutButton({ children, ...props }: LogoutButtonProps) {
   return (
-    <Link
-      className="btn btn-ghost"
-      href="/api/auth/signout"
-      {...props}
-    >
+    <Link className="btn btn-ghost" href="/api/auth/signout" {...props}>
       {children || 'Log out'}
     </Link>
   )
