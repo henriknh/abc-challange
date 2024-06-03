@@ -1,8 +1,11 @@
+'use server'
+
 import { SubmitButton } from '../form/submit-button'
 import Hero from '../hero'
 import { MPost } from '@/models/post'
 import { config } from 'app.config'
 import { getCurrentUser } from 'app/api/current-user'
+import { upsertPort } from 'app/api/post'
 import dbConnect from 'lib/db-connect'
 
 const getLetterIndex = (letter: string) => {
@@ -125,11 +128,13 @@ export default async function PostThumbnail({ letter }: PostProps) {
         </div>
 
         {!post?.claire || !post?.henrik || postTime > nowTime ? (
-          <form className="flex flex-col gap-4">
-            <input type="text" hidden value={letter} />
+          <form action={upsertPort} className="flex flex-col gap-4">
+            <input name="letter" type="text" hidden defaultValue={letter} />
             <textarea
+              name="letterInfo"
               disabled={!currentUser}
               className="textarea textarea-bordered w-full"
+              defaultValue={isHenrik ? post?.henrik : post?.claire}
               placeholder={`Write something about you on the letter ${letter.toUpperCase()} that ${isHenrik ? 'Claire' : 'Henrik'} doesn\'t know about`}
             ></textarea>
             <div className="flex justify-end">

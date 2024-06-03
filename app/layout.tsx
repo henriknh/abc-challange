@@ -1,6 +1,5 @@
 import '../styles/global.css'
 import { getCurrentUser } from './api/current-user'
-import { Navbar } from '@/components/navigation/navbar'
 import { LoginButton } from '@/components/session/login-button'
 import { LogoutButton } from '@/components/session/logout-button'
 import { UserCard } from '@/components/user-card'
@@ -66,6 +65,7 @@ export default async function RootLayout({
 }: RootProps) {
   const currentUser = await getCurrentUser()
   await dbConnect()
+  const isHenrik = currentUser?.email === 'henrik.nilsson.harnert@gmail.com'
 
   const posts = await MPost.find({})
   console.log(posts)
@@ -133,7 +133,13 @@ export default async function RootLayout({
               {/* Sidebar content here */}
 
               {letters.map((letter, index) => {
-                const isCompleted = posts.some((post) => post.letter === letter)
+                const isCompleted =
+                  currentUser &&
+                  posts.some(
+                    (post) =>
+                      post.letter === letter &&
+                      (isHenrik ? post.henrik : post.claire)
+                  )
                 const startDate = new Date(config.startDate)
                 startDate.setDate(startDate.getDate() + index)
                 const nowDate = new Date()
@@ -144,12 +150,14 @@ export default async function RootLayout({
                       className={'flex justify-between'}
                     >
                       <span className="flex items-center gap-2">
-                        <span
-                          className={
-                            'h-2 w-2 rounded-full' +
-                            (isCompleted ? ' bg-success' : ' bg-warning')
-                          }
-                        />
+                        {currentUser && (
+                          <span
+                            className={
+                              'h-2 w-2 rounded-full' +
+                              (isCompleted ? ' bg-success' : ' bg-warning')
+                            }
+                          />
+                        )}
                         <span>{letter}</span>
                       </span>
 
