@@ -152,7 +152,7 @@ export default async function PostThumbnail({ letter }: PostProps) {
                 <h4>Claire</h4>
 
                 {!isHenrik && (
-                  <div className="flex items-end pb-2">
+                  <div className="flex items-end pb-[10px]">
                     <button className="btn btn-square btn-ghost btn-xs">
                       <Icon path={mdiPencil} size={0.6} />
                     </button>
@@ -170,7 +170,7 @@ export default async function PostThumbnail({ letter }: PostProps) {
                 <h4>Henrik</h4>
 
                 {isHenrik && (
-                  <div className="flex items-end pb-2">
+                  <div className="flex items-end pb-[10px]">
                     <button className="btn btn-square btn-ghost btn-xs">
                       <Icon path={mdiPencil} size={0.6} />
                     </button>
