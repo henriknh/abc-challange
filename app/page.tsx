@@ -10,7 +10,6 @@ export default async function Home({ searchParams }) {
     (new Date().getTime() - new Date(config.startDate).getTime()) /
       (24 * 60 * 60 * 1000)
   )
-
   const day = searchParams.day || letters[dayIndex] || 'A'
   const currentUser = await getCurrentUser()
 
