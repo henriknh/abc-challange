@@ -20,11 +20,11 @@ export default async function Home({ searchParams }) {
         <div className="prose flex max-w-none flex-1 flex-col items-center justify-around px-4 text-center">
             <div className="flex-1" />
           <h1 className="m-0 text-7xl md:text-9xl">Heeey :)))</h1>
-          <div className="flex flex-1 flex-col items-center justify-center gap-4 max-w-[600px]">
+          <div className="flex flex-1 flex-col items-center justify-center gap-4 max-w-[550px]">
             <h2 className="m-0">Welcome to the ABC challange!</h2>
             <div>
-              Each day we reveal something new about ourself that either starts
-              with the letter of the days or has to do with that letter in some
+              Each day we reveal something new about ourself through a letter. It can be a word that that starts
+              with the letter of the day. Or something that has to do with that letter in some
               way, shape or form.
             </div>
             <div>Are you ready for the challange?!</div>
