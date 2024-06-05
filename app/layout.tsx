@@ -146,6 +146,15 @@ export default async function RootLayout({
                         ? post.henrikWord && post.henrikText
                         : post.claireWord && post.claireText)
                   )
+                const isPartlyCompleted =
+                  currentUser &&
+                  posts.some(
+                    (post) =>
+                      post.letter === letter &&
+                      (isHenrik
+                        ? post.henrikWord || post.henrikText
+                        : post.claireWord || post.claireText)
+                  )
                 const startDate = new Date(config.startDate)
                 startDate.setDate(startDate.getDate() + index)
                 const nowDate = new Date()
@@ -160,7 +169,7 @@ export default async function RootLayout({
                           <span
                             className={
                               'h-2 w-2 rounded-full' +
-                              (isCompleted ? ' bg-success' : ' bg-warning')
+                              (isCompleted ? ' bg-success' : (isPartlyCompleted ? ' bg-warning' : ' bg-base-300'))
                             }
                           />
                         )}
