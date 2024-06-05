@@ -156,6 +156,7 @@ export default async function RootLayout({
                         : post.claireWord || post.claireText)
                   )
                 const startDate = new Date(config.startDate)
+                startDate.setHours(0)
                 startDate.setDate(startDate.getDate() + index)
                 const nowDate = new Date()
                 return (

@@ -6,9 +6,11 @@ import { LoginButton } from '@/components/session/login-button'
 import { config } from 'app.config'
 
 export default async function Home({ searchParams }) {
+  const startDate = new Date(config.startDate)
+  startDate.setHours(0)
+
   const dayIndex = Math.floor(
-    (new Date().getTime() - new Date(config.startDate).getTime()) /
-      (24 * 60 * 60 * 1000)
+    (new Date().getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000)
   )
   const day = searchParams.day || letters[dayIndex] || 'A'
   const currentUser = await getCurrentUser()
@@ -17,15 +19,18 @@ export default async function Home({ searchParams }) {
     return (
       <Hero excludeNavbarHeight>
         <div className="prose flex max-w-none flex-1 flex-col items-center justify-around px-4 text-center">
-            <div className="flex-1" />
+          <div className="flex-1" />
           <h1 className="m-0 text-7xl md:text-9xl">Heeey :)))</h1>
-          <div className="flex flex-1 flex-col items-center justify-center gap-4 max-w-[600px]">
+          <div className="flex max-w-[600px] flex-1 flex-col items-center justify-center gap-4">
             <h2 className="m-0">Welcome to the ABC challenge!</h2>
             <div>
-              Each day we reveal something new about ourself through a letter in the alphabet. 
+              Each day we reveal something new about ourself through a letter in
+              the alphabet.
             </div>
             <div>
-              By the end of the challenge we will have gotten to know each other through 28 words and stories. Will we complete all letters? What word can we find on Z?
+              By the end of the challenge we will have gotten to know each other
+              through 28 words and stories. Will we complete all letters? What
+              word can we find on Z?
             </div>
             <div>Are you ready for the challenge?!</div>
             <div className="flex flex-col items-center">

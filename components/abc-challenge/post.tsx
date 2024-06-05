@@ -81,15 +81,16 @@ export default async function PostThumbnail({ letter }: PostProps) {
     letter,
   })
 
-  const postDate = new Date(config.startDate)
-  const postTime = postDate.getTime()
+  const startDate = new Date(config.startDate)
+  startDate.setHours(0)
+  const startTime = startDate.getTime()
 
   const nowTime = new Date().getTime()
 
   const currentUser = await getCurrentUser()
 
   const letterIndex = getLetterIndex(letter)
-  postDate.setDate(postDate.getDate() + letterIndex)
+  startDate.setDate(startDate.getDate() + letterIndex)
 
   const isHenrik = currentUser?.email === 'henrik.nilsson.harnert@gmail.com'
   const postNotComplete =
@@ -116,7 +117,7 @@ export default async function PostThumbnail({ letter }: PostProps) {
           <h1 className="m-0 text-9xl">{letter}</h1>
           <div className="flex flex-col items-end gap-2">
             <div>
-              {postDate.toLocaleDateString('se', {
+              {startDate.toLocaleDateString('se', {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',
@@ -133,7 +134,7 @@ export default async function PostThumbnail({ letter }: PostProps) {
         </div>
 
         <div className="flex flex-1 flex-col">
-          {postTime > nowTime ? (
+          {startTime > nowTime ? (
             <form action={upsertPort} className="flex flex-1 flex-col gap-4">
               <input name="letter" type="text" hidden defaultValue={letter} />
 
