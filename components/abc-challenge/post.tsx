@@ -184,7 +184,7 @@ export default async function PostThumbnail({ letter }: PostProps) {
                       {post?.henrikWord || '.'}
                     </div>
                     <div
-                      className={postNotComplete ? 'select-none blur-sm' : ''}
+                      className={"whitespace-pre-wrap" + (postNotComplete ? ' select-none blur-sm' : '')}
                     >
                       {post?.henrikText || '.'}
                     </div>
@@ -219,7 +219,7 @@ export default async function PostThumbnail({ letter }: PostProps) {
                       {post?.claireWord || '.'}
                     </div>
                     <div
-                      className={postNotComplete ? 'select-none blur-sm' : ''}
+                      className={"whitespace-pre-wrap" + (postNotComplete ? ' select-none blur-sm' : '')}
                     >
                       {post?.claireText || '.'}
                     </div>
