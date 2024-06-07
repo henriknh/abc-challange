@@ -81,16 +81,16 @@ export default async function PostThumbnail({ letter }: PostProps) {
     letter,
   })
 
-  const startDate = new Date(config.startDate)
-  startDate.setHours(0)
-  const startTime = startDate.getTime()
-
-  const nowTime = new Date().getTime()
-
   const currentUser = await getCurrentUser()
 
   const letterIndex = getLetterIndex(letter)
+
+  const startDate = new Date(config.startDate)
+  startDate.setHours(0)
   startDate.setDate(startDate.getDate() + letterIndex)
+  const startTime = startDate.getTime()
+
+  const nowTime = new Date().getTime()
 
   const isHenrik = currentUser?.email === 'henrik.nilsson.harnert@gmail.com'
   const postNotComplete =
